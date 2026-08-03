@@ -1,0 +1,276 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newcommand{\fl}[1]{\left\lfloor #1 \right\rfloor}
+
+\title{Prime counts and prime sums from multiplication tables:\\ a self-similar formula system}
+\author{Carl Gribble\thanks{Draft v0.1, companion to \emph{Certified exact sums of primes over dyadic
+intervals via a ladder of generalized factorials}~\cite{Companion} (same author). Developed in collaboration with Claude
+(Anthropic); all numerical claims were machine-verified as described in Section~6. Responsibility for
+the content rests with the author. A full disclosure of AI use appears at the end of the paper.}}
+\date{August 2026 --- draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A multiplication table whose entries are all at least $2$ manufactures exactly the composite numbers;
+the primes are precisely what the table cannot make. Taking this observation seriously as a computational
+program --- ``sum of the integers, minus the de-duplicated output of the table, equals the sum of the
+primes'' --- forces a de-duplication problem, since a composite $m$ appears $d(m)-2$ times in the table,
+and $2^{\Omega(m)}$-fold growth in higher-dimensional tables. Its exact resolution is the
+alternating-harmonic combination of $k$-dimensional multiplication tables, which is Linnik's identity.
+We develop this into a three-line inductive formula family $S_j$ computing $\sum_{p \le y} p^{\,j}$ for
+every weight $j \ge 0$ --- counts at $j=0$, sums at $j=1$, power sums beyond --- over arbitrary
+intervals, with a self-similar ``dust'' recursion that terminates in \emph{empty} tables, so that no
+prime, primality test, or sieve appears anywhere in the system, at any depth. We prove the interval
+structure: sums live on hyperbola shells, folded coordinates are root-bounded, evaluation requires only
+the finite quotient--root lattice of the endpoint, and dimension $k$ is \emph{born} at $2^k$ with a
+single newborn. We prove a duplicated-mass theorem: the $2$-dimensional table cancels identically out
+of its own duplication ledger, which is settled by the diagonal and the tables of dimension $\ge 3$
+alone. A reference implementation passes forty exact interval tests for counts and sums, and at the
+billion scale reproduces $\pi(10^9) = 50{,}847{,}534$ together with the primality and index of
+$999{,}999{,}937$ in minutes, touching $63{,}719$ lattice points out of $10^9$ integers. A curious
+observable falls out: stepping the endpoint from $y$ to $y+1$ enlarges the evaluation lattice exactly at
+the divisors of $y+1$, so a prime step adds a single point --- primality is visible as minimal lattice
+growth. The core identity is Linnik's, the resulting algorithms sit in the Legendre--Meissel family, and the
+computational route through Linnik's identity was pioneered by McKenzie; the contribution is the
+geometric derivation, the duplicated-mass and layer-birth theorems, the interval taxonomy, and the
+verification discipline.
+\end{abstract}
+
+\section{Introduction}
+
+Let $U_k(N)$ denote the $k$-dimensional multiplication table restricted to entries at least $2$ and
+products at most $N$: the set of tuples $(x_1, \dots, x_k)$ with every $x_i \ge 2$ and
+$x_1 x_2 \cdots x_k \le N$. The starting observation is elementary and, we believe, a good pedagogical
+door into multiplicative number theory: the values manufactured by $U_2$ are exactly the composite
+numbers, and the primes are exactly the integers the table cannot make. An arithmetic amateur's very
+natural program --- \emph{sum the integers up to $N$, subtract what the table makes, obtain the sum of
+the primes} --- is therefore structurally sound, and fails only on multiplicity: the table ships
+duplicates, in quantities governed by the divisor function and, more fundamentally, by the number of
+prime factors $\Omega(m)$, which we call the \emph{dimension} of $m$ throughout.
+
+This paper carries the program to completion and then generalizes it. The exact de-duplication weights
+turn out to be the alternating-harmonic sequence $1, -\tfrac12, +\tfrac13, \dots$ applied to the tower
+$U_1, U_2, U_3, \dots$; per integer this is Linnik's identity \cite{Linnik,FI}, the combinatorial
+expansion of $\log \zeta$. Around it we build a uniform, weighted, self-similar formula system with the
+following properties, each verified computationally at scales up to $10^9$: it computes
+$\sum_{A < p \le B} p^{\,j}$ exactly for every $j \ge 0$ and every interval; it consumes no prime data at
+any point, its recursion bottoming out in empty tables; its interval structure is completely described
+by hyperbola shells, root bounds, and a finite quotient--root lattice; and it exhibits a
+\emph{layer-birth law} organizing the dyadic scale $2^k$ as the birthday of dimension $k$.
+
+We state our claims and non-claims plainly. The per-integer identity is Linnik's; the $j = 0$
+extraction line is Riemann's $\Pi$-to-$\pi$ inversion \cite{Riemann,Edwards} with $\Pi$ supplied by
+table layers rather than an integral; and the resulting algorithms belong to the
+Legendre--Meissel combinatorial family \cite{DR,Staple,Orlov,Lucy,McKenzie}, which contains asymptotically
+faster members. What we believe is worth recording: the derivation of the identity from the
+de-duplication ledger of a literal times table; the uniform treatment of counts, sums, and power sums as
+one three-line induction with a weight dial; the duplicated-mass cancellation theorem
+(Section~4); the interval taxonomy and layer-birth law (Section~5); the fully prime-free self-similar
+dust (Section~3); and the lattice-growth observable at prime steps (Section~6). Of these, the computational core --- prime counts and
+prime power sums from Linnik's identity, with no prime input --- is anticipated by McKenzie
+\cite{McKenzie}, whose $x^{2/3}$-class algorithm predates and asymptotically improves on our
+implementation; the remaining items we have not found presented in this form, though we regard that as
+a statement about our searches.
+
+\section{The table frame}
+
+Write $D_k^*(n)$ for the number of ordered factorizations of $n$ into $k$ factors, each at least $2$;
+thus $D_1^*(n) = 1$ for $n \ge 2$, $D_2^*(n) = d(n) - 2$, and $D_k^*(n) = 0$ unless $\Omega(n) \ge k$,
+since dimension is additive and each factor carries dimension at least $1$. Two appearance laws anchor
+intuition. In the (unrestricted) $k$-fold table the multiplicity of $n$ is
+$d_k(n) = \prod_{p^a \| n} \binom{a + k - 1}{k - 1}$ --- the Euler coefficients of $\zeta(s)^k$ \cite{HW} --- so a
+squarefree $n$ of dimension $\omega$ appears $k^{\omega}$ times: base the dimension of the space,
+exponent the dimension of the number. In the restricted table, primes appear only in $U_1$: a prime
+admits no factorization into two factors $\ge 2$. This is the survival mechanism of everything below.
+
+The $x \leftrightarrow y$ fold of $U_2$ along its diagonal is Dirichlet's hyperbola device
+\cite{Dirichlet}; the diagonal itself carries the perfect squares, with the closed form
+$\sum_{k=2}^{s} k^2 = \tfrac{s(s+1)(2s+1)}{6} - 1$, $s = \fl{\sqrt N}$, and after folding, the residual
+duplicates are exactly the values with several distinct two-part factorizations --- necessarily of
+dimension $\ge 3$. (At $N = 100$: the folded interior square repeats only
+$12, 16, 18, 20, 24, 30, 36, 40$, of dimensions $3,4,3,3,4,3,4,4$.)
+
+\section{The de-duplication identity and the formula system}
+
+\begin{lemma}[Per-integer ledger; Linnik]\label{lem:linnik}
+For every integer $n \ge 2$,
+\[
+\sum_{k \ge 1} \frac{(-1)^{k-1}}{k}\, D_k^*(n) \;=\; \frac{\Lambda(n)}{\log n} \;=\;
+\begin{cases} 1/j, & n = p^{\,j},\\ 0, & \text{otherwise,}\end{cases}
+\]
+the sum terminating at $k = \Omega(n)$.
+\end{lemma}
+
+The generating identity is $\log \zeta = \log(1 + F) = F - \tfrac{F^2}{2} + \cdots$ with
+$F = \zeta - 1$; the ledger of each composite closes at its own dimension, and primes survive with
+weight $1$ because they inhabit only $U_1$. An equivalent integer-weight system uses dimension parity,
+$\mu(d) = (-1)^{\Omega(d)}$ on squarefree sieving patterns (Legendre's sieve); we work with the harmonic
+weights throughout.
+
+Fix a weight $j \ge 0$ and define the layer totals $T_k^{(j)}(y) = \sum_{n \le y} n^j D_k^*(n)$. The
+whole system is three lines:
+\begin{align}
+\text{base:}\quad & T_1^{(j)}(y) \;=\; \textstyle\sum_{n=2}^{y} n^j \quad\text{(Faulhaber closed form)},\label{eq:base}\\
+\text{step:}\quad & T_k^{(j)}(y) \;=\; \sum_{d=2}^{\fl{y/2^{k-1}}} d^{\,j}\; T_{k-1}^{(j)}\big(\fl{y/d}\big),\label{eq:step}\\
+\text{extraction:}\quad & S_j(y) \;=\; \sum_{k=1}^{\fl{\log_2 y}} \frac{(-1)^{k-1}}{k}\, T_k^{(j)}(y)
+\;-\; \sum_{a=2}^{\fl{\log_2 y}} \frac{1}{a}\; S_{a j}\big(\fl{y^{1/a}}\big).\label{eq:extract}
+\end{align}
+
+\begin{theorem}[Prime power sums, prime-free]\label{thm:main}
+For every $j \ge 0$ and $y \ge 1$, $S_j(y) = \sum_{p \le y} p^{\,j}$; in particular $S_0 = \pi$ and
+$S_1$ is the prime-sum function, and for any interval,
+$\sum_{A < p \le B} p^{\,j} = S_j(B) - S_j(A)$. The recursion \eqref{eq:extract} is self-similar (the
+dust calls the same $S$ at root scales with multiplied weight) and terminates without any prime input:
+at $y \le 3$ all layers with $k \ge 2$ vanish because the tables are empty, and the formula returns
+$\sum_{n \le y} n^j$ over $\{2, 3\} \cap [1, y]$ of its own accord.
+\end{theorem}
+
+The alternating combination in \eqref{eq:extract} is Riemann's prime-power counting function (weighted),
+and the extraction line is his $\Pi$-to-$\pi$ inversion made recursive; the recursion depth is
+$O(\log \log y)$. As a worked instance, at $y = 30$, $j = 0$: the layers are $29, 52, 32, 5$, giving
+$29 - \tfrac{52}{2} + \tfrac{32}{3} - \tfrac{5}{4} = \tfrac{149}{12} = \Pi(30)$; the dust is
+$\tfrac{\pi(5)}{2} + \tfrac{\pi(3)}{3} + \tfrac{\pi(2)}{4} = \tfrac{29}{12}$; and
+$\pi(30) = \tfrac{149}{12} - \tfrac{29}{12} = 10$. All rungs are linked by Abel summation, so counts
+rebuild sums and sums rebuild counts; and unit windows give membership,
+$S_1(n) - S_1(n-1) \in \{0, n\}$, so the aggregate formulas determine the set of primes itself by
+bisection.
+
+\section{The duplicated-mass theorem}
+
+Return to the amateur's program in its corrected cage: the folded region $2 \le x \le \fl{\sqrt N}$,
+$x \le y$, $xy \le N$, which manufactures every composite $\le N$. Its raw sum is
+$R(N) = \tfrac12\big(T_2^{(1)}(N) + Q(N)\big)$ with $Q$ the diagonal closed form above; the duplicated
+mass is $D(N) = R(N) - \sum_{m \le N \text{ composite}} m$.
+
+\begin{theorem}[The 2D table cancels from its own duplication bill]\label{thm:dup}
+\[
+D(N) \;=\; \frac{Q(N)}{2} \;+\; \sum_{k \ge 3} \frac{(-1)^{k-1}}{k}\, T_k^{(1)}(N)
+\;-\!\!\sum_{p^{j} \le N,\ j \ge 2} \frac{p^{\,j}}{j}.
+\]
+\end{theorem}
+
+The proof is three lines from Lemma~\ref{lem:linnik}: the composite indicator is
+$\tfrac{D_2^*}{2} - \tfrac{D_3^*}{3} + \cdots$ up to prime-power dust, and upon subtracting, the
+$T_2^{(1)}$ terms annihilate. The duplication of the two-dimensional table is settled entirely by the
+squares and the tables of dimension three and higher --- in agreement with the hand ledger, where every
+post-fold repeat offender had dimension $\ge 3$. Verified exactly: $D(100) = 4593$ from
+$192 + \tfrac{21426}{3} - \tfrac{13441}{4} + \tfrac{4112}{5} - \tfrac{640}{6} - \tfrac{5789}{60}$, and
+$D(1000) = 974{,}163$. The dust term is itself produced prime-free by Theorem~\ref{thm:main}.
+
+\section{Interval structure}
+
+\begin{proposition}[Where the intervals live]\label{prop:intervals}
+(i) For a target interval $(A, B]$ of values, every layer is summed over the hyperbola shell
+$A < x_1 \cdots x_k \le B$; the interval constrains the product, never the coordinates. (ii) In the
+sorted fold, the coordinates are root-bounded: $x_1 \le B^{1/k}$ and inductively
+$x_i \le \big(B/(x_1 \cdots x_{i-1})\big)^{1/(k-i+1)}$. (iii) The system
+\eqref{eq:base}--\eqref{eq:extract} evaluates only at the closure of $\{B\}$ (and $\{A\}$) under
+$y \mapsto \fl{y/d}$ and $y \mapsto \fl{y^{1/a}}$ --- a finite, self-similar lattice of
+$O(\sqrt B)$ points (e.g.\ $642$ points for $B = 10^5$).
+\end{proposition}
+
+\begin{proposition}[Layer-birth law]\label{prop:birth}
+$T_k^{(j)}(y) = 0$ for $y < 2^k$, and the contribution of layer $k$ to its own dyadic window
+$(2^{k-1}, 2^k]$ is the single tuple $(2, 2, \dots, 2)$, of value $2^k$ and multiplicity one.
+Consequently the extraction truncates at $k = \fl{\log_2 y}$, and the dyadic window of index $k$ is the
+birth window of dimension $k$, containing exactly one newborn.
+\end{proposition}
+
+\section{Implementation and verification}
+
+A reference implementation (\texttt{prime\_sum\_formula.py} in the code repository \cite{Code}, about
+one hundred lines)
+realizes \eqref{eq:base}--\eqref{eq:extract} with exact rational arithmetic, memoization over the
+quotient--root lattice, and hyperbola block-grouping of the step \eqref{eq:step}, so each lattice node
+costs $O(\sqrt y)$; observed total cost scales near $y^{3/4}$. Every returned value is asserted to have
+denominator $1$ before use --- the harmonic fractions must annihilate, and in all runs they did.
+
+\emph{Test suite.} Forty interval tests, all exact against an independent sieve: the twenty dyadic
+windows to $2^{20}$ (sums); edge cases including the empty interval, the prime-free window
+$(113, 126]$, a unit window, and a window containing $2^{10}$ to exercise the dust; eight random
+intervals below $10^6$; five count tests (weight $j = 0$), including $\pi(10^6) = 78{,}498$; and the
+spans $(10^6, 10^7]$ and $(1, 10^7]$, the latter returning $3{,}203{,}324{,}994{,}356$.
+
+\emph{Billion-scale validation.} With published values as the oracle
+($\pi(10^9) = 50{,}847{,}534$; $999{,}999{,}937$ the largest prime below $10^9$), the implementation
+computed $\pi(999{,}999{,}936) = 50{,}847{,}533$ in $176$ s, $\pi(999{,}999{,}937) = 50{,}847{,}534$ in
+$1$ s, and $\pi(10^9) = 50{,}847{,}534$ in $18$ s, touching $63{,}719$ lattice points in total: the
+formula's verdicts --- that $999{,}999{,}937$ is prime, is prime number $50{,}847{,}534$, and is the
+last prime below one billion --- agree with the record values, with no sieve and no primality test in
+the computation.
+
+\begin{remark}[Primality as lattice growth]
+Since $\fl{(y+1)/d} > \fl{y/d}$ exactly when $d \mid y+1$, the evaluation lattice of $y+1$ exceeds that
+of $y$ only at divisors of $y+1$. A prime step therefore adds a single lattice point --- observed above
+as the $176\,\mathrm{s} \to 1\,\mathrm{s}$ collapse and a lattice increment of exactly one. The
+system's cost profile feels primality before its arithmetic announces it.
+\end{remark}
+
+\section{Related work, limitations, open doors}
+
+Lemma~\ref{lem:linnik} is Linnik's identity \cite{Linnik}, standard in sieve theory \cite{FI} and
+developed into $x^{2/3}$-class algorithms for $\pi(x)$ and prime power sums by McKenzie
+\cite{McKenzie}; the $j=0$ extraction is Riemann's inversion \cite{Riemann,Edwards}; Legendre's sieve is the
+dimension-parity twin; and the combinatorial prime-counting lineage
+\cite{DR,Staple} and its prime-power-sum extensions \cite{Orlov,Lucy} contain algorithms of better
+exponent ($x^{2/3}$-class) than our $x^{3/4}$-class implementation. The companion paper \cite{Companion} develops a
+different, certified route to interval prime sums via Chebyshev-weighted generalized factorials. The
+present system computes any functional of primes defined by \emph{individual} membership --- intervals
+here; residue classes are an open door, since the ledger survives residue-restricted weights and the
+Faulhaber corrections remain closed over progressions --- but no weighting can express \emph{joint}
+conditions across several integers (twin primes, gaps): the per-integer collapse cannot see
+correlations, which is the field's frontier, not this construction's defect. Finally, the system is a
+formula \emph{family} of $\sqrt N$-length evaluations, not a fixed-length closed form; the obstruction
+to further compression is the standard one, that the exact fluctuations carry the zeta spectrum.
+
+\section*{Disclosure of AI use}
+
+In accordance with publisher policies on the use of artificial intelligence, the author discloses the
+following. This paper was developed in an extensive collaboration with Claude (Anthropic; Claude Fable
+5, accessed through the claude.ai interface, 2026). The direction of the work --- the founding research
+programme of exact moment systems for interval primes, of which this paper is the first --- together
+with all decisions about scope, claims, and submission, are the author's. Within that direction, the
+AI system contributed substantially to the mathematical development and proofs, wrote the verification
+code, drafted and revised the manuscript text, and assisted with literature search; the reason for its
+use was to enable a single non-specialist author to develop, check, and document the material to a
+publishable standard. Every numerical and mathematical claim was subsequently machine-verified by the
+test suite and billion-scale validation reported in Section~6, with the verification code openly
+available in the cited repository \cite{Code}. The author has reviewed the entire manuscript and takes
+full responsibility for its content, including the accuracy of the mathematics and of all references.
+
+\begin{thebibliography}{99}
+\bibitem{Linnik} Yu.~V. Linnik, \emph{The Dispersion Method in Binary Additive Problems}, Amer. Math.
+Soc., Providence, 1963.
+\bibitem{FI} J. Friedlander and H. Iwaniec, \emph{Opera de Cribro}, Amer. Math. Soc. Colloq. Publ.
+57, 2010.
+\bibitem{Riemann} B. Riemann, \"Uber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse,
+\emph{Monatsber. Berlin. Akad.} (1859).
+\bibitem{Edwards} H.~M. Edwards, \emph{Riemann's Zeta Function}, Academic Press, 1974.
+\bibitem{Dirichlet} P.~G.~L. Dirichlet, \"Uber die Bestimmung der mittleren Werthe in der
+Zahlentheorie, \emph{Abh. K\"onigl. Preuss. Akad. Wiss.} (1849), 69--83.
+\bibitem{DR} M. Del\'eglise and J. Rivat, Computing $\pi(x)$: the Meissel, Lehmer, Lagarias, Miller,
+Odlyzko method, \emph{Math. Comp.} \textbf{65} (1996), 235--245.
+\bibitem{Staple} D.~B. Staple, The combinatorial algorithm for computing $\pi(x)$, arXiv:1503.01839
+(2015).
+\bibitem{Orlov} A. Orlov, The combinatorial method to compute the sum of the powers of primes,
+arXiv:2111.15545 (2021).
+\bibitem{Lucy} Lucy\_Hedgehog, post in the Project Euler Problem 10 discussion thread (2013).
+\bibitem{HW} G.~H. Hardy and E.~M. Wright, \emph{An Introduction to the Theory of Numbers}, 6th ed.,
+Oxford Univ. Press, 2008.
+\bibitem{McKenzie} N. McKenzie, Computing the prime counting function with Linnik's identity,
+manuscript (2011), available at \texttt{https://www.primecounting.com}.
+\bibitem{Companion} C. Gribble, Certified exact sums of primes over dyadic intervals via a ladder
+of generalized factorials, companion manuscript (2026). % TODO: replace with arXiv ID once posted.
+\bibitem{Code} C. Gribble, Reference implementations accompanying this paper and \cite{Companion},
+code repository (2026), \texttt{https://github.com/USERNAME/REPO}. % TODO: fill in repository URL.
+\end{thebibliography}
+
+\end{document}

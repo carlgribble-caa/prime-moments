@@ -1,0 +1,315 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newcommand{\li}{\operatorname{li}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\title{Certified exact sums of primes over dyadic intervals\\ via a ladder of generalized factorials}
+\author{Carl Gribble\thanks{Draft v0.1, companion to \emph{Prime counts and prime sums from multiplication tables: a
+self-similar formula system}~\cite{Companion} (same author). Developed in collaboration with Claude
+(Anthropic); all numerical claims were machine-verified as described in Section~5. Responsibility for the content rests with the author.
+A full disclosure of AI use appears at the end of the paper.}}
+\date{August 2026 --- draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For an integer $m \ge 8$ let $S(m) = \sum_{m < p \le 2m} p$, the sum over primes in the dyadic window
+$(m, 2m]$. We construct a ladder of generalized factorials
+$A_j(2m) = \prod_{i \le 2m} i^{\,Q_j(i)}$ whose integer exponent sequences
+$Q_j(i) = m^j\,T_j\!\big(\tfrac{2i-3m}{m}\big)$ are Chebyshev polynomials rescaled to take integer values.
+The $p$-adic valuation of $A_j(2m)$ at a prime $p \in (m,2m]$ equals $Q_j(p)$, so each rung of the ladder
+yields one exact linear functional (``moment'') of the interval's primes, computable from the primes
+$\le m$ together with logarithms of the integers $\le 2m$, without identifying any prime inside the
+interval. A near-minimax Chebyshev combination of $K{+}1$ moments approximates $t/\log t$; a rigorous
+sandwich, weighted by the zeroth moment, encloses $S(m)$ in an interval of certified width. Since $S(m)$
+is an integer, a certified width below $1$ determines it exactly. An implementation in $260$-bit interval
+arithmetic certifies $S(10^3) = 200{,}923$, $S(10^4) = 15{,}434{,}795$ and
+$S(10^5) = 1{,}255{,}204{,}276$ using $6$, $8$ and $10$ moments respectively, with empirical window decay
+of roughly one order of magnitude per additional moment, above the proven geometric floor $3 + 2\sqrt{2}$.
+We situate the construction relative to Chebyshev-type identities and to combinatorial prime-summing
+algorithms, and we state its limitations plainly: the method is a certified exact procedure of
+logarithmic description length, not an asymptotically fast algorithm and not a closed form.
+\end{abstract}
+
+\section{Introduction}
+
+Exact computation of prime-counting and prime-summing functions has two established traditions. The
+combinatorial tradition descends from Meissel through Lehmer, Lagarias--Miller--Odlyzko and
+Del\'eglise--Rivat, and computes $\pi(x)$ in $O(x^{2/3}\log^{-2}x)$ time \cite{DR,Staple}; it has been
+extended to the prime power sums $\sum_{p \le x} p^k$ \cite{Orlov}, with widely used implementations
+\cite{primesum}, and has a folklore branch, the $O(x^{3/4})$ dynamic program posted by the Project Euler
+user Lucy\_Hedgehog in 2013, which sums the primes below $x$ ``without finding them all''
+\cite{Lucy}. The analytic tradition, initiated by Lagarias and Odlyzko and realized rigorously by Platt
+\cite{Platt} and B\"uthe \cite{Buthe}, evaluates an explicit formula over zeta zeros to accuracy below
+$\tfrac12$ and rounds; the target being an integer converts a certified approximation into an exact
+determination.
+
+This note describes a third route to exact interval prime sums, elementary in its ingredients and
+certified in its execution. It originates in Chebyshev's 1852 observation \cite{Cheb} that the prime
+factorization of the central binomial coefficient controls $\theta(2m)-\theta(m)$: the primes of
+$(m, 2m]$ appear in $\binom{2m}{m}$ with exponent exactly one. We extend this single exact functional to
+a \emph{ladder} of them. The factorial is the weight-$1$ member of the family
+$\prod_{i \le n} i^{w(i)}$; taking polynomial weights $w$ produces generalized factorials (the weight
+$w(i)=i$ gives the classical hyperfactorial \cite{HypVal1,HypVal2}) whose valuations at large primes are
+$w(p)$ itself. Choosing the weights to be integer-rescaled Chebyshev polynomials yields a numerically
+stable basis of exact moments; approximation theory then converts finitely many moments into a rigorous
+two-sided enclosure of $S(m)$, and the integrality of $S(m)$ converts a sufficiently narrow enclosure
+into the exact value.
+
+We make three claims and two explicit non-claims. Claimed: (i) the exact extraction identities of
+Section~2; (ii) the certified enclosure protocol of Sections~3--4, whose window width contracts at a
+guaranteed geometric rate in the number of moments; (iii) certified computations at three scales,
+verified against sieves. Not claimed: computational superiority over the combinatorial algorithms, which
+remain asymptotically faster; and novelty of the individual ingredients, each of which is classical. To
+the best of our knowledge the assembly --- polynomial-weight generalized factorials organized as a moment
+ladder and closed into a certified integer determination --- has not appeared in the literature, but we
+regard this as a statement about our searches, not a theorem.
+
+\section{The ladder and its exact moments}
+
+Fix an integer $m \ge 8$ and write $n = 2m$, $u(t) = (2t - 3m)/m$, so that $u$ maps $[m, 2m]$ onto
+$[-1, 1]$. Let $T_j$ denote the Chebyshev polynomials of the first kind and define integer sequences
+\[
+Q_j(i) \;=\; m^{j}\, T_j\big(u(i)\big), \qquad j \ge 0 .
+\]
+That $Q_j(i) \in \Z$ for $i \in \Z$ follows from the integer recurrence
+$Q_0 = 1$, $Q_1(i) = 2i - 3m$, $Q_{j+1}(i) = 2(2i-3m)\,Q_j(i) - m^2 Q_{j-1}(i)$.
+Define the $j$-th ladder object
+\[
+A_j(n) \;=\; \prod_{i=1}^{n} i^{\,Q_j(i)} \in \mathbb{Q}_{>0},
+\]
+a rational number in general since $Q_j$ takes both signs; $A_0(n) = n!$ and, for the weight $i$ in
+place of $Q_1$, one obtains the hyperfactorial. The ladder interacts with primes through the following
+elementary facts.
+
+\begin{lemma}[Interval valuations]\label{lem:val}
+Let $p$ be prime with $m < p \le 2m$. Then $v_p\big(A_j(n)\big) = Q_j(p)$.
+\end{lemma}
+
+\begin{proof}
+Since $p > m = n/2$, the only multiple of $p$ in $[1, n]$ is $p$ itself, and $p^2 > n$ for $m \ge 2$.
+Hence $v_p(A_j(n)) = \sum_{i \le n} Q_j(i)\, v_p(i) = Q_j(p)$.
+\end{proof}
+
+\begin{lemma}[Below-interval valuations]\label{lem:corr}
+Let $p \le m$ be prime. Then
+\[
+v_p\big(A_j(n)\big) \;=\; \sum_{a \ge 1,\; p^a \le n} \;\sum_{t=1}^{\lfloor n/p^a \rfloor} Q_j\big(p^a t\big),
+\]
+and each inner sum is an exact integer computable in $O(j^2)$ arithmetic operations from the coefficient
+list of $Q_j$, via the exact power sums
+$\sum_{t=1}^{T} t^r = \sum_{q=1}^{r} q!\, S(r,q) \binom{T+1}{q+1}$,
+where $S(r,q)$ are Stirling numbers of the second kind.
+\end{lemma}
+
+\begin{proof}
+The double sum is $\sum_{i \le n} Q_j(i) v_p(i)$ rewritten by counting, for each prime power $p^a$, the
+indices $i$ it divides. Substituting $i = p^a t$ makes the inner sum a polynomial in $t$ summed over an
+initial segment, which the stated Faulhaber-type identity evaluates exactly.
+\end{proof}
+
+\begin{proposition}[Exact moment extraction]\label{prop:extract}
+For every $j \ge 0$,
+\[
+M_j \;:=\; \sum_{m < p \le 2m} Q_j(p) \log p
+\;=\; \sum_{i=2}^{n} Q_j(i) \log i \;-\; \sum_{p \le m} v_p\big(A_j(n)\big)\, \log p ,
+\]
+with the valuations given exactly by Lemma~\ref{lem:corr}. The right-hand side involves only the primes
+$\le m$ and logarithms of integers $\le n$; no integer in $(m, 2m]$ is examined for primality.
+\end{proposition}
+
+\begin{proof}
+Take logarithms in the prime factorization of $A_j(n)$, split the primes at $m$, and apply
+Lemma~\ref{lem:val} to the upper range. Prime powers $p^a \le n$ with $a \ge 2$ have $p \le \sqrt{n} \le m$
+and are absorbed by Lemma~\ref{lem:corr}.
+\end{proof}
+
+The case $j = 0$ is Chebyshev's identity in the form
+$\theta(2m) - \theta(m) = \log n! - \sum_{p \le m} v_p(n!) \log p$; we write $\mu_0 = M_0$.
+
+\section{From moments to the integer}
+
+Let $f(t) = t/\log t$, so that $f(p)\log p = p$ and
+$S(m) = \sum_{m < p \le 2m} f(p) \log p$. Fix coefficients $a_0, \dots, a_K \in \mathbb{R}$
+(in practice, dyadic rationals), set $P(t) = \sum_{j \le K} a_j T_j(u(t))$ and $g = f - P$ on
+$[m, 2m]$. Since $Q_j(p) = m^j T_j(u(p))$,
+\begin{equation}\label{eq:sandwich}
+S(m) \;=\; \sum_{j=0}^{K} a_j\, m^{-j} M_j \;+\; \sum_{m < p \le 2m} g(p) \log p ,
+\qquad
+\mu_0 \min_{[m,2m]} g \;\le\; \sum_p g(p)\log p \;\le\; \mu_0 \max_{[m,2m]} g ,
+\end{equation}
+the bounds valid because every $\log p > 0$ and $\sum_p \log p = \mu_0$. Thus any choice of $P$ yields a
+rigorous enclosure of $S(m)$ of width $\mu_0 \cdot \mathrm{osc}_{[m,2m]}(g)$; when the certified width is
+below $1$, the unique integer in the enclosure is $S(m)$. Validity does not depend on optimality of $P$,
+which may therefore be designed in floating point and then frozen.
+
+Two elementary bounds certify the range of $g$ from finitely many evaluations.
+
+\begin{lemma}[Curvature bounds]\label{lem:curv}
+For $t \ge e^2$ one has $|f''(t)| = \big|\tfrac{2}{\log t} - 1\big| \big/ (t \log^2 t) \le
+1/(m \log^2 m)$ on $[m, 2m]$, and $\max_{[-1,1]} |T_j''| = j^2(j^2-1)/3$. Consequently
+$\|g''\|_\infty \le B_2 := \frac{1}{m \log^2 m} + \frac{4}{m^2} \sum_{j \le K} |a_j|\,
+\frac{j^2(j^2-1)}{3}$, and for a uniform grid of step $s$ containing both endpoints,
+\[
+\max_{[m,2m]} g \;\le\; \max_i g(t_i) + \tfrac{s^2}{8} B_2 , \qquad
+\min_{[m,2m]} g \;\ge\; \min_i g(t_i) - \tfrac{s^2}{8} B_2 .
+\]
+\end{lemma}
+
+\begin{proposition}[Geometric window decay]\label{prop:rate}
+Let $E_K$ denote the error of best uniform approximation to $f$ on $[m,2m]$ by polynomials of degree
+$K$. Then $\limsup_{K \to \infty} E_K^{1/K} \le 1/\rho_m$, where $\rho_m$ is the Bernstein-ellipse
+parameter of the nearest singularity of $f$ ($t = 1$, where $\log t = 0$) relative to $[m,2m]$; as
+$m \to \infty$, $\rho_m \to 3 + 2\sqrt{2} \approx 5.83$. Hence the achievable certified window
+contracts at least geometrically in $K$, and the number of moments needed to reach width $1$ grows only
+logarithmically in the initial window.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+$f$ is analytic in a neighborhood of $[m, 2m]$ with nearest singularities at $t = 1$ and $t = 0$; under
+$u(t)$ these map near $u = -3$, and $\rho = |u_\ast| + \sqrt{u_\ast^2 - 1}$ with $u_\ast \to -3$. The
+bound is then the classical Bernstein estimate; see \cite[Ch.~8]{Tref}.
+\end{proof}
+
+\begin{remark}
+Empirically the contraction factor observed in Section~5 is close to $10$ per moment, faster than the
+guaranteed floor; the floor alone already gives the logarithmic moment count.
+\end{remark}
+
+\section{Certified implementation}
+
+The protocol has four stages (reference implementation in the code repository \cite{Code}), all
+executed in ball (interval) arithmetic at $260$ bits except where exact integer arithmetic is
+available. (1) \emph{Moments.} The anchor $\sum_{i \le n} Q_j(i) \log i$ is
+accumulated with $Q_j(i)$ produced by the integer recurrence and $\log i$ as an interval; the
+corrections of Lemma~\ref{lem:corr} are exact integers multiplied by interval logarithms. This yields
+enclosures of $M_0, \dots, M_K$ whose observed widths at the scales below were at most
+$4.2 \times 10^{-11}$ (and as small as $10^{-71}$). (2) \emph{Design.} $a_0, \dots, a_K$ are Chebyshev
+interpolation coefficients of $f$ computed in floating point and frozen exactly as dyadics. (3)
+\emph{Residual certification.} $g$ is evaluated in interval arithmetic on an integer grid of step $s$
+and extended to $[m, 2m]$ by Lemma~\ref{lem:curv}. (4) \emph{Assembly.} Equation~\eqref{eq:sandwich} is
+evaluated in interval arithmetic; if $\lceil \text{lo} \rceil = \lfloor \text{hi} \rfloor$, that integer
+is $S(m)$.
+
+The trust base is: correctness of the interval arithmetic library (mpmath), of big-integer arithmetic,
+and of Lemma~\ref{lem:curv}'s two analytic inequalities. All other quantities are enclosed, not
+estimated. Ground-truth verification by segmented sieve, and cross-checks of every moment enclosure
+against direct computation over the (sieved) interval primes, are performed outside the pipeline.
+
+\section{Results}
+
+\begin{center}
+\begin{tabular}{lcccc}
+\hline
+window & moments $K{+}1$ & certified width & $S(m)$ determined & sieve check \\
+\hline
+$(10^3,\,2\cdot 10^3]$ & $6$ & $0.140$ & $200{,}923$ & agrees \\
+$(10^4,\,2\cdot 10^4]$ & $8$ & $0.155$ & $15{,}434{,}795$ & agrees \\
+$(10^5,\,2\cdot 10^5]$ & $10$ & $0.253$ & $1{,}255{,}204{,}276$ & agrees \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent
+Runtimes on commodity hardware were $0.3$, $3.1$ and $31$ seconds respectively, dominated by the
+$O(m)$ interval logarithms of the anchors. Measured window contraction per added moment was $9.7$--$11.4$
+across the three scales. In uncertified experiments the same estimator tracked sieved interval sums with
+relative errors of order $10^{-4}$ at additional scales.
+
+\section{Related identities and remarks}
+
+Rung $0$ is Chebyshev's binomial identity \cite{Cheb}. The weight-$i$ rung is governed by the
+hyperfactorial, whose $p$-adic valuations have an independent literature \cite{HypVal1,HypVal2}; the
+exponent formula involves triangular numbers, and more generally the corrections of
+Lemma~\ref{lem:corr} are the Faulhaber closed forms of iterated-sum sequences, so the ladder may be
+read as a multiplicative avatar of the tower $1, n, \binom{n+1}{2}, \binom{n+2}{3}, \dots$. High-precision
+evaluation of the anchors by Euler--Maclaurin summation leads to the generalized Glaisher--Kinkelin
+(Bendersky--Adamchik) constants, expressible through $\zeta'(-k)$ \cite{Bend,Adam,Coppo}; we have not
+needed this refinement at the scales reported, but it removes the $O(m)$ anchor cost in principle. A
+prime-free variant of the zeroth-order theory is provided by Linnik's identity \cite{Linnik}, which
+expresses $\Lambda(n)/\log n$ as an alternating-harmonic combination of the counts of ordered
+factorizations into parts $\ge 2$, and was developed into prime-counting and prime-power-sum
+algorithms by McKenzie \cite{McKenzie}; the companion paper \cite{Companion} builds this route into a
+uniform weighted formula system which, in exact rational arithmetic, reproduces
+$\sum_{p \le 10^5} p = 454{,}396{,}537$ from divisor-lattice data alone. Finally, the dyadic windows
+$(2^{r-1}, 2^r]$ tile the integers and each contains a prime by Bertrand's postulate, so the pair
+$\big(I(r), F\big)$ with $I(r) = (2^{r-1}, 2^r]$ and $F$ the certified procedure above answers, for
+every $r$, the question ``what is the sum of the primes in the $r$-th dyadic window'' exactly.
+
+\section{Limitations and open questions}
+
+The method as implemented costs $O(m)$ interval logarithms and is therefore not competitive with the
+$O(x^{2/3})$ combinatorial algorithms \cite{DR,Orlov} as a computational tool; its interest is
+methodological. The corrections consume the primes below the window; a fully self-contained variant
+recurses dyadically to a trivial base, or replaces rung $0$ by the Linnik route
+\cite{McKenzie,Companion}. Three questions seem
+worth recording. (1) Can the anchors be evaluated to certified accuracy in time polylogarithmic in $m$
+via the Euler--Maclaurin/$\zeta'(-k)$ route, making the whole pipeline sublinear? (2) Does the ladder
+yield explicit \emph{inequalities} for $S(m)$ of Chebyshev strength but higher order --- bounds rather
+than computations --- that the combinatorial algorithms do not provide? (3) Is there a principled
+obstruction theorem formalizing the folklore that no fixed-length elementary closed form for $S(m)$
+exists, given that the fluctuating part of $S(m)$ carries the zeta spectrum? We do not know, and we
+would welcome pointers to prior appearances of this construction.
+
+\section*{Disclosure of AI use}
+
+In accordance with publisher policies on the use of artificial intelligence, the author discloses the
+following. This paper was developed in an extensive collaboration with Claude (Anthropic; Claude Fable
+5, accessed through the claude.ai interface, 2026). The direction of the work --- the founding research
+programme of exact moment systems for interval primes, of which this paper is the second --- together
+with all decisions about scope, claims, and submission, are the author's. Within that direction, the
+AI system contributed substantially to the mathematical development and proofs, wrote the verification
+code, drafted and revised the manuscript text, and assisted with literature search; the reason for its
+use was to enable a single non-specialist author to develop, check, and document the material to a
+publishable standard. Every numerical and mathematical claim was subsequently machine-verified by the
+certified computations reported in Section~5, with the verification code openly available in the cited
+repository \cite{Code}. The author has reviewed the entire manuscript and takes full responsibility
+for its content, including the accuracy of the mathematics and of all references.
+
+\begin{thebibliography}{99}
+\bibitem{Cheb} P.~L. Chebyshev, M\'emoire sur les nombres premiers, \emph{J. Math. Pures Appl.}
+\textbf{17} (1852), 366--390.
+\bibitem{DR} M. Del\'eglise and J. Rivat, Computing $\pi(x)$: the Meissel, Lehmer, Lagarias, Miller,
+Odlyzko method, \emph{Math. Comp.} \textbf{65} (1996), 235--245.
+\bibitem{Staple} D.~B. Staple, The combinatorial algorithm for computing $\pi(x)$, arXiv:1503.01839
+(2015).
+\bibitem{Orlov} A. Orlov, The combinatorial method to compute the sum of the powers of primes,
+arXiv:2111.15545 (2021).
+\bibitem{primesum} K. Walisch, \emph{primesum} (software), \texttt{github.com/kimwalisch/primesum}.
+\bibitem{Lucy} Lucy\_Hedgehog, post in the Project Euler Problem 10 discussion thread (2013); see also
+G. Broxey, ``Lucy's Algorithm + Fenwick Trees'' (2023),
+\texttt{https://gbroxey.github.io/blog/2023/04/09/lucy-fenwick.html}.
+\bibitem{Platt} D.~J. Platt, Computing $\pi(x)$ analytically, \emph{Math. Comp.} \textbf{84} (2015),
+1521--1535.
+\bibitem{Buthe} J. B\"uthe, An analytic method for bounding $\psi(x)$, \emph{Math. Comp.} \textbf{87}
+(2018); An improved analytic method for calculating $\pi(x)$, \emph{Manuscripta Math.} \textbf{151}
+(2016), 329--352.
+\bibitem{HypVal1} L. Onnis, On the $p$-adic valuation of a hyperfactorial, arXiv:2109.05616 (2021).
+\bibitem{HypVal2} J.-C. Pain, Bounds on the $p$-adic valuation of the factorial, hyperfactorial and
+superfactorial, arXiv:2408.00353 (2024).
+\bibitem{Bend} L. Bendersky, Sur la fonction gamma g\'en\'eralis\'ee, \emph{Acta Math.} \textbf{61}
+(1933), 263--322.
+\bibitem{Adam} V.~S. Adamchik, Polygamma functions of negative order, \emph{J. Comput. Appl. Math.}
+\textbf{100} (1998), 191--199.
+\bibitem{Coppo} M.-A. Coppo, Generalized Glaisher--Kinkelin constants and Ramanujan summation of
+series, \emph{Res. Number Theory} \textbf{10} (2024), art.~8.
+\bibitem{Linnik} Yu.~V. Linnik, \emph{The Dispersion Method in Binary Additive Problems}, Amer. Math.
+Soc., Providence, 1963.
+\bibitem{Tref} L.~N. Trefethen, \emph{Approximation Theory and Approximation Practice}, SIAM,
+Philadelphia, 2013.
+\bibitem{McKenzie} N. McKenzie, Computing the prime counting function with Linnik's identity,
+manuscript (2011), available at \texttt{https://www.primecounting.com}.
+\bibitem{Companion} C. Gribble, Prime counts and prime sums from multiplication tables: a
+self-similar formula system, companion manuscript (2026). % TODO: replace with arXiv ID once posted.
+\bibitem{Code} C. Gribble, Reference implementations accompanying this paper and \cite{Companion},
+code repository (2026), \texttt{https://github.com/USERNAME/REPO}. % TODO: fill in repository URL.
+\end{thebibliography}
+
+\end{document}

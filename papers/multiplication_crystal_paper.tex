@@ -1,0 +1,724 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\title{The multiplication crystal:\\ dimension, diffraction, and the symmetries of arithmetic}
+\author{Carl Gribble\thanks{Draft v0.1, expository companion to the research papers
+\cite{CompanionI,CompanionII,CompanionIII} (same author). Developed in collaboration with Claude
+(Anthropic); every numerical table in this essay was machine-verified as described in Section~7.
+Responsibility for the content rests with the author. A full disclosure of AI use appears at the end
+of the paper.}}
+\date{August 2026 --- draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The positive integers under multiplication form a crystal: a free structure whose axes are the
+primes, whose points are exponent vectors, and whose one-dimensional shadow --- the numbers in their
+usual order --- is the aperiodic point set that number theory studies. This essay is a guided tour of
+that crystal, conducted with a computer. We compute its dimension and find it fractal: the
+self-similarity of the multiplicative structure forces a Moran equation whose form is $\zeta(s) = 2$,
+with real solution $\rho = 1.728647\ldots$ (Kalm\'ar's exponent), and the total mass of the crystal's
+description tower is verified to follow the law $C y^{\rho}$ to a quarter of a percent at $y = 10^6$.
+We diffract it and find a reciprocal crystal: waves shone on the primes' logarithmic positions
+produce Bragg peaks at the Riemann zeros (verified to $\pm 0.005$ from a sieve to $2\times 10^5$),
+while, in the converse experiment of Landau's 1912 theorem, waves built from $300$ zeros ring at the
+primes and prime powers of a window and at nothing else. Finally we chart its symmetries: maximally
+symmetric as a bare crystal (every permutation of the prime axes is an automorphism), perfectly rigid
+as arithmetic (the automorphism group of $(\mathbb{N}, +, \times)$ is trivial), with the sizes
+$\log 2, \log 3, \log 5, \ldots$ acting as the symmetry-breaking field between the two. The surviving
+symmetries are named and, where possible, measured: scale invariance; the congruence point groups and
+their $2016$ fine structure (consecutive primes repel in their last digits: $16.3\%$ of pairs against
+a naive $25\%$, measured to $10^7$); the hidden Galois symmetry with the primes as its census; the
+exact mirror symmetry of the reciprocal crystal (verified to $10^{-22}$); and its unitary statistical
+symmetry class (one near-collision among $499$ zero spacings where structureless randomness predicts
+a hundred). In this language the Riemann Hypothesis is a confinement statement: the diffraction
+pattern, provably symmetric about its mirror, is conjectured to lie on it. A final comparative section
+rebuilds every chapter in Weil's mirror universe $\mathbb{F}_q[t]$, where the axis lengths are
+quantized, and finds each aperiodic pathology replaced by an exactness --- closed-form prime counts,
+integer dimension, a Mertens function that is identically zero, and a Riemann Hypothesis that is a
+theorem, machine-verified here on an elliptic curve at $428$ primes --- isolating the
+incommensurability of the lengths $\log p$ as the single source of the integers' difficulty. A closing analysis
+localizes the source once more: by Ostrowski's theorem the incommensurability lives at the unique
+archimedean place, and, fused with the absence of Frobenius, traces to one dial --- characteristic
+zero. A final experimental section
+builds a weld laboratory and a skeleton-null scanner (first light: the consecutive-residue repulsion
+rediscovered unprompted; zero new candidates), demonstrates a six-stage scan-to-theorem pipeline on
+the $\ell$-adic depth law of $p-1$, and names the programme's organizing claim as the two-skeleton
+conjecture: the crystal's detectable order is its congruence skeleton and its spectral skeleton, and
+nothing else. Nothing in this essay is
+new mathematics; every theorem is attributed. What is offered is the tour, its organizing thesis ---
+number theory as the physics of a broken crystal symmetry --- and the machine demonstrations, which
+anyone can rerun.
+\end{abstract}
+
+\section{A plane of ones}
+
+Begin where arithmetic began: with pebbles. A number is a collection of ones, and the Greeks read
+multiplication geometrically --- a product of two numbers is a rectangle of ones, a product of three
+a box, and Euclid's \emph{Elements} speaks of plane numbers and solid numbers accordingly
+\cite{Euclid}. In this picture a prime is a \emph{linear number}: a quantity of ones that can form
+only a line, never a proper rectangle. The multiplication table is the catalogue of all rectangles,
+and the primes are the row counts missing from its interior.
+
+The research companions to this essay take that picture seriously as a computational instrument. The
+first \cite{CompanionI} turns the de-duplication of the multiplication table into an exact,
+prime-free formula system for prime counts and prime sums; the second \cite{CompanionII} builds
+certified measuring instruments --- generalized factorials --- that weigh the primes in a window
+using only the primes below it; the third \cite{CompanionIII} proves that such measurements determine
+the primes individually, and prices the determination in bits. This essay is the view from above:
+what single object have those papers been probing, and what is its geometry?
+
+\section{The crystal and its shadow}
+
+Unique factorization is a coordinate statement. Write $n = 2^{a_1} 3^{a_2} 5^{a_3} \cdots$ and the
+number $n$ becomes the integer vector $(a_1, a_2, a_3, \ldots)$; multiplication of numbers becomes
+addition of vectors. The positive integers under multiplication are therefore a \emph{lattice} --- a
+crystal --- of infinite rank, one axis per prime, the numbers themselves its points. We will call it
+the multiplication crystal. Two features deserve immediate notice. First, the primes are not special
+points of the crystal; they are its \emph{axes}. Second, the crystal is free: no relations bind the
+axes, which is unique factorization restated.
+
+The numbers as we meet them --- ordered by size on a line --- are a one-dimensional shadow of this
+crystal. The projection is the logarithm: $\log n = a_1 \log 2 + a_2 \log 3 + \cdots$, a linear
+functional on the exponent lattice with weights $\log p$. The image is an aperiodic point set: the
+gaps $\log(n{+}1) - \log n$ shrink irregularly, and no finite pattern repeats. But the disorder is an
+artifact of projection. The weights $\log 2, \log 3, \log 5, \ldots$ share no common measure --- a
+rational relation among them would exhibit a nontrivial product of primes equal to $1$ --- so the
+projection throws a perfectly regular infinite-dimensional crystal onto a line at incommensurable
+angles. Point sets produced this way are the mathematical models of \emph{quasicrystals}: aperiodic
+to the eye, crystalline in origin, and recognizable by their diffraction, to which we will return. A
+typical point of the shadow at height $n$ engages about $\log\log n$ of the crystal's axes
+\cite{HardyRamanujan}; the primes are the points engaging exactly one --- flattest in the crystal,
+and, as positions on the line, the least predictable.
+
+\section{The dimension of the tower}
+
+The crystal is exactly self-similar: multiplying every point by $d$ maps the structure into itself,
+for every $d \ge 2$. (This one-way family of translations is what powers the recursions of
+\cite{CompanionI}, whose regions at scale $y$ decompose into copies at scales $y/d$.) Self-similar
+structures have a canonical dimension, computed by Moran's principle: if a set is built from copies
+of itself at scales $r_1, r_2, \ldots$, its similarity dimension is the exponent $s$ with
+$\sum_i r_i^{\,s} = 1$. For the multiplication crystal the ratios are $1/d$ for every $d \ge 2$, and
+Moran's equation becomes
+\[
+\sum_{d \ge 2} \frac{1}{d^{\,s}} \;=\; 1, \qquad\text{that is,}\qquad \boxed{\;\zeta(s) = 2\;.}
+\]
+The zeta function, which will reappear below as the crystal's diffraction apparatus, enters first as
+its \emph{dimension formula}. The real solution is
+\[
+\rho \;=\; 1.728647238998\ldots
+\]
+
+What does this non-integer dimension measure? Not the shadow, and not a single layer of the
+description space of \cite{CompanionI} --- layer $k$ (ordered products of $k$ factors $\ge 2$) has
+generating function $(\zeta(s)-1)^k$, whose pole at $s = 1$ has order exactly $k$, an integer
+dimension for each layer, verified numerically in our runs to four decimals. The fractal exponent
+governs the \emph{whole tower at once}: the total number $G(y)$ of factorization-descriptions of all
+numbers up to $y$, every box in every layer, whose generating function is the geometric series
+$\sum_k (\zeta - 1)^k = 1/(2 - \zeta(s))$. Stacking the integer-dimensional layers moves the
+rightmost singularity from $s = 1$ out to $s = \rho$: the tower's dimension is where the layer series
+diverges. This is a classical theorem of Kalm\'ar \cite{Kalmar}: $G(y) \sim C y^{\rho}$ with
+$C = -1/(\rho\, \zeta'(\rho)) = 0.3181736\ldots$; the Moran reading --- $\rho$ as the similarity
+dimension of the multiplication crystal --- is, we believe, the right way to see \emph{why} the
+equation is $\zeta(s) = 2$. The machine's verdict, from a sieve of all ordered factorizations to one
+million:
+
+\begin{center}
+\begin{tabular}{rrrr}
+\hline
+$y$ & $G(y)$ (boxes in the tower) & $C y^{\rho}$ & ratio \\
+\hline
+$10^3$ & $48{,}614$ & $4.882 \times 10^4$ & $0.9958$ \\
+$10^4$ & $2{,}602{,}393$ & $2.614 \times 10^6$ & $0.9957$ \\
+$10^5$ & $139{,}804{,}054$ & $1.399 \times 10^8$ & $0.9991$ \\
+$10^6$ & $7{,}509{,}428{,}756$ & $7.491 \times 10^9$ & $1.0024$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent The measured slope over the last decade is $1.7301$ against $\rho = 1.7286$. Two features
+of the table repay attention. First, the crystal genuinely is fractal: seven and a half billion boxes
+march to a non-integer power law. Second, the ratio column does not converge monotonically; it
+\emph{breathes} around $1$. The breathing is structure, not noise: the equation $\zeta(s) = 2$ has
+non-real solutions as well, and in the theory of complex dimensions of self-similar structures
+\cite{LapidusBook} such roots contribute log-periodic oscillations to the counting --- indeed
+possessing non-real dimensions is that theory's \emph{definition} of fractality. Because the
+crystal's similarity ratios $1/d$ have incommensurable logarithms, it is a non-lattice self-similar
+structure in Lapidus's sense, and its complex dimensions are aperiodic. The same theory walks
+directly back to the deepest open problem: by a theorem of Lapidus and Maier \cite{LapidusMaier}, the
+inverse spectral problem for fractal strings --- ``can one hear the dimension?'' --- is solvable in
+dimension $D$ exactly when $\zeta$ has no zeros on the line $\mathrm{Re}\, s = D$, so the Riemann
+Hypothesis is equivalent to audibility in every dimension but $\tfrac12$.
+
+A final calibration of how completely the complex plane reorganizes the crystal's bookkeeping. In the
+real world, counting the layer-$2$ region to $y = 10^5$ means visiting $966{,}751$ lattice points one
+by one. In the complex world the same information is stored at a single interior point: a numerical
+contour integral around a circle of radius $0.4$ centred at $s = 1$ --- sampling $\zeta$ at a few
+dozen complex values, nowhere near the lattice --- returns $966{,}735.679\ldots$, agreeing with the
+theoretical residue to twenty decimal places and missing the true count by $15.3$ out of nearly a
+million. The bulk lives at the pole; the leftover is the music.
+
+\section{The diffraction pattern}
+
+Quasicrystals are identified in the laboratory by diffraction: shine waves on an aperiodic point set,
+and hidden crystalline order announces itself as sharp Bragg peaks. The multiplication crystal's
+shadow can be diffracted in both directions, and both experiments succeed.
+
+\emph{Primes ring at zeros.} Take the prime powers up to $N = 2 \times 10^5$ at their logarithmic
+positions, weighted as in the Chebyshev function, and scan the exponential sum
+$\sum_{n \le N} \Lambda(n)\, n^{-1/2 - it}$ across frequencies $t$. The raw scan is dominated by the
+smooth bulk term --- the pole's contribution, whose truncation ripple (spacing $2\pi/\log N$) is a
+convincing impostor --- and the first lesson of the experiment is that the loudest structure in raw
+data is usually the instrument. Subtract the bulk, and the true peaks emerge:
+
+\begin{center}
+\begin{tabular}{cccc}
+\hline
+peak located at $t$ & Riemann zero $\gamma$ & discrepancy \\
+\hline
+$14.140$ & $14.134725$ & $0.005$ \\
+$21.010$ & $21.022040$ & $0.012$ \\
+$25.035$ & $25.010858$ & $0.024$ \\
+$30.380$ & $30.424876$ & $0.045$ \\
+$32.950$ & $32.935062$ & $0.015$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent A sieve to $200{,}000$ and a wave scan recover the first five zeros of the zeta function to
+within hundredths. The diffraction pattern of the primes is the zeros.
+
+\emph{Zeros ring at primes.} The converse is a theorem of Landau from 1912 \cite{LandauZeros}: for
+fixed $x > 1$, $\sum_{0 < \gamma \le T} x^{\rho}$ grows like $-(T/2\pi)\Lambda(x)$ --- it spikes
+exactly when $x$ is a prime power, with amplitude proportional to $\log p$, and stays bounded
+otherwise. With the first $300$ zeros ($T = 541.85$) and the detector normalized so that its limit is
+$\Lambda(x)$, a scan of the integers $30$ to $60$ gives: every prime lit, at close to its true
+$\log p$ (e.g.\ $53$ rang at $3.90$ against $\log 53 = 3.97$); the prime powers lit at the overtone
+amplitudes ($49 = 7^2$ at $1.64$ against $\log 7 = 1.95$; $32 = 2^5$ faint but audible at $0.27$
+against $\log 2 = 0.69$); and every composite silent, the loudest reaching $0.02$. The separation was
+clean, with no exceptions. The prime powers' reduced amplitudes $\tfrac1k \log p$ are precisely the
+``dust'' of the companion system \cite{CompanionI}, here made audible as the overtone series of the
+prime tones.
+
+For a true lattice, the statement ``the Fourier transform of the point set is again a point set'' is
+Poisson summation. For the multiplication crystal's shadow, it is the Riemann--Weil explicit formula:
+primes and zeros are each other's diffraction patterns, an observation Dyson made pointedly when he
+proposed classifying quasicrystals as a road toward the Riemann Hypothesis \cite{Dyson}.
+
+\section{The symmetries}
+
+A crystallographer's first question about any crystal is its symmetry group, and here the crystal
+delivers its deepest surprise: it is simultaneously the most symmetric object in elementary
+mathematics and the least, and the distance between those two facts is a fair definition of number
+theory.
+
+\emph{Translations.} The crystal slides into itself under multiplication by every $d \ge 2$ --- but
+only forward: division exits the positive integers. As it stands, the crystal is a semigroup crystal,
+translatable one way; completing it to the positive rationals restores the full translation lattice
+of infinite rank.
+
+\emph{Maximal symmetry of the bare crystal.} Since $(\mathbb{N}, \times)$ is free on the primes, any
+permutation of the primes extends to an automorphism, and these are all of them: the automorphism
+group of the bare multiplication crystal is the full symmetric group on its axes. Multiplicatively,
+nothing distinguishes $2$ from $3$: the map exchanging them inside every factorization preserves all
+products. The bare crystal has no favorite directions at all.
+
+\emph{Rigidity of arithmetic.} Now restore addition. The additive structure $(\mathbb{N}, +)$ is
+generated by $1$, so its only automorphism is the identity; \emph{a fortiori} the automorphism group
+of full arithmetic $(\mathbb{N}, +, \times)$ is trivial. Arithmetic is perfectly rigid. Welding a
+maximally symmetric structure to a born-rigid one, along the enumeration of the primes by size, kills
+every symmetry --- and the weld is the object of study. In the language of physics, the sizes
+$\log 2, \log 3, \log 5, \ldots$ --- the incommensurable lengths that scrambled the shadow in
+Section~2 --- are a \emph{symmetry-breaking field}, and the phenomena of the primes are the pattern
+of the breaking. (The same field, incidentally, breaks music: $3^{12} \ne 2^{19}$ by the Pythagorean
+comma of $1.4\%$, which is why no piano can be tuned perfectly. The untunability of pianos and the
+irregularity of primes are one incommensurability.)
+
+\emph{Surviving symmetry I: scale.} The crystal's natural measure $dx/x$ is exactly
+dilation-invariant, and its spectrum under its own scaling symmetry --- the dilation frequencies that
+resonate --- is the set of zeros: the diffraction experiments of Section~4 were representation theory
+of the scale symmetry.
+
+\emph{Surviving symmetry II: the congruence point groups.} On every clock $q$, the reduced residues
+form the finite abelian group $(\mathbb{Z}/q)^{\times}$; the crystal's points distribute evenly over
+it, and so, by Dirichlet's theorem \cite{Dirichlet}, do the primes. These finite groups play the role
+of the point group, their characters --- waves on finite dials --- its irreducible representations;
+all clocks assemble into the profinite point group at infinity, which by the Kronecker--Weber theorem
+is precisely the symmetry group of the maximal abelian extension of the rationals \cite{Lang}. The
+symmetry is exact only in the limit; at finite range it carries celebrated fine structure. Chebyshev
+observed in $1853$ that the class $3 \bmod 4$ leads the race more often than not, a bias whose
+logarithmic distribution Rubinstein and Sarnak determined, under natural hypotheses, on exactly the
+phase torus the crystal hides \cite{RubinsteinSarnak}. And in $2016$ Lemke Oliver and Soundararajan
+discovered, by counting, that \emph{consecutive} primes repel in their residues \cite{LOS}. Our own
+census of the primes to $10^7$, by last digit of consecutive pairs:
+
+\begin{center}
+\begin{tabular}{c|cccc}
+ & $\to 1$ & $\to 3$ & $\to 7$ & $\to 9$ \\
+\hline
+$1$ & $17.04\%$ & $31.08\%$ & $32.10\%$ & $19.77\%$ \\
+$3$ & $23.16\%$ & $15.60\%$ & $29.27\%$ & $31.97\%$ \\
+$7$ & $25.65\%$ & $27.55\%$ & $15.60\%$ & $31.20\%$ \\
+$9$ & $34.12\%$ & $25.83\%$ & $23.07\%$ & $16.97\%$ \\
+\end{tabular}
+\end{center}
+
+\noindent Same-digit pairs total $16.30\%$ against the naive $25\%$. The point-group symmetry is
+exact for single primes and visibly broken for pairs: symmetry of the parts, fine structure of the
+correlations.
+
+\emph{Surviving symmetry III: the hidden Galois census.} Extending the number system recovers the
+symmetries that rigidity forbids. Every prime acquires a symmetry label --- its Frobenius --- in the
+Galois group of any extension, and Chebotarev's density theorem \cite{Lang} says the primes visit the
+labels with perfect fairness: the primes are an exact census of the hidden symmetry group of
+arithmetic. The harmonic analysis of that group is the Langlands program, which lies beyond this
+essay; the point here is only where it sits on the crystallographic map: it is the representation
+theory of the symmetries that survive extension.
+
+\emph{Surviving symmetry IV: the mirror.} The reciprocal crystal --- the zeros --- possesses one
+exact, proven symmetry: Riemann's functional equation \cite{Riemann}, $\xi(s) = \xi(1-s)$, a mirror
+through the critical line. Machine check: at $s = 0.3 + 7.2i$,
+$|\xi(s) - \xi(1-s)| = 3.6 \times 10^{-22}$ against $|\xi(s)| = 0.142$. In this chapter's language
+the Riemann Hypothesis is a \emph{confinement} statement: the diffraction pattern, provably symmetric
+about its mirror, is conjectured to lie \emph{on} it.
+
+\emph{Surviving symmetry V: the statistical symmetry class.} Beyond exact symmetries, the reciprocal
+crystal has a statistical one. Montgomery's pair-correlation discovery \cite{Montgomery}, confirmed
+at scale by Odlyzko \cite{Odlyzko}, is that the zeros space themselves like the eigenvalues of large
+random unitary matrices --- the GUE law, whose signature is quadratic repulsion of near-collisions.
+Our test on the first $500$ zeros, spacings unfolded by the local density:
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+spacing bin & observed & GUE & Poisson \\
+\hline
+$[0, 0.25)$ & $0.006$ & $0.016$ & $0.221$ \\
+$[0.25, 0.5)$ & $0.062$ & $0.096$ & $0.172$ \\
+$[0.5, 1)$ & $0.487$ & $0.421$ & $0.239$ \\
+$[1, 1.5)$ & $0.343$ & $0.341$ & $0.145$ \\
+$[1.5, 2)$ & $0.100$ & $0.108$ & $0.088$ \\
+$[2, \infty)$ & $0.002$ & $0.017$ & $0.135$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent The smallest of $499$ normalized spacings is $0.236$; structureless (Poisson) points would
+put about a hundred spacings below that value, and we observe one. The spectrum repels. In the
+classification of Katz and Sarnak \cite{KatzSarnak} --- proven in the function-field universe,
+conjectural in ours --- each zeta-like crystal carries a symmetry \emph{type} drawn from the
+classical compact groups, and the multiplication crystal's type is unitary.
+
+\section{The mirror: the crystal with quantized lengths}
+
+Every difficulty met above condensed, on inspection, to one property: the crystal's axis lengths
+$\log 2, \log 3, \log 5, \ldots$ share no common measure. There is a companion universe in which that
+single property is switched off. In Weil's Rosetta stone --- the celebrated analogy, set out in his
+1940 letter \cite{Krieger}, between number fields and function fields --- the role of the integers is
+played by the monic polynomials over a finite field $\mathbb{F}_q$, the role of the primes by the
+irreducible ones, and the crystal is built by the \emph{identical} free construction. The one change
+is the size map: $|f| = q^{\deg f}$, so every axis length is an integer multiple of the quantum
+$\log q$. The crystal becomes lattice rather than aperiodic, and the prediction of this essay's
+thesis is stark: every aperiodic pathology of the integers should become an exactness. The machine's
+verdict, chapter by chapter, over $\mathbb{F}_2[t]$:
+
+\begin{center}\small
+\begin{tabular}{p{0.20\textwidth} p{0.36\textwidth} p{0.36\textwidth}}
+\hline
+object & the integers & the mirror $\mathbb{F}_2[t]$ (verified) \\
+\hline
+prime count & no closed form; fluctuations tied to the zeros & exact:
+$\tfrac1n \sum_{d \mid n} \mu(d)\, q^{n/d}$ (Gauss \cite{LidlNiederreiter}); verified to degree
+$14$ \\
+layer counts & the Piltz divisor problems; error exponents open since $1849$ & exact binomials
+$q^n \binom{n-1}{k-1}$; verified for $k \le 6$, $n \le 12$ \\
+layer birth & dimension $k$ opens at $2^k$ & at size $q^k$ (same law; both exact) \\
+tower dimension & $\rho = 1.7286\ldots$, fractal; ratios breathe aperiodically & exactly
+$1 + \log 2/\log q = 2$; tower mass $= 2^{2n-1}$ \emph{identically}, verified to $n = 14$ \\
+complex dimensions & aperiodic (non-lattice self-similar) & exact periodic comb, period
+$2\pi/\log q$ \\
+M\"obius / Mertens & random walk; RH $\Leftrightarrow$ square-root size & identically zero in every
+degree $\ge 2$; verified to degree $10$ \\
+zeros & conjectured on the critical line & on $|\alpha| = \sqrt{q}$ by theorem
+(Hasse--Weil \cite{Hasse, Weil49}); verified for $y^2 = x^3 + x + 1$ at all $428$ good primes
+$\le 3000$, tightest approach $0.9917$ of the bound \\
+spectral statistics & GUE, conjectural \cite{Montgomery, Odlyzko} & Sato--Tate, a theorem
+\cite{SatoTate}; $428$ angles match the semicircle to $\sim 1\%$ per bin \\
+rigidity & $\mathrm{Aut}(\mathbb{N}, +, \times) = 1$: arithmetic admits no symmetry & non-rigid:
+$t \mapsto at + b$ are automorphisms; $t \mapsto t{+}1$ verified to permute the irreducibles of
+every degree \\
+point group & Dirichlet's theorem, with biases & effectively exact: degree $6$ splits
+$3$--$3$--$3$ mod $t^2 + t + 1$ \\
+the additive weld & the $abc$ conjecture, open & the Mason--Stothers theorem
+\cite{MasonStothers} \\
+symmetry-breaking field & $\log p$ incommensurable & $\deg \cdot \log q$ quantized --- \emph{the measurable difference} \\
+\hline
+\end{tabular}
+\end{center}
+
+Two rows carry the section's meaning. The last row is the thesis made checkable: the two universes
+share the crystal and differ in nothing but the arithmetic of the sizes, and every left-column
+mystery sits opposite a right-column exactness. And the rigidity row explains \emph{why} the mirror
+is solvable. The mirror's arithmetic possesses symmetries that ours provably lacks --- substitutions,
+and above all the Frobenius --- and Weil's proof of the mirror's Riemann Hypothesis \cite{Weil49}
+uses the Frobenius as the operator whose eigenvalues \emph{are} the zeros. The Hilbert--P\'olya dream
+is not a dream there; it is the proof. The operator exists because the arithmetic has a symmetry for
+it to be the operator of; our universe's rigidity is not a curiosity of the symmetry chapter but a
+candidate explanation for a century of impasse. The function-field zeta function is Artin's
+\cite{Artin}; the elliptic case of its Riemann Hypothesis is Hasse's \cite{Hasse}; the machine's role
+here is only to watch the theorem work --- and to note, at one prime, the bound holding by less than
+one percent: what our universe conjectures, the mirror enforces to the wire. A vertical verification completes
+the picture: over $\mathbb{F}_5$ the same curve's two zeros
+$\alpha, \bar\alpha = (-3 \pm i\sqrt{11})/2$ --- read off from a nine-point base count, and lying
+on the circle $|\alpha| = \sqrt5$ by the exact identity $(9 + 11)/4 = 5$ --- predict the exact
+number of points over every extension field, verified by brute force through $\mathbb{F}_{5^7}$
+($78{,}633$ points among $78{,}125$ elements): seven exact predictions from two zeros, the Hasse
+bound holding at every level, and the normalized traces equal to $|\cos n\theta|$ for the single
+angle $\theta$ of the zero --- the mirror's explicit formula as one sustained tone, where ours
+requires an infinite orchestra.
+
+The ontological verdict this section was built to deliver: a prime is an irreducible element of a
+free crystal, and \emph{that} is not mysterious --- the mirror dispatches it in closed form. A number
+is a crystal point together with a size. The two universes differ only in the size map, and with it
+goes everything: closed form versus none, integer dimension versus fractal breathing, periodic music
+versus aperiodic, silence versus random walk, theorem versus conjecture. The mystery of the primes is
+not the algebra of the atoms. It is the arithmetic of their lengths.
+
+That verdict can be sharpened twice, and the sharpened form is this essay's final thesis. First, the
+incommensurability has an \emph{address}. By Ostrowski's theorem \cite{Ostrowski}, every absolute
+value on the rationals is either $p$-adic --- and every one of those is quantized, taking its values
+in the powers of a single prime --- or it is the ordinary archimedean absolute value. Our universe is
+therefore already quantized at all of its places but one, and the lengths $\log p$ are read, and
+found incommensurable, precisely at that one place: the place at infinity, which an entire modern
+field, Arakelov geometry, was built to tame. Second, quantization alone does not buy the mirror's
+theorems: a Beurling system \cite{Beurling, DiamondZhang} with perfectly lattice lengths but
+arbitrary multiplicities has periodic, meromorphic bookkeeping and, in general, neither a Riemann
+Hypothesis nor a prime formula. The mirror's miracles require its second gift, the Frobenius --- the
+symmetry $x \mapsto x^q$ that exists only in positive characteristic, powers the closed-form count,
+and serves as the operator in Weil's proof --- and that engine keeps running: the twin-prime and
+Chowla conjectures, frontier problems here, are theorems over $\mathbb{F}_q[t]$
+\cite{SawinShusterman}, proved by the same mechanism of randomness derived from symmetry. And the
+two gifts are one. Characteristic zero forces the archimedean place, hence the incommensurable
+lengths; and characteristic zero forbids the Frobenius, hence the rigidity of the symmetry chapter
+and the missing operator that Hilbert--P\'olya and its physical form \cite{BerryKeating} have
+sought to retrofit. One dial, two absences, every mystery. The thesis, in its final compression: the
+mystery of the primes is characteristic zero; the arithmetic of the lengths is its measurable
+shadow.
+
+\section{Between the universes: de-quantization along the temperament ladder}
+
+The dictionary's last row treats commensurability as a switch. This section turns it into a dial. The
+interpolation territory has two named maps. On the arithmetic side, Beurling's theory of generalized
+primes \cite{Beurling, DiamondZhang} takes an arbitrary system of lengths, builds the free crystal on
+them, and asks how much regularity of the lengths purchases which theorems; the answer is
+quantitative and sharp --- a Prime Number Theorem is bought at error exponent $3/2$ in the integer
+counts, and not below \cite{DMV}. On the dimension side, Lapidus's lattice/non-lattice dichotomy
+\cite{LapidusBook} governs the complex dimensions: rational length-ratios force periodic combs,
+irrational ones force aperiodic quasiperiodic scatter. Our experiment runs the two-length crystal
+$\{2, 2^{p/q}\}$ up the continued-fraction convergents of $\log_2 3$ toward the true incommensurable
+system $\{2, 3\}$ --- and the ladder's rungs come with names, because the denominators of those
+convergents, $2, 5, 12, 41, 53, 306, 665$, are the historical equal temperaments of music:
+twelve-tone equal temperament is the fourth rung, and the $41$- and $53$-tone systems of the
+microtonalists are the fifth and sixth. The de-quantization path from the solvable universe to ours
+runs through the pianos.
+
+\begin{center}\small
+\begin{tabular}{rrccc}
+\hline
+$p/q$ & temperament $q$ & dimension $D_{p/q}$ & comb lines & comb spacing $2\pi q/\ln 2$ \\
+\hline
+$3/2$ & $2$ & $0.811370$ & $3$ & $18.1$ \\
+$8/5$ & $5$ & $0.783910$ & $8$ & $45.3$ \\
+$19/12$ & $12$ & $0.788319$ & $19$ & $108.8$ \\
+$65/41$ & $41$ & $0.787778$ & $65$ & $371.7$ \\
+$84/53$ & $53$ & $0.787900$ & $84$ & $480.4$ \\
+$485/306$ & $306$ & $0.787884$ & $485$ & $2773.8$ \\
+$1054/665$ & $665$ & $0.787885$ & $1054$ & $6028.0$ \\
+$\{2,3\}$ & (aperiodic) & $0.787885$ & --- & --- \\
+\hline
+\end{tabular}
+\end{center}
+
+Three findings. First, the dimensions oscillate onto the non-lattice limit exactly as convergents do
+--- over, under, over --- agreeing with the measured dimension of the $\{2,3\}$ crystal to six
+decimals by the $665$-tone rung. Second, the first rung is exactly solvable: the $\{2, 2^2\}$ tower
+counts are the Fibonacci numbers, verified to satisfy the recurrence and Binet's rounding identity
+for all $n \le 60$ --- lattice music as a single, perfectly periodic, geometrically damped overtone.
+Third, the true system's complex dimensions do what the structure theory of \cite{LapidusBook} says
+non-lattice strings must: a numerical scan to height $50$ finds nine roots (a count consistent with
+the expected density $\ln 3/2\pi$), their real parts wandering across $[-0.988,\, 0.788]$ where every
+rational rung pins them to vertical lines, the real dimension alone at the rightmost, and
+quasi-periodic near-returns creeping back toward it ($+0.681$ at $t \approx 17.6$, $+0.767$ at
+$t \approx 45.6$). Each finite rung is a comb whose period stretches with the temperament;
+aperiodicity is the audible limit of ever-finer pianos.
+
+The horizon, honestly drawn. This charts de-quantization for the self-similar skeleton of a
+two-letter crystal; carrying the full integer crystal --- infinitely many incommensurable lengths,
+welded to addition --- along such a path is the open frontier. At the far endpoint of the mirror,
+where the quantum of length degenerates, live the field-with-one-element programs and the arithmetic
+site of Connes and Consani \cite{ConnesConsani}, in which the crystal's translation semigroup becomes
+a topos whose hidden points are conjectured to house the spectral realization of the zeros. The essay
+ends at that door --- not through it, but knowing, with some precision, which door it is.
+
+\section{The weld laboratory, the scanner, and the two-skeleton conjecture}
+
+The essay so far has read the crystal's known structure. This section reports the experimental
+programme built to ask whether anything \emph{else} is there, and states its organizing claim as a
+conjecture equipped with its own falsification protocol.
+
+\emph{The weld laboratory.} Selecting primes by multiplicative (crystal) criteria and then adding
+them is a controlled experiment on the weld between the two arithmetics. Three modes were run. With
+no selection, the representation counts of even numbers as sums of two primes display the celebrated
+banded structure, and the machine measured its loudest band to four digits: multiples of $3$ receive
+$1.999$ times the representations of their neighbours, against the Hardy--Littlewood singular
+series' prediction of exactly $2$ \cite{HardyLittlewood}; dividing every count by the predicted
+congruence factor collapses $25{,}001$ data points onto one curve with $2.26\%$ spread --- the entire
+visible pattern of prime addition is the congruence skeleton in additive costume. A crystal-neighbour
+mode (safe primes, $p = 2q+1$) shows the mechanism in miniature: the selection leaks a congruence ---
+of the $4{,}324$ safe primes below $10^6$, all but the exception $7$ are $\equiv 2 \bmod 3$, a
+three-line theorem --- and the leak casts an additive shadow: $99.95\%$ of pairwise sums are
+$\equiv 1 \bmod 3$, and exactly one sum in all of mathematics is $\equiv 2 \bmod 3$, namely
+$7 + 7 = 14$. A spectral mode (signs of $a_p$ on the Section~6 curve) returned the predicted null:
+pair-sum label correlation within one standard error of independence. Recursing the neighbour mode
+gives Cunningham chains, whose census below $10^6$ runs $67{,}134$, $5{,}953$, $949$, $109$, $24$,
+$5$ by maximal length \cite{Dickson}, and whose starts obey a congruence \emph{amplifier}: at
+recursion level $j$ each small prime $r$ forbids exactly one residue class mod $r$, the classes
+distinct until the order of $2$ mod $r$ saturates, confining length-$4$ starts to $4$ of the $48$
+coprime residues mod $210$ (machine-verified --- indeed the machine corrected the author's first
+derivation of when the mod-$5$ filter binds). The dual recursion downward, through the factorizations
+of $p-1$, is Pratt's primality certificate \cite{Pratt}, and it is shallow: mean depth $4.7$ and
+maximum $10$ across all $68{,}906$ primes in $[10^5, 10^6]$, the doubly logarithmic height
+established by Ford, Konyagin, and Luca \cite{FKL}.
+
+\emph{The skeleton-null scanner.} To search without a theorem in hand, the programme uses a
+pre-registered protocol: fix a finite battery of crystal-native invariants per prime (layer numbers
+of $p \pm 1$, the Pratt height, the largest-factor slope, the unfolded gap, digit weight, characters)
+and a fixed grid of same-prime and consecutive-prime correlations; take as null model not uniformity
+but the \emph{skeleton} --- shuffles that preserve all congruence-class and density structure; pay
+the multiple-comparison tax in advance (Bonferroni-grade thresholds over $117$ tests); demand
+replication in an untouched holdout half; and audit every survivor up a ladder: instrument artifact,
+mechanical feature entanglement, skeleton-derivable, known theorem, and only then candidate. First
+light returned $69$ survivors, and the audit sorted the entire deck: a mechanical cluster (features
+competing for one integer's size budget); a $2$-adic cluster that was the scanner \emph{finding its
+own bug} (stratification by $p \bmod 30$ is blind to $p \bmod 4$, so the elementary seesaw between
+$v_2(p-1)$ and $v_2(p+1)$ poured through the null); one detrending artifact (binary digit sums
+against coarse size bands); and two genuine detections, both known --- the
+Lemke Oliver--Soundararajan consecutive-residue repulsion \cite{LOS}, rediscovered unprompted at
+$z = -27$ (the positive control passed), and the anticorrelation of consecutive gaps. Candidates:
+zero, the honest harvest of any instrument's first light.
+
+\emph{The extraction pipeline.} From scan to theorem the programme runs six stages: stabilize the
+anomaly across scales; mechanize it with a skeleton-conditioned probabilistic model whose new
+predictions are committed \emph{before} measurement; weaken the statement into the highest provable
+stratum; test it in the mirror; prove and postdict the original readings; then the librarian and the
+adversary. Executed live on the scanner's loudest reading (the $\chi_4$ cluster), the pipeline
+delivered:
+
+\begin{theorem}
+For every prime $\ell$ and every $k \ge 1$, the density of primes $p$ with
+$v_\ell(p-1) = k$ is exactly $\ell^{-k}$, with mass $1 - 1/(\ell - 1)$ at $k = 0$ and mean depth
+$\ell/(\ell-1)^2$. In particular $\mathbb{E}[\,v_2(p-1) \mid p \equiv 3 \bmod 4\,] = 1$ identically
+and $\mathbb{E}[\,v_2(p-1) \mid p \equiv 1 \bmod 4\,] \to 3$.
+\end{theorem}
+
+\noindent The proof is Dirichlet's theorem \cite{Dirichlet} read in the progressions
+$1 \bmod \ell^k$ and telescoped; the factors $\ell - 1$ cancel. Machine verification: the $2$-adic
+law to four decimals at $10^6$ and $10^7$; conditional means $2.9990$ and $1.0000$; the mirror law
+over $\mathbb{F}_2[t]$ at mean $1.984$ against the predicted $2$. The pre-registration discipline
+earned its keep: the committed prediction for the $3$-adic zero mass was $2/3$ (the random-integer
+heuristic) and the measurement returned $0.5002$ --- Dirichlet's $1/2$ --- the programme's third
+machine-corrects-the-author event, surfaced as a discrepancy rather than dissolved into hindsight.
+The corollary (the class gap of $\mathbb{E}[\Omega(p-1)]$ tends to $2$, with the odd parts equalized
+by Halberstam's shifted-prime Erd\H{o}s--Kac theorem \cite{Halberstam}) postdicts the scan's loudest
+$z$ in sign and size. The librarian's verdict, applied without mercy: the theorem is classical
+folklore. The pipeline's honest certificate for this input reads \emph{known result, freshly
+mechanized, one operator error caught, one instrument reading explained} --- which is what
+extraction usually yields, and should.
+
+\emph{The conjecture.} The programme's organizing claim, assembled from every experiment above, is a
+property of the crystal:
+
+\begin{conjecture}[the two-skeleton conjecture]
+The multiplication crystal's detectable order consists of its congruence skeleton and its spectral
+skeleton, and nothing else. Operationally: for every finite pre-registered battery of crystal-native
+invariants of the primes, every correlation detectable at any scale is derivable from the congruence
+data together with the Hardy--Littlewood correlations; conditioned on these, all remaining
+statistics agree with the skeleton-null ensemble. In particular the scanner of this section, run at
+any scale with adequately resolved nulls, asymptotically returns no survivor beyond the
+skeleton-derivable ones.
+\end{conjecture}
+
+\noindent Honesty about ownership and status. The mathematical content of this conjecture is not
+new: its random side is the circle of conjectures of Chowla \cite{Chowla} and Sarnak \cite{Sarnak}
+--- orthogonality of the M\"obius signal to all low-complexity observers --- and its structured side
+is Hardy--Littlewood \cite{HardyLittlewood}; celebrated cases are theorems in the mirror
+\cite{SawinShusterman}. What the crystal formulation adds is operational: the conjecture names its
+own experiment. Every audited null strengthens it; a single robust, replicated,
+skeleton-inexplicable survivor refutes it; and by the undecidability of the weld it can never be
+exhaustively verified --- the crystal guarantees its own inexhaustibility. The instrument, the
+protocol, and the pipeline are in the repository \cite{Code}, standing equipment awaiting
+candidates.
+
+\section{What the crystal cannot tell us}
+
+An essay conducted at this altitude owes the reader its ledger. Every load-bearing statement above is
+a named theorem or a named conjecture: the geometric arithmetic is Euclid's; the dimension law is
+Kalm\'ar's; complex dimensions and the audibility criterion are Lapidus's and Lapidus--Maier's; the
+resonance of zeros at primes is Landau's; the explicit-formula duality is Riemann's and Weil's, its
+quasicrystal reading Dyson's; equidistribution over the point group is Dirichlet's, over the Galois
+labels Chebotarev's; the consecutive-prime bias is Lemke Oliver's and Soundararajan's; the race
+analysis is Rubinstein's and Sarnak's; the mirror is Riemann's; the statistics are Montgomery's and
+Odlyzko's, the symmetry types Katz's and Sarnak's. The mirror dictionary is Weil's
+Rosetta stone \cite{Krieger}, its entries due to Gauss, Artin, Hasse, Weil, Stothers and Mason, and
+the provers of Sato--Tate. The interpolation
+territory of the final section is Beurling's and Lapidus's. The localization of the final thesis rests on Ostrowski's classification of the places and on the
+function-field theorems of Sawin and Shusterman. The weld laboratory's asymptotic is Hardy and Littlewood's; the certificates are Pratt's; the
+tree heights are Ford's, Konyagin's, and Luca's; the chain admissibility is Dickson's; the
+shifted-prime input is Halberstam's; and the content of the two-skeleton conjecture is the
+Chowla--Sarnak circle. What is offered as new is the organization --- the
+crystal as a single object; Moran's reading of Kalm\'ar's equation; number theory as the physics of a
+broken crystal symmetry --- together with the machine demonstrations, and the connection to the
+companion papers, whose certified instruments \cite{CompanionII, CompanionIII} are, in this
+language, \emph{certified crystallography}: exact, provable measurements of the point group and its
+breaking, as opposed to the statistical observations tabulated here.
+
+Two epistemic warnings, both earned in our own computations. First, serene data prove nothing on this
+terrain: the strict form of square-root cancellation suggested by every computation ever performed
+(Mertens's conjecture) is false, disproved through the zeros without any explicit counterexample
+being known. Second, the modern structure-versus-randomness programme sharpens the crystal's
+limits: its detectable order appears to consist of exactly the two skeletons measured in this essay
+--- the congruence skeleton and the spectral skeleton --- and the conjectures of Chowla and Sarnak
+assert that beyond them no low-complexity detector finds anything at all \cite{Sarnak}. The preceding
+section states this as the two-skeleton conjecture and equips it with a falsification protocol. The crystal
+shows us its symmetries and their breaking; what remains after both are subtracted is, on the field's
+considered bet, genuine noise.
+
+\section{Reproducibility}
+
+Every table in this essay is produced by a single documented script (\texttt{crystal\_demos.py}) in
+the code repository \cite{Code}, using only integer sieves, the mpmath and numpy libraries, and, for
+Section~4, the first $300$--$500$ zeros of $\zeta$ computed on the spot. Total runtime is a few minutes on ordinary hardware; the mirror computations (irreducible sieves
+over $\mathbb{F}_2[t]$, the elliptic-curve point counts, and the Sato--Tate histogram) add under a
+minute. The weld laboratory, the recursion census, the skeleton-null scanner, and the extraction run add
+a few minutes more. The companion papers' exact systems \cite{CompanionI, CompanionII,
+CompanionIII} were re-used where indicated and were themselves machine-verified as described there.
+
+\section*{Coda}
+
+The multiplication crystal is maximally symmetric; arithmetic is perfectly rigid; and everything we
+call the mystery of the primes lives between those two sentences, in the breaking of the one symmetry
+by the sizes of the axes. The primes are the census of the symmetry that hides; the zeros are the
+spectrum of the symmetry that survives; and the oldest unsolved problem in mathematics is the
+conjecture that the spectrum keeps to its mirror. Compressed once more: the
+crystal is universal; characteristic zero is ours --- one dial, two absences, every mystery. A reader who takes away one image should take the
+plane of ones: everything in this essay --- the fractal tower, the Bragg peaks, the broken point
+group --- was already latent in the child's picture of numbers as pebbles arranged in rows, looked at
+long enough, and counted honestly.
+
+\section*{Disclosure of AI use}
+
+In accordance with publisher policies on the use of artificial intelligence, the author discloses the
+following. This essay was developed in an extensive collaboration with Claude (Anthropic; Claude
+Fable 5, accessed through the claude.ai interface, 2026). The direction of the work --- the founding
+intuition that arithmetic should be read as the geometry of a space of ones, pursued through a
+sequence of the author's conjectures about projection, dimension, and symmetry --- is the author's,
+together with all decisions about scope, claims, and submission. Within that direction, the AI system
+identified the classical results corresponding to those conjectures and their attributions, wrote and
+ran the verification code producing every numerical table, and drafted and revised the text; the
+reason for its use was to enable a single non-specialist author to develop, check, and document the
+material to a publishable standard. The author has reviewed the entire manuscript and takes full
+responsibility for its content, including the accuracy of the mathematics and of all references.
+
+\begin{thebibliography}{99}
+\bibitem{CompanionI} C. Gribble, Prime counts and prime sums from multiplication tables: a
+self-similar formula system, companion manuscript (2026). % TODO: replace with arXiv ID once posted.
+\bibitem{CompanionII} C. Gribble, Certified exact sums of primes over dyadic intervals via a ladder
+of generalized factorials, companion manuscript (2026). % TODO: replace with arXiv ID once posted.
+\bibitem{CompanionIII} C. Gribble, Recovering the primes in a dyadic interval from exact moments: two
+constructive routes and an obstruction theorem, companion manuscript (2026). % TODO: replace with
+% arXiv ID once posted.
+\bibitem{Euclid} T. L. Heath, \emph{The Thirteen Books of Euclid's Elements}, Dover, New York, 1956.
+\bibitem{HardyRamanujan} G. H. Hardy and S. Ramanujan, The normal number of prime factors of a number
+$n$, \emph{Quart. J. Math.} \textbf{48} (1917), 76--92.
+\bibitem{Kalmar} L. Kalm\'ar, \"Uber die mittlere Anzahl der Produktdarstellungen der Zahlen,
+\emph{Acta Litt. Sci. Szeged} \textbf{5} (1931), 95--107.
+\bibitem{LapidusBook} M. L. Lapidus and M. van Frankenhuijsen, \emph{Fractal Geometry, Complex
+Dimensions and Zeta Functions}, 2nd ed., Springer, New York, 2013.
+\bibitem{LapidusMaier} M. L. Lapidus and H. Maier, The Riemann hypothesis and inverse spectral
+problems for fractal strings, \emph{J. London Math. Soc.} (2) \textbf{52} (1995), 15--34.
+\bibitem{LandauZeros} E. Landau, \"Uber die Nullstellen der Zetafunktion, \emph{Math. Ann.}
+\textbf{71} (1912), 548--564.
+\bibitem{Dyson} F. Dyson, Birds and frogs, \emph{Notices Amer. Math. Soc.} \textbf{56} (2009),
+212--223.
+\bibitem{Riemann} B. Riemann, \"Uber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse,
+\emph{Monatsber. K\"onigl. Preuss. Akad. Wiss. Berlin} (1859), 671--680.
+\bibitem{Dirichlet} P. G. L. Dirichlet, Beweis des Satzes, dass jede unbegrenzte arithmetische
+Progression \ldots unendlich viele Primzahlen enth\"alt, \emph{Abhandl. K\"onigl. Preuss. Akad.
+Wiss.} (1837), 45--81.
+\bibitem{Lang} S. Lang, \emph{Algebraic Number Theory}, 2nd ed., Springer, New York, 1994.
+\bibitem{RubinsteinSarnak} M. Rubinstein and P. Sarnak, Chebyshev's bias, \emph{Experiment. Math.}
+\textbf{3} (1994), 173--197.
+\bibitem{LOS} R. J. Lemke Oliver and K. Soundararajan, Unexpected biases in the distribution of
+consecutive primes, \emph{Proc. Natl. Acad. Sci. USA} \textbf{113} (2016), E4446--E4454.
+\bibitem{Montgomery} H. L. Montgomery, The pair correlation of zeros of the zeta function, in
+\emph{Analytic Number Theory}, Proc. Sympos. Pure Math. XXIV, Amer. Math. Soc., 1973, 181--193.
+\bibitem{Odlyzko} A. M. Odlyzko, On the distribution of spacings between zeros of the zeta function,
+\emph{Math. Comp.} \textbf{48} (1987), 273--308.
+\bibitem{KatzSarnak} N. M. Katz and P. Sarnak, Zeroes of zeta functions and symmetry, \emph{Bull.
+Amer. Math. Soc.} \textbf{36} (1999), 1--26.
+\bibitem{Sarnak} P. Sarnak, Three lectures on the M\"obius function, randomness and dynamics, lecture
+notes, Institute for Advanced Study, 2011.
+\bibitem{Krieger} M. H. Krieger, A 1940 letter of Andr\'e Weil on analogy in mathematics,
+\emph{Notices Amer. Math. Soc.} \textbf{52} (2005), 334--341.
+\bibitem{LidlNiederreiter} R. Lidl and H. Niederreiter, \emph{Finite Fields}, 2nd ed., Cambridge
+Univ. Press, 1997.
+\bibitem{Artin} E. Artin, Quadratische K\"orper im Gebiete der h\"oheren Kongruenzen I, II,
+\emph{Math. Z.} \textbf{19} (1924), 153--246.
+\bibitem{Hasse} H. Hasse, Zur Theorie der abstrakten elliptischen Funktionenk\"orper III, \emph{J.
+Reine Angew. Math.} \textbf{175} (1936), 193--208.
+\bibitem{Weil49} A. Weil, Numbers of solutions of equations in finite fields, \emph{Bull. Amer.
+Math. Soc.} \textbf{55} (1949), 497--508.
+\bibitem{MasonStothers} W. W. Stothers, Polynomial identities and hauptmoduln, \emph{Quart. J.
+Math. Oxford} \textbf{32} (1981), 289--305; R. C. Mason, \emph{Diophantine Equations over Function
+Fields}, Cambridge Univ. Press, 1984.
+\bibitem{SatoTate} T. Barnet-Lamb, D. Geraghty, M. Harris, and R. Taylor, A family of Calabi--Yau
+varieties and potential automorphy II, \emph{Publ. Res. Inst. Math. Sci.} \textbf{47} (2011),
+29--98.
+\bibitem{Beurling} A. Beurling, Analyse de la loi asymptotique de la distribution des nombres
+premiers g\'en\'eralis\'es I, \emph{Acta Math.} \textbf{68} (1937), 255--291.
+\bibitem{DiamondZhang} H. G. Diamond and W.-B. Zhang, \emph{Beurling Generalized Numbers}, Math.
+Surveys Monogr. 213, Amer. Math. Soc., Providence, 2016.
+\bibitem{DMV} H. G. Diamond, H. L. Montgomery, and U. M. A. Vorhauer, Beurling primes with large
+oscillation, \emph{Math. Ann.} \textbf{334} (2006), 1--36.
+\bibitem{ConnesConsani} A. Connes and C. Consani, The arithmetic site, \emph{C. R. Math. Acad. Sci.
+Paris} \textbf{352} (2014), 971--975.
+\bibitem{Ostrowski} A. Ostrowski, \"Uber einige L\"osungen der Funktionalgleichung
+$\varphi(x)\varphi(y) = \varphi(xy)$, \emph{Acta Math.} \textbf{41} (1916), 271--284.
+\bibitem{SawinShusterman} W. Sawin and M. Shusterman, On the Chowla and twin primes conjectures over
+$\mathbb{F}_q[T]$, \emph{Ann. of Math.} \textbf{196} (2022), 457--506.
+\bibitem{BerryKeating} M. V. Berry and J. P. Keating, The Riemann zeros and eigenvalue asymptotics,
+\emph{SIAM Rev.} \textbf{41} (1999), 236--266.
+\bibitem{HardyLittlewood} G. H. Hardy and J. E. Littlewood, Some problems of `Partitio
+numerorum' III: On the expression of a number as a sum of primes, \emph{Acta Math.} \textbf{44}
+(1923), 1--70.
+\bibitem{Chowla} S. Chowla, \emph{The Riemann Hypothesis and Hilbert's Tenth Problem}, Gordon and
+Breach, New York, 1965.
+\bibitem{Pratt} V. R. Pratt, Every prime has a succinct certificate, \emph{SIAM J. Comput.}
+\textbf{4} (1975), 214--220.
+\bibitem{FKL} K. Ford, S. V. Konyagin, and F. Luca, Prime chains and Pratt trees, \emph{Geom.
+Funct. Anal.} \textbf{20} (2010), 1231--1258.
+\bibitem{Halberstam} H. Halberstam, On the distribution of additive number-theoretic functions III,
+\emph{J. London Math. Soc.} \textbf{31} (1956), 14--27.
+\bibitem{Dickson} L. E. Dickson, A new extension of Dirichlet's theorem on prime numbers,
+\emph{Messenger of Math.} \textbf{33} (1904), 155--161.
+\bibitem{Code} C. Gribble, Reference implementations accompanying this essay and its companions, code
+repository (2026), \texttt{https://github.com/USERNAME/REPO}. % TODO: fill in repository URL.
+\end{thebibliography}
+
+\end{document}

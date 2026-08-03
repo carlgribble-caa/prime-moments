@@ -1,0 +1,344 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\title{Recovering the primes in a dyadic interval from exact moments:\\
+two constructive routes and an obstruction theorem}
+\author{Carl Gribble\thanks{Draft v0.1, third in a series, companion to \emph{Prime counts and prime
+sums from multiplication tables: a self-similar formula system}~\cite{CompanionI} and \emph{Certified
+exact sums of primes over dyadic intervals via a ladder of generalized factorials}~\cite{CompanionII}
+(same author). Developed in collaboration with Claude (Anthropic); all numerical claims were
+machine-verified as described in Section~6. Responsibility for the content rests with the author. A full disclosure of AI use appears at the end of the paper.}}
+\date{August 2026 --- draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The companion papers supply two exact ``moment channels'' for the primes in a dyadic window
+$W = (m, 2m]$: integer power sums $\sum_{p \in W} p^k$, produced from divisor-lattice data with no
+prime input at any stage \cite{CompanionI}, and weighted logarithmic moments
+$\sum_{p \in W} Q(p)\log p$ for polynomial $Q$, produced from the primes below the window
+\cite{CompanionII}. This note closes the circle: the channels determine the window primes
+\emph{individually}. Two constructive decoders are given. From the $r{+}1$ integer moments of weights
+$0, \dots, r$ ($r$ the number of window primes), Newton's identities yield the elementary symmetric
+functions --- integers --- and the primes are read off as the integer roots of the resulting monic
+polynomial; the entire pipeline contains no prime input and no primality test. Alternatively, a
+\emph{single} real moment, Chebyshev's 1852 functional $\theta(2m) - \theta(m)$, known to
+$\lceil \log_2 N \rceil + 2$ bits where $N = \prod_{p \in W} p \le 4^m$, determines $N$ by rounding,
+and the window primes are exactly the divisors of $N$ in $W$, found by trial division; a Prony decoder
+using $2r$ moments at intermediate precision interpolates between the two. Against these, an
+obstruction: any scheme whose decoder receives at most $D$ bits determined by the configuration, and
+which correctly decodes \emph{every} $r$-subset of the window's integers, has
+$D \ge \log_2 \binom{m}{r} - 1 \asymp m \log\log m / \log m$. Hence no uniform scheme of bounded
+description decodes the dyadic windows for all $m$, while the companion's certified determination of
+the single aggregate $S(m)$ from $O(\log m)$ moments sits near the same floor read at entropy
+$O(\log m)$: one pigeonhole, two entropy scales. The model restriction --- decoders blind to number
+theory except through the delivered bits --- is discussed and shown to be necessary; Mills- and
+Willans-type formulas live outside it, as does the sieve. All constructions are machine-verified: at
+$m = 500$ both routes recover the $73$ primes of $(500, 1000]$ exactly, the second from a single
+$695$-bit real number.
+\end{abstract}
+
+\section{Introduction}
+
+The first companion paper \cite{CompanionI} develops Linnik's identity \cite{Linnik}, in the
+computational tradition opened by McKenzie \cite{McKenzie}, into a formula system $S_j$ returning the
+exact integers $\sum_{p \le y} p^{\,j}$ for every weight $j \ge 0$ from divisor-lattice data alone: no
+prime, primality test, or sieve appears at any depth. The second \cite{CompanionII} constructs
+generalized factorials $\prod_{i \le 2m} i^{\,Q(i)}$ with polynomial exponents whose valuations at
+window primes are $Q(p)$, so that each polynomial weight yields one exact functional
+$\sum_{m < p \le 2m} Q(p) \log p$, computable from the primes $\le m$; finitely many such moments,
+closed by a certified sandwich and the integrality of the target, determine the aggregate
+$S(m) = \sum_{m < p \le 2m} p$ exactly.
+
+Both constructions output \emph{aggregates}. It is natural to ask how much of the window the moment
+channels actually know. The answer, made precise here, is: everything. Finitely many moments determine
+the window primes individually, by elementary and fully constructive decoders (Theorems~\ref{thm:int}
+and \ref{thm:prod}, Remark~\ref{rem:prony}), and the cost of this determination --- counted in
+delivered bits --- can be compared against an unconditional pigeonhole floor
+(Theorem~\ref{thm:lb}). The comparison quantifies, in a restricted but honestly delimited model, the
+folklore assertion that no short formula produces the primes: the floor grows like
+$m \log\log m / \log m$ for the full window, while a single aggregate of entropy $O(\log m)$ admits the
+companion's $O(\log m)$-moment certified determination. The impossibility of a bounded-length exact
+scheme for the primes themselves and the possibility of a log-length certified procedure for one sum
+are the same counting argument read at two entropy scales.
+
+We state claims and non-claims plainly. Claimed: (i) the exact recovery theorems and their machine
+verification; (ii) the bit-budget lower bound, with an explicit discussion of the model restriction
+that makes it true; (iii) the accounting that unifies the three regimes (one exact real moment; many
+finite-precision moments; too few bits). Not claimed: computational advantage --- both decoders cost
+far more than sieving the window, by design, since the object of study is the information channel, not
+the running time; and no unrestricted impossibility --- the primes are computable from $m$, so any
+lower bound must, and ours does, constrain the decoder's access rather than the universe.
+
+\section{The two moment channels}
+
+Fix $m \ge 8$, write $W = (m, 2m]$, let $P(W)$ be the set of primes in $W$ and $r = |P(W)|$ (so
+$r \ge 1$ by Bertrand's postulate). The channels of \cite{CompanionI, CompanionII} deliver:
+\begin{align}
+\text{(integer channel)} \qquad & s_k \;=\; \sum_{p \in P(W)} p^{\,k} \;=\; S_k(2m) - S_k(m)
+\;\in\; \mathbb{Z}, \qquad k \ge 0,\label{eq:intch}\\
+\text{(weighted channel)} \qquad & M_Q \;=\; \sum_{p \in P(W)} Q(p)\, \log p, \qquad Q \in \mathbb{Z}[t],
+\label{eq:wch}
+\end{align}
+the first exactly, in integer arithmetic, with no prime input at any stage \cite{CompanionI}; the
+second to any prescribed precision, from the primes $\le m$ together with logarithms of the integers
+$\le 2m$ \cite[Prop.~1]{CompanionII}. The case $Q = 1$ of \eqref{eq:wch} is Chebyshev's identity
+\cite{Cheb} in the form
+$\theta(2m) - \theta(m) = \log\,(2m)! \,-\, \sum_{p \le m} v_p\big((2m)!\big)\log p$, used below. Only the two displayed facts \eqref{eq:intch} and \eqref{eq:wch}, with the stated
+computability provenance, are imported from the companions; every proof in this paper is
+self-contained given those displays.
+
+\section{Route I: integer moments, Newton's identities, integer roots}
+
+\begin{theorem}[Prime-free individual recovery]\label{thm:int}
+Let $r = s_0 = S_0(2m) - S_0(m)$ and let $s_1, \dots, s_r$ be as in \eqref{eq:intch}. Define $e_0 = 1$
+and, recursively,
+\[
+e_k \;=\; \frac{1}{k} \sum_{i=1}^{k} (-1)^{i-1} e_{k-i}\, s_i, \qquad 1 \le k \le r .
+\]
+Then every $e_k$ is an integer,
+\[
+f(x) \;=\; \sum_{k=0}^{r} (-1)^k e_k\, x^{\,r-k} \;=\; \prod_{p \in P(W)} (x - p),
+\]
+and $P(W) = \{\, c \in W \cap \mathbb{Z} : f(c) = 0 \,\}$. The entire pipeline --- moments, recursion,
+and root reading by evaluation at the $m$ integers of $W$ --- consumes no prime and performs no
+primality test; the primes emerge as the integer roots.
+\end{theorem}
+
+\begin{proof}
+The $s_k$ are the power sums of the finite multiset $P(W)$ of distinct integers. Newton's identities
+(see, e.g., \cite[Ch.~I, \S2]{Macdonald}) express the elementary symmetric functions $e_k$ of that
+multiset by exactly the stated recursion; the $e_k$ are symmetric polynomials with integer
+coefficients in integers, hence integers, and the recursion's divisions by $k$ are exact. The monic
+polynomial with those symmetric functions is $\prod_{p}(x - p)$. A monic integer polynomial of degree
+$r$ has at most $r$ integer roots; the $r$ window primes are roots; so the zero set of $f$ in $W$ is
+exactly $P(W)$.
+\end{proof}
+
+The moment count is the smallest for which this decoder is defined: $r$ unknowns, $r$ power sums, plus
+$s_0$ to know $r$. The price is paid in height rather than count: $\log_2 e_k$ grows like
+$k \log_2 m$, so the total delivered data is $\Theta(r^2 \log m)$ bits (Section~7), and the encoder
+must run the companion system at weights up to $r$.
+
+\section{Route II: one real moment, rounding, trial division}
+
+\begin{theorem}[Single-moment recovery]\label{thm:prod}
+Let $N = \prod_{p \in P(W)} p$, so $N \mid \binom{2m}{m}$ and $N \le 4^m$. Put
+$B = \lceil \log_2 N \rceil + 2$ (a priori, $B = 2m + 2$ suffices). Let $\widetilde{M}$ be any real
+number with
+\[
+\bigl|\widetilde{M} - \big(\theta(2m) - \theta(m)\big)\bigr| \;\le\; 2^{-B},
+\]
+for instance the output of the extraction identity of \cite[Prop.~1]{CompanionII} at rung $0$,
+evaluated in interval arithmetic at $B + O(1)$ bits from the primes $\le m$ and the logarithms of the
+integers $\le 2m$. Then $N$ is the unique integer within distance $\tfrac12$ of
+$\exp(\widetilde{M})$, and
+\[
+P(W) \;=\; \{\, c \in W \cap \mathbb{Z} \,:\, c \mid N \,\},
+\]
+recovered by trial division of $N$ by the $m$ integers of the window. No integer in $W$ is tested for
+primality.
+\end{theorem}
+
+\begin{proof}
+$\exp(\theta(2m) - \theta(m)) = N$ exactly, and for $|\delta| \le 2^{-B}$,
+$|N e^{\delta} - N| \le N\, 2^{-B+1} < 2^{\lceil \log_2 N\rceil + 1 - B} = \tfrac12$, so rounding
+recovers $N$; the divisibility $N \mid \binom{2m}{m}$ and the bound $N \le 4^m$ are the central
+binomial facts underlying \cite{Cheb,Erdos}. For the divisor characterization: every $p \in P(W)$ divides
+$N$ and lies in $W$; conversely a composite $c \in W$ has a prime factor $q \le \sqrt{2m} \le m$
+(valid for $m \ge 2$), and $q$ does not divide $N$ since every prime factor of $N$ exceeds $m$; hence
+$c \nmid N$.
+\end{proof}
+
+Theorem~\ref{thm:prod} is the ``internal Willans'' of the moment model: a single real number carries
+the entire window. Two comments calibrate it. First, the information is priced in precision --- the
+one moment must be delivered to $\approx \log_2 N \approx (\theta(2m)-\theta(m))/\log 2$ bits, and
+Section~7 shows this is within a factor $\sim \log m / \log\log m$ of the unconditional floor, making
+rung $0$ at high precision the most bit-efficient constructive decoder we know. Second, information
+and extraction separate: the \emph{exact} real $\theta(2m)-\theta(m)$ determines $P(W)$ outright, but
+generic extraction from $N$ is integer factorization of an $r\log m$-bit number; the window structure
+rescues us, since trial division over $W$ is \emph{complete} --- composites cannot divide $N$ --- so
+no factoring and no primality testing occur.
+
+\begin{remark}[Prony interpolation]\label{rem:prony}
+The weighted channel \eqref{eq:wch} with $2r$ moments recovers $P(W)$ at intermediate precision. With
+$\sigma_k = \sum_p (\log p)\, p^k$ for $0 \le k \le 2r-1$, the Hankel matrix
+$(\sigma_{i+j})_{0 \le i, j \le r-1} = V^{\mathsf T} D V$ is positive definite ($V$ the Vandermonde
+matrix at the distinct primes, $D = \mathrm{diag}(\log p) \succ 0$), and the Prony system
+$\sum_{j=0}^{r-1} c_j \sigma_{i+j} = -\sigma_{r+i}$ returns the coefficients of
+$\prod_p (x - p) \in \mathbb{Z}[x]$, which rounding makes exact at sufficient precision; the roots are
+then read off as in Theorem~\ref{thm:int}. Explicit precision bounds follow from Vandermonde-inverse
+estimates using the gap $|p_i - p_j| \ge 2|i - j|$ between distinct odd primes, but are tedious; we
+record instead the machine datum that at $m = 50$ a working precision of about $160$ bits suffices
+(Section~6). Prony's memoir is \cite{Prony}.
+\end{remark}
+
+\section{The obstruction theorem}
+
+The primes up to $2m$ are computable from the single input $m$; in the unrestricted world their
+description length is $O(\log m)$ and no lower bound is possible. The meaningful question, and the
+rigorous kernel of the no-closed-form folklore, concerns schemes whose decoders learn about the window
+\emph{only through delivered data}. We formalize the channel and count.
+
+\begin{definition}[Uniform scheme]\label{def:scheme}
+Fix $m$ and $1 \le r \le m$. A \emph{$D$-bit uniform scheme} for $(m, r)$ is a pair $(\Phi, \Psi)$
+where $\Phi$ maps each $r$-element subset $S \subseteq W \cap \mathbb{Z}$ to a bit string of length at
+most $D$, and $\Psi(\Phi(S)) = S$ for every such $S$. No constraint is placed on the functions
+themselves: $\Phi$ may be any quantization of any moments, and $\Psi$ any decoder --- but $\Psi$ sees
+only the bits.
+\end{definition}
+
+\begin{theorem}[Bit floor]\label{thm:lb}
+Every $D$-bit uniform scheme for $(m, r)$ satisfies $D \ge \log_2 \binom{m}{r} - 1$. In particular,
+for $r = \pi(2m) - \pi(m) \sim m/\log m$,
+\[
+D \;\ge\; (1 + o(1))\, \frac{m \log_2(e \log m)}{\log m} \;\longrightarrow\; \infty ,
+\]
+so no family of uniform schemes of bounded description length decodes the dyadic windows for all $m$.
+\end{theorem}
+
+\begin{proof}
+$\Psi \circ \Phi = \mathrm{id}$ forces $\Phi$ to be injective on the $\binom{m}{r}$ configurations;
+there are $2^{D+1} - 1$ bit strings of length at most $D$; so $2^{D+1} > \binom{m}{r}$. The
+asymptotic is $\log_2\binom{m}{r} = r \log_2(em/r) + O(\log m)$ with $r \sim m/\log m$.
+\end{proof}
+
+Three glosses carry the theorem's meaning. \emph{(a) The ensemble is the model.} The actual window
+primes are one configuration per $m$; correctness over all $r$-subsets is what excludes decoders with
+number theory built in. Mills's prime-representing function \cite{Mills} is a decoder whose constant
+stores the answers; Willans's formula \cite{Willans} passes unbounded information through the
+evaluation of factorials under a floor; a sieve is a decoder that ignores the channel and recomputes
+from $m$. All three are outside Definition~\ref{def:scheme}, and their exclusion is precisely what
+makes the folklore well-posed rather than false. The decoders of Theorems~\ref{thm:int} and
+\ref{thm:prod} --- Newton's recursion, rounding, trial division --- use no property of the primes
+beyond what the bits assert, are correct on arbitrary configurations of distinct window integers (for
+Theorem~\ref{thm:prod}, arbitrary sets of primes in $W$; for Theorem~\ref{thm:int}, arbitrary distinct
+integers), and hence live inside the model, where their budgets can be compared to the floor.
+\emph{(b) Precision must be charged.} With exact reals even one moment suffices
+(Theorem~\ref{thm:prod}), so a count-only lower bound is impossible; the bit budget $D$ is the honest
+currency, and the count--precision \emph{tradeoff} is the object of study. \emph{(c) Information is
+not extraction.} The floor prices what the bits can distinguish, not the work of deciding; the time
+cost of prime determination is a separate and harder question, on which the elementary
+$\sqrt{x}$-barrier literature \cite{Polymath} is the state of the art.
+
+\section{Machine verification}
+
+A reference implementation (\texttt{prime\_recovery.py} in the code repository \cite{Code}) exercises
+both routes end to end, re-using the companion systems as published. At $m = 500$, so
+$W = (500, 1000]$: the integer channel returned $r = s_0 = 73$ and $s_1, \dots, s_{73}$ with no prime
+input at any stage (the companion system's exactness assertion --- every harmonic combination landing
+on denominator $1$ --- held at all weights up to $73$); Newton's recursion divided exactly at every
+step; the $73$ integer roots of $f$ in $W$ coincide with an independent sieve; and
+$e_{73} = N$, a $695$-bit integer, all in under a second. Independently, rung $0$ evaluated by the
+extraction identity at $1300$-bit working precision, from the primes $\le 500$ and the logarithms of
+the integers $\le 1000$, satisfied $|\exp(\widetilde M) - N| \approx 4 \times 10^{-178}$; rounding
+recovered the same $N$ (the cross-route identity $e_{73} = N$ is itself a check that the two channels
+agree), and trial division over the window returned exactly the $73$ primes, with no primality test
+performed. At $m = 50$, the Prony decoder of Remark~\ref{rem:prony} with $2r = 20$ weighted moments
+recovered the ten primes of $(50, 100]$; a precision scan located the working threshold near $160$
+bits, every rounded coefficient landing within $1/4$ of the integer coefficients of
+$\prod_p (x - p)$. Trust base: big-integer arithmetic, the mpmath library, and Newton's identities;
+nothing else is assumed.
+
+\section{The accounting, the gap, and open questions}
+
+Theorem~\ref{thm:lb} supplies the floor; the constructions supply budgets. At the verified scales:
+
+\begin{center}
+\begin{tabular}{lcccc}
+\hline
+scheme & window & moments & total delivered bits & $\log_2 \binom{m}{r}$ \\
+\hline
+Route I (Thm.~\ref{thm:int}) & $(500, 1000]$ & $74$ & $27{,}128$ & $\approx 296$ \\
+Route II (Thm.~\ref{thm:prod})$^{\dagger}$ & $(500, 1000]$ & $1$ & $697$ & $\approx 296$ \\
+Prony (Rem.~\ref{rem:prony})$^{\dagger}$ & $(50, 100]$ & $20$ & $\approx 3{,}200$ & $\approx 33$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent
+Route I is uniform over arbitrary distinct-integer configurations and so lies fully inside
+Definition~\ref{def:scheme}; its $\times 90$ overpay is the redundancy of the symmetric-function
+encoding, $\Theta(r^2 \log m)$ bits against a floor of $\Theta(r \log\log m)$ --- the price of the
+minimal moment \emph{count}. The daggered schemes are uniform over configurations of window
+\emph{primes} only: over arbitrary integer configurations a single moment cannot even separate ---
+$\{54, 96\}$ and $\{64, 81\}$ share their product --- so the injectivity of rung $0$ on prime
+configurations is itself a unique-factorization fact, and the $697$-against-$296$ comparison bounds
+the overpay of the product encoding \emph{granted} the side information that the configuration is
+prime. That overpay has a clean shape: the product spends $\log_2 p \approx \log_2 m$ bits per prime
+where the floor charges only $\log_2(em/r) \approx \log_2(e \log m)$, a ratio
+$\log m / \log(e\log m)$, about $2.4$ at $m = 500$ and slowly divergent. Rung $0$ at high precision is
+thus the most bit-efficient constructive decoder we know, and it is not optimal.
+
+The unification promised in the introduction is now one sentence. The companion sandwich
+\cite{CompanionII} determines the single aggregate $S(m)$ --- entropy $O(\log m)$ --- from
+$K + 1 \asymp \log m$ moments of bounded precision, a polylogarithmic budget sitting near the floor at
+the small entropy scale; Theorem~\ref{thm:lb} shows the full window --- entropy
+$\asymp m \log\log m/\log m$ --- admits no bounded budget at all. The impossibility of a short exact
+scheme for the primes themselves and the existence of a log-length certified procedure for one sum are
+the same pigeonhole read at two entropy scales, which is, we believe, the honest rigorous shape of the
+no-closed-form folklore: no more, and no less.
+
+Three questions remain open. (1) \emph{The gap.} Does any scheme, uniform over prime configurations,
+decode the window from $(1 + o(1)) \log_2\binom{m}{r}$ bits? We conjecture that smooth
+polynomial-weight moments cannot close the $\log m / \log\log m$ factor, and we know no encoding that
+does. (2) \emph{Adaptivity.} Extending Theorem~\ref{thm:lb} to schemes that adaptively query real
+functionals at bounded precision is routine by the same counting applied to the transcript; a version
+with \emph{analog} noise models may be less routine. (3) \emph{Time.} The floor prices
+distinguishability, not work: whether the primes of $W$ can be \emph{found} substantially faster than
+the elementary square-root barrier is the standing problem of \cite{Polymath}, and nothing here
+touches it. The three regimes --- one exact real moment (information complete, extraction hard); many
+finite-precision moments (constructive, overpaying); too few bits (impossible) --- delimit what the
+moment channels of \cite{CompanionI, CompanionII} can and cannot know, and close the circle this
+series of notes set out to draw.
+
+\section*{Disclosure of AI use}
+
+In accordance with publisher policies on the use of artificial intelligence, the author discloses the
+following. This paper was developed in an extensive collaboration with Claude (Anthropic; Claude Fable
+5, accessed through the claude.ai interface, 2026). The direction of the work --- the founding research
+programme of exact moment systems for interval primes, of which this paper is the capstone --- together
+with all decisions about scope, claims, and submission, are the author's. Within that direction, the
+AI system contributed substantially to the mathematical development and proofs, wrote the verification
+code, drafted and revised the manuscript text, and assisted with literature search; the reason for its
+use was to enable a single non-specialist author to develop, check, and document the material to a
+publishable standard. Every numerical and mathematical claim was subsequently machine-verified by
+the recovery experiments reported in Section~6, with the verification code openly available in the cited repository \cite{Code}. The author has
+reviewed the entire manuscript and takes full responsibility for its content, including the accuracy
+of the mathematics and of all references.
+
+\begin{thebibliography}{99}
+\bibitem{CompanionI} C. Gribble, Prime counts and prime sums from multiplication tables: a
+self-similar formula system, companion manuscript (2026). % TODO: replace with arXiv ID once posted.
+\bibitem{CompanionII} C. Gribble, Certified exact sums of primes over dyadic intervals via a ladder
+of generalized factorials, companion manuscript (2026). % TODO: replace with arXiv ID once posted.
+\bibitem{Linnik} Yu.~V. Linnik, \emph{The Dispersion Method in Binary Additive Problems}, Amer. Math.
+Soc., Providence, 1963.
+\bibitem{McKenzie} N. McKenzie, Computing the prime counting function with Linnik's identity,
+manuscript (2011), available at \texttt{https://www.primecounting.com}.
+\bibitem{Cheb} P.~L. Chebyshev, M\'emoire sur les nombres premiers, \emph{J. Math. Pures Appl.}
+\textbf{17} (1852), 366--390.
+\bibitem{Macdonald} I.~G. Macdonald, \emph{Symmetric Functions and Hall Polynomials}, 2nd ed., Oxford
+Univ. Press, 1995.
+\bibitem{Prony} R. de Prony, Essai exp\'erimental et analytique, \emph{J. \'Ecole Polytechnique}
+\textbf{1} (1795), 24--76.
+\bibitem{Mills} W.~H. Mills, A prime-representing function, \emph{Bull. Amer. Math. Soc.} \textbf{53}
+(1947), 604.
+\bibitem{Willans} C.~P. Willans, On formulae for the $n$th prime number, \emph{Math. Gaz.} \textbf{48}
+(1964), 413--415.
+\bibitem{Erdos} P. Erd\H{o}s, Beweis eines Satzes von Tschebyschef, \emph{Acta Litt. Sci. Szeged}
+\textbf{5} (1932), 194--198.
+\bibitem{Polymath} D.~H.~J. Polymath, Deterministic methods to find primes, \emph{Math. Comp.}
+\textbf{81} (2012); arXiv:1009.3956.
+\bibitem{Code} C. Gribble, Reference implementations accompanying this paper and its companions,
+code repository (2026), \texttt{https://github.com/USERNAME/REPO}. % TODO: fill in repository URL.
+\end{thebibliography}
+
+\end{document}

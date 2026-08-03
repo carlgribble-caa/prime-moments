@@ -1,0 +1,23 @@
+# Superseded working copies — canonical sources live in papers/ and code/
+# (kept on disk for reference; provenance documented in papers/PROVENANCE.md)
+Draft II/
+Finals/
+The Crystal/
+/u_space_prime_formula_paper.tex
+/prime_ladder_paper.tex
+/prime_sum_formula.py
+/certified_snap.py
+
+# Downloads and build artifacts
+*.zip
+*.pdf
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+__pycache__/
+*.pyc
+
+# Local tooling
+.claude/
