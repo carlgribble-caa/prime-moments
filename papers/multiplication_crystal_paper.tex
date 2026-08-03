@@ -165,6 +165,21 @@ inverse spectral problem for fractal strings --- ``can one hear the dimension?''
 dimension $D$ exactly when $\zeta$ has no zeros on the line $\mathrm{Re}\, s = D$, so the Riemann
 Hypothesis is equivalent to audibility in every dimension but $\tfrac12$.
 
+The tower has a thermodynamic reading, and the reading has a name. Interpret $e^{-s}$ as a
+Boltzmann factor: the free crystal is Julia's \emph{primon gas} \cite{Julia}, one bosonic mode per
+axis at energy $\log p$, with partition function $\zeta(\beta)$ --- divergent at $\beta = 1$, the
+free gas's Hagedorn point. The tower --- every ordered factorization a distinct microstate --- is
+an interacting gas with partition function $G(\beta) = 1/(2 - \zeta(\beta))$, and its Hagedorn
+point \emph{is the crystal's dimension}: divergence at $\zeta(\beta) = 2$, that is, at
+$\beta = \rho = 1.7286\ldots$, driven by the $y^{\rho}$ density of states of Kalm\'ar's law ---
+the tower gas boils while the free gas is still cold. The machine's check
+(\texttt{primon\_gas.py}): thermal sums built from the exact factorization counts $K(n)$ to
+$10^6$ match $1/(2-\zeta(\beta))$ with deficits equal to the $y^{\rho}$ density-law prediction to
+ratios $0.999$--$1.000$ at every tested temperature, and the pole's residue
+$1/(-\zeta'(\rho)) = 0.5500\ldots$ equals $\rho\, C$ with $C = 0.3181736\ldots$ the constant of
+the table above: the counting law and the thermodynamics are one identity read twice. The
+dimension of the crystal is the temperature at which its description tower boils.
+
 A final calibration of how completely the complex plane reorganizes the crystal's bookkeeping. In the
 real world, counting the layer-$2$ region to $y = 10^5$ means visiting $966{,}751$ lattice points one
 by one. In the complex world the same information is stored at a single interior point: a numerical
@@ -307,6 +322,25 @@ Section~2 --- are a \emph{symmetry-breaking field}, and the phenomena of the pri
 of the breaking. (The same field, incidentally, breaks music: $3^{12} \ne 2^{19}$ by the Pythagorean
 comma of $1.4\%$, which is why no piano can be tuned perfectly. The untunability of pianos and the
 irregularity of primes are one incommensurability.)
+
+That language is not a metaphor on loan; it is a theorem with an address. Bost and Connes
+\cite{BostConnes} built a quantum statistical-mechanical system out of exactly this chapter's
+objects --- the crystal's translation semigroup acting on the congruence phases of the point
+group --- whose partition function is $\zeta(\beta)$ and whose equilibrium (KMS) states undergo a
+phase transition at $\beta = 1$: below it the equilibrium state is unique and symmetric; above
+it, the extremal equilibrium states are permuted freely and transitively by the profinite point
+group $\mathrm{Gal}(\mathbb{Q}^{\mathrm{ab}}/\mathbb{Q})$ of the clocks above --- spontaneous
+symmetry breaking in the physicists' exact sense, with the symmetry that breaks being this
+chapter's. The machine can watch the order parameter (\texttt{primon\_gas.py}): the Gibbs
+expectation of the phase observable $e^{2\pi i/3}$, computed exactly through Hurwitz zeta
+functions, is the frozen root of unity at $\beta = \infty$ (modulus $1.000000$, and at clock $5$
+the four frozen states are the four primitive fifth roots, visibly permuted by the Galois group),
+then falls as the system heats --- $0.893$ at $\beta = 4$, $0.529$ at $2$, $0.141$ at $1.2$,
+$0.0076$ at $1.01$ --- condensing to zero at the transition: the congruence phases melt into the
+unique symmetric state. The classification theorems are Bost's and Connes's, not ours; what the
+crystal adds is the observation that their system is this chapter written as operator algebra ---
+the symmetry that breaks is the point group, the field that breaks it is the spectrum of lengths,
+and the transition sits at the pole of the free gas.
 
 \emph{Surviving symmetry I: scale.} The crystal's natural measure $dx/x$ is exactly
 dilation-invariant, and its spectrum under its own scaling symmetry --- the dilation frequencies that
@@ -664,7 +698,8 @@ resonance of zeros at primes is Landau's; the explicit-formula duality is Rieman
 quasicrystal reading Dyson's; equidistribution over the point group is Dirichlet's, over the Galois
 labels Chebotarev's; the consecutive-prime bias is Lemke Oliver's and Soundararajan's; the race
 analysis is Rubinstein's and Sarnak's; the mirror is Riemann's; the statistics are Montgomery's and
-Odlyzko's, the symmetry types Katz's and Sarnak's. The mirror dictionary is Weil's
+Odlyzko's, the symmetry types Katz's and Sarnak's; the primon gas is Julia's, and the phase
+transition with its Galois symmetry is Bost's and Connes's. The mirror dictionary is Weil's
 Rosetta stone \cite{Krieger}, its entries due to Gauss, Artin, Hasse, Weil, Stothers and Mason, and
 the provers of Sato--Tate. The interpolation
 territory of the final section is Beurling's and Lapidus's. The localization of the final thesis rests on Ostrowski's classification of the places and on the
@@ -695,8 +730,10 @@ Every table in this essay is produced by a single documented script (\texttt{cry
 the code repository \cite{Code}, using only integer sieves, the mpmath and numpy libraries, and, for
 Section~4, the first $300$--$500$ zeros of $\zeta$ computed on the spot. Total runtime is a few minutes on ordinary hardware; the mirror computations (irreducible sieves
 over $\mathbb{F}_2[t]$, the elliptic-curve point counts, and the Sato--Tate histogram) add under a
-minute. The graph-universe checks of Section~6 (\texttt{graph\_universe.py}) and the
-explicit-formula pairing table of Section~4 (\texttt{diffraction\_pairing.py}) add seconds each. The weld laboratory, the recursion census, the skeleton-null scanner, and the extraction run add
+minute. The graph-universe checks of Section~6 (\texttt{graph\_universe.py}), the
+explicit-formula pairing table of Section~4 (\texttt{diffraction\_pairing.py}), and the
+primon-gas and Bost--Connes order-parameter tables of Sections~3 and~5
+(\texttt{primon\_gas.py}) add seconds each. The weld laboratory, the recursion census, the skeleton-null scanner, and the extraction run add
 a few minutes more. The companion papers' exact systems \cite{CompanionI, CompanionII,
 CompanionIII} were re-used where indicated and were themselves machine-verified as described there.
 
@@ -780,6 +817,11 @@ consecutive primes, \emph{Proc. Natl. Acad. Sci. USA} \textbf{113} (2016), E4446
 \emph{Math. Comp.} \textbf{48} (1987), 273--308.
 \bibitem{KatzSarnak} N. M. Katz and P. Sarnak, Zeroes of zeta functions and symmetry, \emph{Bull.
 Amer. Math. Soc.} \textbf{36} (1999), 1--26.
+\bibitem{Julia} B. Julia, Statistical theory of numbers, in \emph{Number Theory and Physics},
+Springer Proc. Phys. 47, Springer, 1990, 276--293.
+\bibitem{BostConnes} J.-B. Bost and A. Connes, Hecke algebras, type III factors and phase
+transitions with spontaneous symmetry breaking in number theory, \emph{Selecta Math.} \textbf{1}
+(1995), 411--457.
 \bibitem{Sarnak} P. Sarnak, Three lectures on the M\"obius function, randomness and dynamics, lecture
 notes, Institute for Advanced Study, 2011.
 \bibitem{Krieger} M. H. Krieger, A 1940 letter of Andr\'e Weil on analogy in mathematics,
