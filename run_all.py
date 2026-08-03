@@ -14,6 +14,7 @@ SCRIPTS = [
     ("Paper 4 - graph universe column (WP9a)", "graph_universe.py"),
     ("Paper 4 - explicit-formula pairing (WP3)", "diffraction_pairing.py"),
     ("Paper 4 - primon gas and Bost-Connes order parameter (WP4)", "primon_gas.py"),
+    ("Paper 4 - logic column decision procedures (WP5)", "logic_column.py"),
     ("Programme Note 2 - formal engine checks", "formal_engine.py"),
 ]
 

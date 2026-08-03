@@ -9,7 +9,7 @@
 \title{The multiplication crystal:\\ dimension, diffraction, and the symmetries of arithmetic}
 \author{Carl Gribble\thanks{Draft v0.1, expository companion to the research papers
 \cite{CompanionI,CompanionII,CompanionIII} (same author). Developed in collaboration with Claude
-(Anthropic); every numerical table in this essay was machine-verified as described in Section~7.
+(Anthropic); every numerical table in this essay was machine-verified as described in Section~10.
 Responsibility for the content rests with the author. A full disclosure of AI use appears at the end
 of the paper.}}
 \date{August 2026 --- draft}
@@ -342,6 +342,27 @@ crystal adds is the observation that their system is this chapter written as ope
 the symmetry that breaks is the point group, the field that breaks it is the spectrum of lengths,
 and the transition sits at the pole of the free gas.
 
+\emph{The logic of the weld.} The weld's wildness is itself a theorem --- three theorems, with
+names. The bare ruler is decidable: Presburger proved in 1929 that the first-order theory of
+$(\mathbb{N}, +)$ admits a decision procedure \cite{Presburger}. The bare crystal is decidable
+too: Skolem proved it in 1930 for $(\mathbb{N}, \times)$ \cite{Skolem}, the modern proof running
+axiswise --- a multiplicative question decomposes along the crystal's axes into ruler questions
+about exponents. The weld is undecidable: G\"odel and Church \cite{Godel, Church} --- and Julia
+Robinson sharpened the point to a knife: addition is definable from multiplication and
+\emph{successor alone} \cite{JRobinson}, so the weld is fatal already at one tick of the ruler.
+The machine walks all three (\texttt{logic\_column.py}): it decides Frobenius representability on
+the ruler and brute force confirms the exact frontiers ($6x + 35y$ misses $169$ last; $20x + 27y$
+misses $493$); it decides $\exists x, y\,(x^2 = 2y^2)$ --- the irrationality of $\sqrt{2}$ ---
+negatively, mechanically, by the parity of a single exponent, a question the bare crystal can
+settle but never ask about $x + 1$; and it verifies Robinson's identity
+$a + b = c \iff S(ac)\,S(bc) = S(c^2\,S(ab))$ (for $c \neq 0$) at all $226{,}981$ triples of a
+finite patch --- the definitional collapse in miniature. Two glosses. First, the logic column
+separates the structures, not the universes: the mirror's weld $(\mathbb{F}_2[t], +, \times)$ is
+undecidable too \cite{RRobinson}; the solvability the mirror enjoys elsewhere in this essay is
+analytic, not logical, and the wildness everywhere is the weld's, not the lengths'. Second, the
+laboratory of Section~8 has already leaned on this fact: the guarantee that no scanner exhausts
+the weld's phenomena is exactly this undecidability, which here acquires its citations.
+
 \emph{Surviving symmetry I: scale.} The crystal's natural measure $dx/x$ is exactly
 dilation-invariant, and its spectrum under its own scaling symmetry --- the dilation frequencies that
 resonate --- is the set of zeros: the diffraction experiments of Section~4 were representation theory
@@ -461,6 +482,9 @@ point group & Dirichlet's theorem, with biases & effectively exact: degree $6$ s
 $3$--$3$--$3$ mod $t^2 + t + 1$ \\
 the additive weld & the $abc$ conjecture, open & the Mason--Stothers theorem
 \cite{MasonStothers} \\
+logic of the weld & $(\mathbb{N},+)$ and $(\mathbb{N},\times)$ decidable (Presburger,
+Skolem); the weld undecidable, already with successor & $(\mathbb{F}_2[t],+,\times)$
+undecidable too (R. Robinson): the wildness is the weld's, not the lengths' \\
 symmetry-breaking field & $\log p$ incommensurable & $\deg \cdot \log q$ quantized --- \emph{the measurable difference} \\
 \hline
 \end{tabular}
@@ -733,7 +757,8 @@ over $\mathbb{F}_2[t]$, the elliptic-curve point counts, and the Sato--Tate hist
 minute. The graph-universe checks of Section~6 (\texttt{graph\_universe.py}), the
 explicit-formula pairing table of Section~4 (\texttt{diffraction\_pairing.py}), and the
 primon-gas and Bost--Connes order-parameter tables of Sections~3 and~5
-(\texttt{primon\_gas.py}) add seconds each. The weld laboratory, the recursion census, the skeleton-null scanner, and the extraction run add
+(\texttt{primon\_gas.py}), and the decision-procedure demonstrations of Section~5
+(\texttt{logic\_column.py}) add seconds each. The weld laboratory, the recursion census, the skeleton-null scanner, and the extraction run add
 a few minutes more. The companion papers' exact systems \cite{CompanionI, CompanionII,
 CompanionIII} were re-used where indicated and were themselves machine-verified as described there.
 
@@ -822,6 +847,19 @@ Springer Proc. Phys. 47, Springer, 1990, 276--293.
 \bibitem{BostConnes} J.-B. Bost and A. Connes, Hecke algebras, type III factors and phase
 transitions with spontaneous symmetry breaking in number theory, \emph{Selecta Math.} \textbf{1}
 (1995), 411--457.
+\bibitem{Presburger} M. Presburger, \"Uber die Vollst\"andigkeit eines gewissen Systems der
+Arithmetik ganzer Zahlen, in welchem die Addition als einzige Operation hervortritt, in
+\emph{Comptes Rendus du I Congr\`es des Math\'ematiciens des Pays Slaves}, Warsaw, 1929, 92--101.
+\bibitem{Skolem} T. Skolem, \"Uber einige Satzfunktionen in der Arithmetik, \emph{Skrifter utgitt
+av Det Norske Videnskaps-Akademi i Oslo} I, no.~7 (1930).
+\bibitem{Godel} K. G\"odel, \"Uber formal unentscheidbare S\"atze der Principia Mathematica und
+verwandter Systeme I, \emph{Monatsh. Math. Phys.} \textbf{38} (1931), 173--198.
+\bibitem{Church} A. Church, An unsolvable problem of elementary number theory, \emph{Amer. J.
+Math.} \textbf{58} (1936), 345--363.
+\bibitem{JRobinson} J. Robinson, Definability and decision problems in arithmetic, \emph{J.
+Symbolic Logic} \textbf{14} (1949), 98--114.
+\bibitem{RRobinson} R.~M. Robinson, Undecidable rings, \emph{Trans. Amer. Math. Soc.}
+\textbf{70} (1951), 137--159.
 \bibitem{Sarnak} P. Sarnak, Three lectures on the M\"obius function, randomness and dynamics, lecture
 notes, Institute for Advanced Study, 2011.
 \bibitem{Krieger} M. H. Krieger, A 1940 letter of Andr\'e Weil on analogy in mathematics,
