@@ -80,7 +80,11 @@ Unique factorization is a coordinate statement. Write $n = 2^{a_1} 3^{a_2} 5^{a_
 number $n$ becomes the integer vector $(a_1, a_2, a_3, \ldots)$; multiplication of numbers becomes
 addition of vectors. The positive integers under multiplication are therefore a \emph{lattice} --- a
 crystal --- of infinite rank, one axis per prime, the numbers themselves its points. We will call it
-the multiplication crystal. Two features deserve immediate notice. First, the primes are not special
+the multiplication crystal. (Formally: a \emph{crystal} is a free commutative monoid equipped with an additive length
+functional with locally finite axis spectrum; the multiplication crystal is the instance with axes
+the primes and lengths $\log p$. The companion definitions note~\cite{Defs} fixes this vocabulary,
+in which every chapter below computes one invariant of that one object.) Two features deserve
+immediate notice. First, the primes are not special
 points of the crystal; they are its \emph{axes}. Second, the crystal is free: no relations bind the
 axes, which is unique factorization restated.
 
@@ -325,7 +329,9 @@ played by the monic polynomials over a finite field $\mathbb{F}_q$, the role of 
 irreducible ones, and the crystal is built by the \emph{identical} free construction. The one change
 is the size map: $|f| = q^{\deg f}$, so every axis length is an integer multiple of the quantum
 $\log q$. The crystal becomes lattice rather than aperiodic, and the prediction of this essay's
-thesis is stark: every aperiodic pathology of the integers should become an exactness. The machine's
+thesis is stark: every aperiodic pathology of the integers should become an exactness. (In the
+vocabulary of~\cite{Defs}: the table below evaluates one list of crystal invariants at two
+crystals whose only difference is the multiset of axis lengths.) The machine's
 verdict, chapter by chapter, over $\mathbb{F}_2[t]$:
 
 \begin{center}\small
@@ -643,6 +649,9 @@ of generalized factorials, companion manuscript, Zenodo (2026), \texttt{doi:10.5
 \bibitem{CompanionIII} C. Gribble, Recovering the primes in a dyadic interval from exact moments: two
 constructive routes and an obstruction theorem, companion manuscript, Zenodo (2026),
 \texttt{doi:10.5281/zenodo.21769107}.
+\bibitem{Defs} C. Gribble, Crystals and their shadows: definitions for a programme on the
+multiplication crystal, programme note (2026), in the code repository
+\texttt{https://github.com/carlgribble-caa/prime-moments}.
 \bibitem{Euclid} T. L. Heath, \emph{The Thirteen Books of Euclid's Elements}, Dover, New York, 1956.
 \bibitem{HardyRamanujan} G. H. Hardy and S. Ramanujan, The normal number of prime factors of a number
 $n$, \emph{Quart. J. Math.} \textbf{48} (1917), 76--92.

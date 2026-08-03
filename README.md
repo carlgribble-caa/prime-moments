@@ -15,6 +15,12 @@ claims are machine-verified, together with the code that reproduces every table.
 Author: Carl Gribble. Developed in collaboration with Claude (Anthropic); each paper carries a full
 AI-use disclosure section. Provenance of the canonical sources: `papers/PROVENANCE.md`.
 
+## Programme notes
+
+| Note | Content |
+|---|---|
+| `papers/crystals_and_shadows.tex` | Programme Note 1 (WP1): the crystal defined — measured free monoids, the invariant package, the instances dictionary |
+
 ## Reproduction
 
 Requires Python 3.10+ with `numpy` and `mpmath`.

@@ -1,0 +1,329 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Sym}{\operatorname{Sym}}
+
+\title{Crystals and their shadows:\\ definitions for a programme on the multiplication crystal}
+\author{Carl Gribble\thanks{Programme Note 1, draft v0.1. Companion to the papers
+\cite{CompanionI,CompanionII,CompanionIII} and the essay \cite{Essay} (same author), whose vocabulary
+this note fixes. Developed in collaboration with Claude (Anthropic). Responsibility for the content
+rests with the author. A full disclosure of AI use appears at the end of the note.}}
+\date{August 2026 --- draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note fixes the definitional frame for the multiplication-crystal programme: a \emph{crystal} is
+a free commutative monoid equipped with an additive length functional whose axis spectrum is locally
+finite. The definition is not new --- it is Knopfmacher's arithmetical semigroup written additively,
+and Beurling's generalized number system in monoid form --- but writing it once lets the programme's
+statements be made at full generality and specialized to its three standing instances: the integers,
+the function fields, and the Beurling continuum between them, with the graph universe as a preview.
+We define the invariant package the essay's chapters compute --- the zeta/partition function, the
+layer decomposition and tower exponent, the Linnik prime detector, the shadow combs and their
+diffraction, the automorphism group, and the lattice/non-lattice dichotomy --- prove the three
+elementary structural facts the programme leans on (local finiteness of the shadow, the length
+multiset as a complete isomorphism invariant, existence and uniqueness of the tower exponent), and
+record which work package consumes which invariant. One observation falls out of the definitions and
+deserves emphasis: measured by lengths alone, the integer crystal is already perfectly rigid, while
+the function-field crystal retains an enormous symmetry group --- the symmetry asymmetry between the
+two universes is visible before any arithmetic is welded on.
+\end{abstract}
+
+\section{The object}
+
+\begin{definition}[Crystal]\label{def:crystal}
+A \emph{crystal} is a pair $C = (M, \ell)$ where $M$ is the free commutative monoid on a nonempty,
+at most countable set $P$ of generators (the \emph{axes} of $C$), and
+$\ell \colon M \to [0, \infty)$ is a monoid homomorphism into $(\R_{\ge 0}, +)$ with $\ell(p) > 0$
+for every $p \in P$, subject to the finiteness axiom
+\[
+\text{(F)}\qquad \#\{\, p \in P : \ell(p) \le x \,\} \;<\; \infty \quad\text{for every } x \ge 0 .
+\]
+We call $\ell$ the \emph{length functional}, $\ell(p)$ the \emph{axis lengths}, and
+$|m| := e^{\ell(m)}$ the \emph{size} of $m$. The \emph{shadow} of $C$ is the image of $M$ under
+$\ell$ counted with multiplicity: the measure $\nu_C = \sum_{m \in M} \delta_{\ell(m)}$ on
+$[0, \infty)$.
+\end{definition}
+
+Freeness means every $m \in M$ is a finite product $\prod_p p^{a_p}$ with uniquely determined
+exponents --- unique factorization is part of the definition, not a theorem. The axes are the
+\emph{primes of the crystal}; we reserve the word ``prime'' for them.
+
+\begin{lemma}[The shadow is locally finite]\label{lem:locfin}
+Under \emph{(F)}, $N_C(x) := \#\{ m \in M : \ell(m) \le x \}$ is finite for every $x$.
+\end{lemma}
+
+\begin{proof}
+If $p$ divides $m$ then $\ell(p) \le \ell(m)$, so an $m$ with $\ell(m) \le x$ uses only axes in the
+finite set $P_x = \{p : \ell(p) \le x\}$. If $P_x$ is empty only $m = 1$ qualifies. Otherwise
+$\delta = \min_{P_x} \ell > 0$, each exponent vector supported on $P_x$ has coordinate sum at most
+$x/\delta$, and there are finitely many such vectors; by freeness distinct vectors are distinct
+elements.
+\end{proof}
+
+\begin{proposition}[The lengths are everything]\label{prop:iso}
+Two crystals are isomorphic --- a monoid isomorphism $\varphi$ with $\ell' \circ \varphi = \ell$ ---
+if and only if their multisets of axis lengths coincide. A crystal \emph{is} its multiset of axis
+lengths.
+\end{proposition}
+
+\begin{proof}
+In a free commutative monoid the irreducible elements are exactly the generators, and a monoid
+isomorphism carries irreducibles to irreducibles; by freeness it is determined by the induced axis
+bijection. The length condition says precisely that this bijection preserves lengths, which is
+possible if and only if the length multisets agree; conversely any length-preserving axis bijection
+extends multiplicatively to an isomorphism.
+\end{proof}
+
+Two constructions are used throughout. The \emph{scaling} $C_\lambda = (M, \lambda\ell)$ for
+$\lambda > 0$, which normalizes conventions (below, $\zeta_{C_\lambda}(s) = \zeta_C(\lambda s)$);
+and the \emph{sub-crystal} on any subset $Q \subseteq P$, the free submonoid it generates with the
+restricted lengths.
+
+\begin{remark}[Attribution]\label{rem:attrib}
+Definition~\ref{def:crystal} is classical. It is Beurling's system of generalized primes
+\cite{Beurling, DiamondZhang} in monoid form, and it is Knopfmacher's \emph{arithmetical semigroup}
+\cite{Knopfmacher} written additively ($\ell = \log$ of Knopfmacher's norm); the lattice case below
+is the \emph{additive arithmetical semigroup} of Knopfmacher--Zhang \cite{KnopfmacherZhang}. The
+word ``crystal'' adds only the geometric reading defended in the essay \cite{Essay}: exponent
+vectors as lattice points, axes as directions, $\ell$ as the projection to a line. This note's
+contribution is organization, not mathematics.
+\end{remark}
+
+\section{The standing instances}
+
+\begin{example}[The integer crystal $C_{\Z}$]
+Axes the rational primes, $\ell(p) = \log p$. Then $M \cong (\N_{\ge 1}, \times)$, $|n| = n$, and
+the shadow is the set $\{\log n\}$ --- the numbers in their usual order, logarithmically spaced.
+Axiom (F) holds since $\pi(x)$ is finite. All axis lengths are distinct.
+\end{example}
+
+\begin{example}[The function-field crystal $C_{\F_q[t]}$]
+Axes the monic irreducibles of $\F_q[t]$, $\ell(f) = (\deg f)\log q$, so $|f| = q^{\deg f}$. Every
+axis length is an integer multiple of the quantum $\log q$, and lengths are massively repeated: all
+$I_n$ irreducibles of degree $n$ share one length.
+\end{example}
+
+\begin{example}[Beurling crystals]
+Any sequence $1 < |p_1| \le |p_2| \le \cdots \to \infty$ of real sizes defines a crystal on
+countably many axes with $\ell(p_i) = \log|p_i|$; this is exactly Beurling's construction
+\cite{Beurling}, and the quantitative theory of which length regularity buys which theorems is the
+subject of \cite{DiamondZhang, DMV}. The integers and the function fields are the two named points
+of this continuum; the essay's temperament ladder \cite{Essay} walks between them.
+\end{example}
+
+\begin{example}[Graph crystals --- preview]
+For a finite connected graph, take as axes the primitive backtrackless closed geodesics up to
+rotation, with $\ell(\gamma)$ the edge length. The Euler product below becomes the Ihara zeta
+function \cite{Terras}; lengths are quantized (a lattice crystal), and the Riemann Hypothesis for
+the Ihara zeta is \emph{equivalent} to the graph being Ramanujan. Developed as work package WP9a.
+\end{example}
+
+\section{The invariant package}
+
+Throughout, $C = (M, \ell)$ is a crystal. Each invariant below is a function of the length multiset
+(Proposition~\ref{prop:iso}); each chapter of the essay \cite{Essay} computes one of them at
+$C = C_{\Z}$.
+
+\subsection{Zeta and partition function}
+
+\[
+\zeta_C(s) \;=\; \sum_{m \in M} e^{-s\,\ell(m)} \;=\; \sum_{m \in M} |m|^{-s}
+\;=\; \prod_{p \in P} \bigl(1 - e^{-s\,\ell(p)}\bigr)^{-1},
+\]
+the Euler product being freeness restated. Its abscissa of convergence $\sigma_C \in [0, \infty]$ is
+the crystal's \emph{density exponent}; scaling normalizes any finite nonzero $\sigma_C$ to $1$. For
+$C_{\Z}$ this is Riemann's zeta; for $C_{\F_q[t]}$ it is $\zeta(s) = (1 - q^{1-s})^{-1}$, with
+$I_n$ recovered by Gauss's formula. Read at real $s = \beta$, $\zeta_C(\beta)$ is the partition
+function of the free bosonic gas with one mode per axis at energy $\ell(p)$ --- the primon gas
+\cite{Julia}; this reading, and the phase structure of the interacting system of
+Bost--Connes \cite{BostConnes}, is work package WP4.
+
+\subsection{Layers and the tower exponent}
+
+The \emph{dimension} grading $\Omega \colon M \to \N$ is the additive extension of $\Omega(p) = 1$.
+The $k$-th \emph{layer count} of $m$ is the number $D_k(m)$ of ordered $k$-tuples of non-identity
+elements with product $m$; formally
+$\sum_m D_k(m)\, |m|^{-s} = (\zeta_C(s) - 1)^k$. The \emph{tower series} is the geometric sum
+$G_C(s) = \sum_{k \ge 0} (\zeta_C - 1)^k = (2 - \zeta_C(s))^{-1}$, counting all ordered
+factorizations of all elements.
+
+\begin{proposition}[Tower exponent]\label{prop:tower}
+Suppose $\sigma_C < \infty$ and $\lim_{s \downarrow \sigma_C} \zeta_C(s) > 2$. Then there is a
+unique real $\rho_C > \sigma_C$ with $\zeta_C(\rho_C) = 2$.
+\end{proposition}
+
+\begin{proof}
+On $(\sigma_C, \infty)$ the series converges to a continuous, strictly decreasing function (each
+term is strictly decreasing; $M \ne \{1\}$), and $\zeta_C(s) \to 1$ as $s \to \infty$ by dominated
+convergence. The intermediate value theorem gives existence; strict monotonicity gives uniqueness.
+\end{proof}
+
+For $C_{\Z}$, $\rho_C = 1.728647\ldots$ is Kalm\'ar's exponent \cite{Kalmar}, governing
+$G(y) \sim Cy^{\rho}$; for $C_{\F_q[t]}$, $\zeta_C(\rho) = 2$ solves exactly to
+$\rho = 1 + \log 2/\log q$ --- the integer dimension of the essay's mirror table. The Moran reading
+of $\zeta_C(s) = 2$ as a similarity dimension, and the lattice/non-lattice structure of the complex
+solutions, follow Lapidus \cite{LapidusBook}.
+
+\subsection{The prime detector}
+
+For $m \ne 1$ define the \emph{Linnik weight}
+\[
+\kappa(m) \;=\; \sum_{k \ge 1} \frac{(-1)^{k-1}}{k}\, D_k(m),
+\]
+a finite sum terminating at $k = \Omega(m)$.
+
+\begin{proposition}[Universal detector; stated here, proved at WP2]\label{prop:linnik}
+In every crystal, $\kappa(p^{\,j}) = 1/j$ on axis powers and $\kappa(m) = 0$ otherwise; the
+corresponding von Mangoldt weight is $\Lambda_C(m) := \kappa(m)\,\ell(m)$, equal to $\ell(p)$ on
+powers of $p$ and $0$ elsewhere.
+\end{proposition}
+
+The point of stating this at crystal generality: $D_k(p^{\,j})$ counts compositions of $j$ into $k$
+positive parts, $\binom{j-1}{k-1}$, so the claim on axis powers is the identity
+$\sum_k \frac{(-1)^{k-1}}{k}\binom{j-1}{k-1} = \frac1j$ (at $j = 3$:
+$1 - \tfrac12\cdot 2 + \tfrac13\cdot 1 = \tfrac13$), and the vanishing off axis powers is pure
+freeness --- no property of the integers enters. The formal-algebra proof (the logarithm in the
+reduced incidence algebra, equivalently $\log \zeta_C$ coefficientwise) is work package WP2; at
+$C_{\Z}$ it is Linnik's identity \cite{Linnik}, the engine of \cite{CompanionI}.
+
+\subsection{Shadows and diffraction}
+
+Two weighted combs on $[0, \infty)$:
+\[
+\nu_C \;=\; \sum_{m} \delta_{\ell(m)} \qquad\text{(counting comb)}, \qquad
+\mu_C \;=\; \sum_{m} \Lambda_C(m)\, \delta_{\ell(m)} \qquad\text{(prime comb)}.
+\]
+The \emph{diffraction} of $C$ is the Fourier-transform data of $\mu_C$ in the autocorrelation sense
+of mathematical diffraction theory \cite{BaakeGrimm}; making the essay's Chapter~4 exact in that
+frame --- for $C_{\Z}$, the Guinand--Weil explicit formula pairing $\mu_C$ with the zeta zeros ---
+is work package WP3. For lattice crystals the diffraction is periodic; for $C_{\Z}$ it is the
+aperiodic spectrum conjecturally confined to the mirror line.
+
+\subsection{Symmetry}
+
+$\Aut(M) = \Sym(P)$: the bare crystal is maximally symmetric. The \emph{measured} automorphism
+group is
+\[
+\Aut(C) \;=\; \{\sigma \in \Sym(P) : \ell \circ \sigma = \ell\}
+\;=\; \prod_{\text{length classes}} \Sym(\text{class}),
+\]
+the permutations of axes within equal-length classes.
+
+\begin{remark}[The symmetry asymmetry]\label{rem:sym}
+For $C_{\Z}$ all lengths $\log p$ are distinct, so $\Aut(C_{\Z}) = 1$: \emph{measured by its sizes
+alone, the integer crystal is already perfectly rigid} --- before addition is welded on. For
+$C_{\F_q[t]}$, $\Aut(C) = \prod_n \Sym(I_n)$ is enormous, and it contains the arithmetic's actual
+symmetries: every substitution $t \mapsto at + b$ permutes the irreducibles of each degree (the
+essay's rigidity row), and the Galois action on coefficients sits inside it likewise. The essay's
+thesis that the mirror is solvable \emph{because} its arithmetic has symmetries acquires a
+definition-level restatement: quantized lengths leave room for symmetry ($I_n$-fold degeneracy per
+level); incommensurable lengths leave none. The weld statement --- $\Aut(\N, +, \times) = 1$ ---
+is logically separate and stronger; the observation here is that even the weld-free measured
+crystal distinguishes the two universes.
+\end{remark}
+
+\subsection{The dichotomy}
+
+$C$ is \emph{lattice} if $\ell(P) \subseteq \delta\Z$ for some $\delta > 0$, else
+\emph{non-lattice} \cite{LapidusBook}. Lattice: $C_{\F_q[t]}$, graph crystals. Non-lattice:
+$C_{\Z}$ (a rational relation among $\log p$ would exhibit a nontrivial product of primes equal to
+$1$). This single bit is the essay's ``measurable difference'' row, and the Beurling continuum
+parametrizes the crossing.
+
+\section{The dictionary, restated}
+
+\begin{center}\small
+\begin{tabular}{lccc}
+\hline
+invariant & $C_{\Z}$ & $C_{\F_q[t]}$ & graph crystal (WP9a) \\
+\hline
+$\zeta_C$ & Riemann zeta & $(1 - q^{1-s})^{-1}$ & Ihara zeta \\
+$\sigma_C$ & $1$ & $1$ & known \\
+$\rho_C$ ($\zeta_C = 2$) & $1.7286\ldots$ (Kalm\'ar) & $1 + \log 2/\log q$ & --- \\
+lattice? & no & yes ($\delta = \log q$) & yes \\
+$\Aut(C)$ & $1$ & $\prod_n \Sym(I_n)$ & graph-dependent \\
+detector $\Lambda_C$ & von Mangoldt & function-field $\Lambda$ & geodesic counting \\
+diffraction of $\mu_C$ & zeta zeros (RH: on the mirror) & periodic comb & poles; RH $=$ Ramanujan \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent
+The essay's two-column mirror table \cite{Essay} is this table's first two columns: one list of
+invariants, two length multisets. Beurling crystals fill in the horizontal continuum.
+
+\section{Who consumes what}
+
+WP2 (algebraic engine): Proposition~\ref{prop:linnik} proved in the reduced incidence algebra, at
+this generality. WP3 (diffraction): $\mu_C$ and its autocorrelation made rigorous; Guinand--Weil at
+$C_{\Z}$. WP4 (statistical mechanics): $\zeta_C(\beta)$, $G_C(\beta)$, and $\rho_C$ as Hagedorn
+point; Bost--Connes at $C_{\Z}$. WP5 (logic): decidability of the bare crystal versus the weld.
+WP6 (observer ladder): correlation classes on the shadow $\nu_C$. WP8 (frontier): what extra
+structure on $C_{\Z}$ replaces the mirror's $\Aut$-residue --- $\lambda$-ring data as the shadow of
+the missing Frobenius. WP9a (graphs): the fourth column. The companion papers
+\cite{CompanionI, CompanionII, CompanionIII} are, in this vocabulary, exact evaluations of
+functionals of $\mu_{C_\Z}$ restricted to windows.
+
+\section*{Disclosure of AI use}
+
+This note was developed in an extensive collaboration with Claude (Anthropic; Claude Fable 5,
+accessed through Claude Code, 2026). The direction of the work and all decisions about scope and
+claims are the author's; the AI system drafted the text, checked the elementary proofs, and
+assembled the attributions, the reason for its use being to enable a single non-specialist author
+to develop and document the material to a publishable standard. The author has reviewed the note
+and takes full responsibility for its content. No numerical claims are made here beyond constants
+quoted from the cited companions, where they are machine-verified.
+
+\begin{thebibliography}{99}
+\bibitem{CompanionI} C. Gribble, Prime counts and prime sums from multiplication tables: a
+self-similar formula system, preprint, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769103}.
+\bibitem{CompanionII} C. Gribble, Certified exact sums of primes over dyadic intervals via a ladder
+of generalized factorials, preprint, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769105}.
+\bibitem{CompanionIII} C. Gribble, Recovering the primes in a dyadic interval from exact moments:
+two constructive routes and an obstruction theorem, preprint, Zenodo (2026),
+\texttt{doi:10.5281/zenodo.21769107}.
+\bibitem{Essay} C. Gribble, The multiplication crystal: dimension, diffraction, and the symmetries
+of arithmetic, manuscript (2026), in the code repository
+\texttt{https://github.com/carlgribble-caa/prime-moments}.
+\bibitem{Beurling} A. Beurling, Analyse de la loi asymptotique de la distribution des nombres
+premiers g\'en\'eralis\'es I, \emph{Acta Math.} \textbf{68} (1937), 255--291.
+\bibitem{DiamondZhang} H.~G. Diamond and W.-B. Zhang, \emph{Beurling Generalized Numbers}, Math.
+Surveys Monogr. 213, Amer. Math. Soc., Providence, 2016.
+\bibitem{DMV} H.~G. Diamond, H.~L. Montgomery, and U.~M.~A. Vorhauer, Beurling primes with large
+oscillation, \emph{Math. Ann.} \textbf{334} (2006), 1--36.
+\bibitem{Knopfmacher} J. Knopfmacher, \emph{Abstract Analytic Number Theory}, North-Holland,
+Amsterdam, 1975.
+\bibitem{KnopfmacherZhang} J. Knopfmacher and W.-B. Zhang, \emph{Number Theory Arising from Finite
+Fields: Analytic and Probabilistic Theory}, Marcel Dekker, New York, 2001.
+\bibitem{Kalmar} L. Kalm\'ar, \"Uber die mittlere Anzahl der Produktdarstellungen der Zahlen,
+\emph{Acta Litt. Sci. Szeged} \textbf{5} (1931), 95--107.
+\bibitem{Linnik} Yu.~V. Linnik, \emph{The Dispersion Method in Binary Additive Problems}, Amer.
+Math. Soc., Providence, 1963.
+\bibitem{LapidusBook} M.~L. Lapidus and M. van Frankenhuijsen, \emph{Fractal Geometry, Complex
+Dimensions and Zeta Functions}, 2nd ed., Springer, New York, 2013.
+\bibitem{BaakeGrimm} M. Baake and U. Grimm, \emph{Aperiodic Order. Vol. 1: A Mathematical
+Invitation}, Cambridge Univ. Press, 2013.
+\bibitem{Julia} B. Julia, Statistical theory of numbers, in \emph{Number Theory and Physics},
+Springer Proc. Phys. 47, Springer, 1990, 276--293.
+\bibitem{BostConnes} J.-B. Bost and A. Connes, Hecke algebras, type III factors and phase
+transitions with spontaneous symmetry breaking in number theory, \emph{Selecta Math.} \textbf{1}
+(1995), 411--457.
+\bibitem{Terras} A. Terras, \emph{Zeta Functions of Graphs: A Stroll through the Garden}, Cambridge
+Univ. Press, 2011.
+\end{thebibliography}
+
+\end{document}

@@ -291,6 +291,10 @@ graph TD
    (prior-art hunt, applied without mercy) and adversary (strongest objection, written down).
 5. **Versioning:** papers carry vN in-file; PROGRAMME.md is the single source of truth for status;
    each WP gets a `status:` line here as it moves (todo → active → review → done).
+6. **Autonomous cadence:** work proceeds one WP at a time. At each WP exit: changes committed and
+   pushed, the status-ledger row updated with the outcome, and a chat summary posted — then pause
+   for direction before the next WP begins. Mid-WP interruptions only for genuine blockers or scope
+   changes.
 
 ---
 
@@ -307,7 +311,7 @@ Status ledger:
 | WP | Status |
 |---|---|
 | WP0 | **done** 2026-08-03 — version audit + canonical `papers/`+`code/` (provenance recorded); attribution + AI disclosures in all four papers; cite cross-check clean; full `run_all.py` verification green (Paper 1 40/40, Papers 2–3 exact, essay tables + scanner reproduce); repo public at `github.com/carlgribble-caa/prime-moments`; **trilogy published on Zenodo** (CC BY 4.0, ORCID-linked): `10.5281/zenodo.21769103` / `21769105` / `21769107`, DOIs cross-filled in all papers and the submission pack. arXiv can follow later as record versions if endorsement materializes. → M0 achieved; Phase 1 unblocked |
-| WP1 | todo |
+| WP1 | **done** 2026-08-03 — Programme Note 1 (`papers/crystals_and_shadows.tex`, compiles clean): crystal = measured free monoid (= Knopfmacher's arithmetical semigroup additively, Beurling in monoid form — attribution explicit); finiteness lemma; length multiset proved a complete isomorphism invariant; invariant package defined (ζ_C/partition fn, layers + tower exponent ρ_C via ζ_C=2 with existence/uniqueness proof, universal Linnik detector stated for WP2, shadow/prime combs for WP3, Aut(C), lattice dichotomy); instances table (ℤ, F_q[t], Beurling, graph preview); "symmetry asymmetry" remark — Aut(C_ℤ)=1 already at the measured-crystal level vs Aut(C_F_q[t]) = ∏ Sym(I_n) ⊇ substitutions. Essay §2 + mirror table now cite the note; who-consumes-what section maps invariants → WPs |
 | WP2 | todo |
 | WP3 | todo |
 | WP4 | todo |
