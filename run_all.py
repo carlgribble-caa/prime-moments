@@ -1,4 +1,5 @@
 """Run every verification script in code/, in paper order. See README.md."""
+import os
 import pathlib
 import subprocess
 import sys
@@ -23,7 +24,8 @@ def main():
     for label, name in SCRIPTS:
         print(f"\n{'=' * 72}\n== {label}  ({name})\n{'=' * 72}", flush=True)
         t0 = time.time()
-        result = subprocess.run([sys.executable, str(code / name)])
+        env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
+        result = subprocess.run([sys.executable, str(code / name)], env=env)
         print(f"-- exit {result.returncode} in {time.time() - t0:.1f}s")
         if result.returncode != 0:
             failures.append(name)
