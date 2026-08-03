@@ -7,7 +7,7 @@
 \newtheorem{remark}{Remark}
 
 \title{The multiplication crystal:\\ dimension, diffraction, and the symmetries of arithmetic}
-\author{Carl Gribble\thanks{Draft v0.1, expository companion to the research papers
+\author{Carl Gribble\thanks{Draft v0.2, expository companion to the research papers
 \cite{CompanionI,CompanionII,CompanionIII} (same author). Developed in collaboration with Claude
 (Anthropic); every numerical table in this essay was machine-verified as described in Section~10.
 Responsibility for the content rests with the author. A full disclosure of AI use appears at the end
@@ -24,11 +24,16 @@ usual order --- is the aperiodic point set that number theory studies. This essa
 that crystal, conducted with a computer. We compute its dimension and find it fractal: the
 self-similarity of the multiplicative structure forces a Moran equation whose form is $\zeta(s) = 2$,
 with real solution $\rho = 1.728647\ldots$ (Kalm\'ar's exponent), and the total mass of the crystal's
-description tower is verified to follow the law $C y^{\rho}$ to a quarter of a percent at $y = 10^6$.
+description tower is verified to follow the law $C y^{\rho}$ to a quarter of a percent at $y = 10^6$
+--- a law with a thermodynamic reading: $\rho$ is the Hagedorn point of the gas of ordered
+factorizations, and its pole residue is the same constant again.
 We diffract it and find a reciprocal crystal: waves shone on the primes' logarithmic positions
 produce Bragg peaks at the Riemann zeros (verified to $\pm 0.005$ from a sieve to $2\times 10^5$),
 while, in the converse experiment of Landau's 1912 theorem, waves built from $300$ zeros ring at the
-primes and prime powers of a window and at nothing else. Finally we chart its symmetries: maximally
+primes and prime powers of a window and at nothing else; behind both experiments, the Guinand--Weil
+explicit formula is paired by machine against Gaussian tests to twenty-three decimals --- the
+diffraction of the weighted prime comb as an identity, not a fit, with the honest clause that the
+bare shadow is no Delone set stated and priced. Finally we chart its symmetries: maximally
 symmetric as a bare crystal (every permutation of the prime axes is an automorphism), perfectly rigid
 as arithmetic (the automorphism group of $(\mathbb{N}, +, \times)$ is trivial), with the sizes
 $\log 2, \log 3, \log 5, \ldots$ acting as the symmetry-breaking field between the two. The surviving
@@ -37,12 +42,18 @@ their $2016$ fine structure (consecutive primes repel in their last digits: $16.
 a naive $25\%$, measured to $10^7$); the hidden Galois symmetry with the primes as its census; the
 exact mirror symmetry of the reciprocal crystal (verified to $10^{-22}$); and its unitary statistical
 symmetry class (one near-collision among $499$ zero spacings where structureless randomness predicts
-a hundred). In this language the Riemann Hypothesis is a confinement statement: the diffraction
+a hundred). The symmetry-breaking language is meanwhile a theorem with an address --- Bost and
+Connes's phase transition, whose order parameter the machine watches condense through $\beta = 1$
+--- and the weld's wildness is the logicians' trichotomy: ruler and crystal separately decidable,
+welded arithmetic undecidable already at one tick of the successor. In this language the Riemann
+Hypothesis is a confinement statement: the diffraction
 pattern, provably symmetric about its mirror, is conjectured to lie on it. A final comparative section
 rebuilds every chapter in Weil's mirror universe $\mathbb{F}_q[t]$, where the axis lengths are
 quantized, and finds each aperiodic pathology replaced by an exactness --- closed-form prime counts,
 integer dimension, a Mertens function that is identically zero, and a Riemann Hypothesis that is a
-theorem, machine-verified here on an elliptic curve at $428$ primes --- isolating the
+theorem, machine-verified here on an elliptic curve at $428$ primes; a third universe --- finite
+graphs, their zeta functions rational and their Riemann Hypothesis equivalent to the Ramanujan
+property --- is checked per instance, in both directions --- isolating the
 incommensurability of the lengths $\log p$ as the single source of the integers' difficulty. A closing analysis
 localizes the source once more: by Ostrowski's theorem the incommensurability lives at the unique
 archimedean place, and, fused with the absence of Frobenius, traces to one dial --- characteristic
