@@ -306,7 +306,7 @@ Status ledger:
 
 | WP | Status |
 |---|---|
-| WP0 | active — 2026-08-03: version audit done; canonical `papers/` + `code/` established (see `papers/PROVENANCE.md`); author attribution + AI-disclosure sections completed in all four papers; cite/bibitem cross-check clean; forty-tests claim verified correct; git baseline committed. GitHub repo live at `github.com/carlgribble-caa/prime-moments`, URL filled into all four papers. Full `run_all.py` verification run green 2026-08-03 (~5.5 min, 5 scripts): Paper 1 40/40 PASS; Paper 2 all three windows certified with widths/values matching the paper; Paper 3 both routes + Prony match Sections 6–7; essay tables and scanner first-light reproduce, including the 69-survivor scan and the LOS rediscovery at z ≈ −27. Remaining: arXiv posting (needs ORCID + math.NT endorsement — user actions per Finals/submission_pack.md) |
+| WP0 | **done** 2026-08-03 — version audit + canonical `papers/`+`code/` (provenance recorded); attribution + AI disclosures in all four papers; cite cross-check clean; full `run_all.py` verification green (Paper 1 40/40, Papers 2–3 exact, essay tables + scanner reproduce); repo public at `github.com/carlgribble-caa/prime-moments`; **trilogy published on Zenodo** (CC BY 4.0, ORCID-linked): `10.5281/zenodo.21769103` / `21769105` / `21769107`, DOIs cross-filled in all papers and the submission pack. arXiv can follow later as record versions if endorsement materializes. → M0 achieved; Phase 1 unblocked |
 | WP1 | todo |
 | WP2 | todo |
 | WP3 | todo |

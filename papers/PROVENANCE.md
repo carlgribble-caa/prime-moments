@@ -22,11 +22,17 @@ Superseded copies remain on disk untracked (`Draft II/`, `Finals/`, `The Crystal
 5. Bibliography self-references unified to `C. Gribble` across all four papers
    (matching Paper 4's existing style).
 
-## Outstanding placeholders (deliberate; tracked under WP0 in PROGRAMME.md)
+## Placeholders (all resolved 2026-08-03)
 
-- `% TODO: replace with arXiv ID once posted` — companion cross-citations in all four papers.
-- Repository URL: **filled 2026-08-03** with `https://github.com/carlgribble-caa/prime-moments`
+- Companion cross-citations: **filled** with the published Zenodo DOIs in all four papers —
+  Paper 1 `10.5281/zenodo.21769103`, Paper 2 `10.5281/zenodo.21769105`,
+  Paper 3 `10.5281/zenodo.21769107` (preprints, CC BY 4.0, ORCID 0009-0007-5500-9175).
+  These replaced the arXiv-ID TODOs via the submission pack's Zenodo fallback route; arXiv
+  proper can follow later as record versions if an endorsement materializes.
+- Repository URL: **filled** with `https://github.com/carlgribble-caa/prime-moments`
   in all four Code bibitems.
+
+No placeholders remain in any paper.
 
 ## Audit note
 
