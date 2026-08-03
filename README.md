@@ -26,8 +26,11 @@ AI-use disclosure section. Provenance of the canonical sources: `papers/PROVENAN
 
 `lean/` is a Lean 4 project (mathlib v4.32.2) mechanizing the programme's theorems.
 `lean/PrimeMoments/NewtonRecovery.lean` — Paper 3, Theorem 1 (WP7.H1): Vieta coefficients,
-the Newton recursion at integer configurations, root reading, and window-filter recovery;
-all theorems depend only on `propext`, `Classical.choice`, `Quot.sound`.
+the Newton recursion at integer configurations, root reading, and window-filter recovery.
+`lean/PrimeMoments/BitFloor.lean` — Paper 3, Definition 1 + Theorem 3 (WP7.H2): uniform
+schemes, the exact counting floor `C(m,r) ≤ 2^(D+1) − 1`, and the logarithmic form
+`D ≥ log₂ C(m,r) − 1`. All theorems depend only on `propext`, `Classical.choice`,
+`Quot.sound`.
 Build: `cd lean && lake exe cache get && lake build` (first run downloads the mathlib cache).
 
 ## Reproduction
