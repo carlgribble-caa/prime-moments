@@ -25,8 +25,8 @@ Superseded copies remain on disk untracked (`Draft II/`, `Finals/`, `The Crystal
 ## Outstanding placeholders (deliberate; tracked under WP0 in PROGRAMME.md)
 
 - `% TODO: replace with arXiv ID once posted` — companion cross-citations in all four papers.
-- `https://github.com/USERNAME/REPO` — Code bibitems in all four papers; fill when the GitHub
-  repository is created (the submission pack in `Finals/` suggests `carlgribble-caa/prime-moments`).
+- Repository URL: **filled 2026-08-03** with `https://github.com/carlgribble-caa/prime-moments`
+  in all four Code bibitems.
 
 ## Audit note
 

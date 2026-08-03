@@ -306,7 +306,7 @@ Status ledger:
 
 | WP | Status |
 |---|---|
-| WP0 | active — 2026-08-03: version audit done; canonical `papers/` + `code/` established (see `papers/PROVENANCE.md`); author attribution + AI-disclosure sections completed in all four papers; cite/bibitem cross-check clean; forty-tests claim verified correct; git baseline committed. Remaining: GitHub repo creation + URL fill, `run_all.py` full verification run, arXiv posting |
+| WP0 | active — 2026-08-03: version audit done; canonical `papers/` + `code/` established (see `papers/PROVENANCE.md`); author attribution + AI-disclosure sections completed in all four papers; cite/bibitem cross-check clean; forty-tests claim verified correct; git baseline committed. GitHub repo live at `github.com/carlgribble-caa/prime-moments`, URL filled into all four papers. Remaining: `run_all.py` full verification run, arXiv posting |
 | WP1 | todo |
 | WP2 | todo |
 | WP3 | todo |
