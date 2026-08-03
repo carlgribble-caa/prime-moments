@@ -1,0 +1,202 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{definition}{Definition}
+\newtheorem{conjecture}{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\title{The observer ladder:\\ stratifying the two-skeleton conjecture, with a second first light}
+\author{Carl Gribble\thanks{Programme Note 3, draft v0.1. Companion to the essay \cite{Essay} and
+Programme Notes 1--2 \cite{Defs, Engine}. Developed in collaboration with Claude (Anthropic); the
+scanner runs are preregistered as described in Section~4. Responsibility for the content rests with
+the author. A full disclosure of AI use appears at the end of the note.}}
+\date{August 2026 --- draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The essay's two-skeleton conjecture --- the multiplication crystal's detectable order is its
+congruence skeleton and its spectral skeleton, and nothing else --- is here stratified by
+\emph{observer complexity}, so that its known base camps become theorems of the ladder and its
+open floors become the scanner's hunting ground. The base camps are real: automatic sequences
+cannot correlate with the M\"obius signal (M\"ullner, after Mauduit--Rivat's digits of primes),
+nor can bounded-depth circuits (Green), and the two-point logarithmically-averaged Chowla
+correlation vanishes (Tao), with the zero-entropy stratum largely settled in logarithmic density
+(Frantzikinakis--Host). Above the theorem line, the skeleton-null scanner of the essay is upgraded
+and rerun under a preregistered protocol: a twelve-feature battery tagged by observer class,
+nulls stratified by residue mod~$60$ (closing the mod-$4$ blindness the first instrument found in
+itself), survival requiring replication in both halves, and --- new --- a skeleton-matched
+\emph{control population} $m = p + 30$, identical to the primes in congruence class, size, and gap
+chain but overwhelmingly composite, which automates the audit question ``is this reading
+prime-specific?''. Second first light, honestly reported: the v2.0 instrument nulled its own
+congruence controls by over-stratification (the scanner finding its own bug, again) and was
+revised to v2.1 before any prediction was scored; under v2.1 all five committed predictions hold
+--- the Lemke Oliver--Soundararajan repulsion fires at $z = -37.8$ mod $4$ and $z = -41.3$ mod $3$
+(the second a new positive control), the gap anticorrelation at $z = -10.8$, the automatic-class
+theorem-null is clean, and the v1 chi-cluster is absorbed by the finer null as predicted. Of $57$
+survivors, $43$ are reproduced by the control (not prime-specific), $11$ are Pratt-height
+entanglements invisible to the control by definition, and $3$ small gap-by-smoothness readings
+remain in audit. Confirmed candidates: zero. The conjecture, the ladder, and the protocol are
+stated so that any future survivor knows exactly which floor it must climb.
+\end{abstract}
+
+\section{The conjecture, recalled}
+
+The essay \cite{Essay} states the two-skeleton conjecture: for every finite pre-registered battery
+of crystal-native invariants of the primes, every correlation detectable at any scale is derivable
+from the congruence data together with the Hardy--Littlewood correlations \cite{HardyLittlewood};
+conditioned on these, all remaining statistics agree with the skeleton-null ensemble. Its random
+side is the Chowla--Sarnak circle \cite{Chowla, Sarnak}. As stated, the conjecture is operational
+--- it names its own experiment --- but it flattens a structure that the known partial results
+articulate: orthogonality is \emph{proved} against weak observers and \emph{open} against strong
+ones. This note supplies the missing coordinate.
+
+\section{The ladder}
+
+\begin{definition}[Observer class; orthogonality]
+An \emph{observer class} $\mathcal{C}$ is a family of bounded sequences $u \colon \mathbb{N} \to
+[-1, 1]$ with a specified membership criterion (automaton size, circuit depth, dynamical entropy,
+computation time). The class \emph{detects nothing in} a bounded arithmetic signal $f$ if
+$\frac1N \sum_{n \le N} f(n)\, u(n) \to 0$ for every $u \in \mathcal{C}$ (in ordinary or
+logarithmic density, as stated). The \emph{ladder} is the family of such statements as
+$\mathcal{C}$ grows.
+\end{definition}
+
+For the M\"obius/Liouville signal the base camps are theorems:
+
+\begin{center}\small
+\begin{tabular}{lll}
+\hline
+observer class & status for $\mu$ (or $\lambda$) & attribution \\
+\hline
+automatic sequences & orthogonal --- theorem & M\"ullner \cite{Mullner}; digits of primes:
+Mauduit--Rivat \cite{MauduitRivat} \\
+$\mathrm{AC}^0$ circuits & orthogonal --- theorem & Green \cite{GreenAC0} \\
+two-point self-correlations & vanish, log density --- theorem & Tao \cite{TaoChowla} \\
+zero-entropy dynamics & log-Sarnak --- theorem (structured cases) & Frantzikinakis--Host
+\cite{FH} \\
+polynomial-time observers & open & (pseudorandomness frontier) \\
+all bounded observers & open --- Sarnak's conjecture & \cite{Sarnak} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{conjecture}[Two-skeleton, stratified]
+For each observer class $\mathcal{C}$ in the ladder, every $\mathcal{C}$-detectable correlation
+among crystal-native invariants of the primes is derivable from the congruence skeleton together
+with the Hardy--Littlewood correlations. The base camps above are the proven strata; the
+conjecture is the assertion that the pattern continues to the top of the ladder.
+\end{conjecture}
+
+The scanner probes \emph{above} the theorem line: its crystal-native features ($\Omega(p \pm 1)$,
+Pratt height, largest-factor slope) are not computable by weak observers, so no theorem protects
+them; only the skeleton-null ensemble does.
+
+\section{The instrument, upgraded}
+
+Scanner v2 extends the essay's first instrument \cite{Essay} in four ways, all preregistered
+before first light (Section~4). \emph{Battery}: twelve features tagged by observer class ---
+eight crystal/spacing features from v1, the characters mod $4$ and mod $3$ (congruence class),
+and the binary digit sum, Thue--Morse sign, and Rudin--Shapiro sign (automatic class, riding
+directly above the M\"ullner--Mauduit--Rivat base camp). \emph{Nulls}: stratification by coprime
+residue mod $60$ crossed with four size bands --- mod $60$ determines the residue mod $4$ and mod
+$3$, closing the blindness that v1's own audit discovered when its $2$-adic cluster poured
+through a mod-$30$ null. \emph{Survival}: full-sample $|z| \ge 3.9$ \emph{and} same-sign
+$|z| \ge 3.0$ in both split halves. \emph{Control}: the population $m = p + 30$ carries the
+primes' exact mod-$60$ classes, sizes, and gap chain while being overwhelmingly composite; the
+whole battery (except Pratt height, undefined off the primes) runs on it, and a survivor
+reproduced by the control with the same sign is classified \emph{not prime-specific} ---
+the audit ladder's ``skeleton-derivable or mechanical'' stage, automated.
+
+\section{Preregistration and second first light, honestly}
+
+The registry protocol (directory \texttt{registry/} of \cite{Code}) commits battery, nulls,
+thresholds, exclusions, and predictions to version control \emph{before} a run; the commit is the
+commitment device, the prereg file is never edited, and results are appended separately. Scanner
+v2's preregistration (commit \texttt{930a091}) committed seven predictions, among them: the
+consecutive-residue repulsion fires mod $4$ (the v1 positive control) \emph{and} mod $3$ (a new
+one); no automatic-class feature survives as prime-specific (the theorem-null); the v1 same-prime
+chi cluster is absorbed by the finer stratification; zero candidates after audit.
+
+First light v2.0 immediately caught its own instrument in two errors, which the registry
+discipline requires reporting rather than dissolving: over-stratification made the congruence
+features constant within strata, nulling exactly the positive controls the prereg predicted would
+fire (the mod-$60$ upgrade, over-applied, blinded the instrument to the signal it was built to
+confirm); and the theorem-null checker enforced a stricter carve-out than the prereg's text. One
+genuinely instructive reading appeared: Rudin--Shapiro against itself at consecutive primes,
+$z = -12.8$, replicated --- consecutive primes share binary prefixes, so the automatic sequence's
+\emph{own} shift-autocorrelation, an integer phenomenon, leaks through prime gaps. The v2.1
+revision (two-tier standardization; consecutive nulls permuted within size bands; the control
+population) was made before any prediction was scored, and the control settled the
+Rudin--Shapiro reading exactly as diagnosed: reproduced off the primes, not prime-specific.
+
+Under v2.1, all committed predictions hold. The Lemke Oliver--Soundararajan repulsion \cite{LOS}
+fires at $z = -37.8$ (mod $4$) and $z = -41.3$ (mod $3$); the gap anticorrelation at $z = -10.8$; the automatic class is clean of
+prime-specific survivors; the v1 chi cluster is gone. One instructive subtlety: the control
+reproduces the repulsion ($z = -38.5$, $-41.5$) --- as it must, since $m = p + 30$ inherits the
+primes' residue \emph{chain}, and the repulsion lives in the skeleton-plus-Hardy--Littlewood
+layer that the control copies. The control distinguishes prime-specific structure from
+skeleton-borne structure; it does not, and should not, erase the skeleton.
+
+Of the $57$ survivors: $43$ control-reproduced (integer smoothness autocorrelations at small
+shifts, size-budget entanglements, and the skeleton-borne controls above); $11$ involving Pratt
+height, which the control cannot audit --- their same-prime members are definitional
+entanglements (Pratt height is built from the factorization of $p - 1$), their consecutive
+members plausibly inherit the control-reproduced smoothness autocorrelations through that
+entanglement; and $3$ small readings ($|z| = 5.0$--$5.4$) pairing the normalized gap with
+smoothness of neighbouring shifted primes, where the control \emph{disagrees} --- genuinely
+prime-only observables, retained in audit for the next scale, not promoted. Confirmed candidates:
+zero, as predicted; the honest harvest of a second first light, with the instrument now two bugs
+wiser.
+
+\section{What would refute what}
+
+A robust, replicated, control-clean, prime-specific correlation of an automatic-class feature
+would contradict no theorem directly --- the base camps govern $\mu$-orthogonality and
+single-sequence equidistribution, not consecutive-prime pair correlations --- but it would breach
+the stratified conjecture at a floor adjacent to proven ground, and would therefore be
+extraordinary. A crystal-class survivor clearing the full ladder would refute the two-skeleton
+conjecture as stated. Nothing of either kind has appeared. The undecidability of the weld
+(essay, Section~5's logic column) guarantees the hunt cannot be exhaustively closed; the ladder
+guarantees any find will know its floor.
+
+\section*{Disclosure of AI use}
+
+This note was developed in an extensive collaboration with Claude (Anthropic; Claude Fable 5,
+accessed through Claude Code, 2026). The direction of the work and all decisions about scope and
+claims are the author's; the AI system drafted the text, wrote and ran the instrument under the
+registry protocol, and assembled the attributions. The base-camp theorems are cited, not
+reproved; the instrument revisions and their causes are reported as they occurred. The author has
+reviewed the note and takes full responsibility for its content.
+
+\begin{thebibliography}{99}
+\bibitem{Essay} C. Gribble, The multiplication crystal: dimension, diffraction, and the
+symmetries of arithmetic, manuscript (2026), in the code repository \cite{Code}.
+\bibitem{Defs} C. Gribble, Crystals and their shadows, programme note (2026), in \cite{Code}.
+\bibitem{Engine} C. Gribble, The multiplication crystal's engine is a formal logarithm, programme
+note (2026), in \cite{Code}.
+\bibitem{HardyLittlewood} G.~H. Hardy and J.~E. Littlewood, Some problems of `Partitio numerorum'
+III, \emph{Acta Math.} \textbf{44} (1923), 1--70.
+\bibitem{Chowla} S. Chowla, \emph{The Riemann Hypothesis and Hilbert's Tenth Problem}, Gordon and
+Breach, New York, 1965.
+\bibitem{Sarnak} P. Sarnak, Three lectures on the M\"obius function, randomness and dynamics,
+lecture notes, Institute for Advanced Study, 2011.
+\bibitem{MauduitRivat} C. Mauduit and J. Rivat, Sur un probl\`eme de Gelfond: la somme des
+chiffres des nombres premiers, \emph{Ann. of Math.} \textbf{171} (2010), 1591--1646.
+\bibitem{Mullner} C. M\"ullner, Automatic sequences fulfill the Sarnak conjecture, \emph{Duke
+Math. J.} \textbf{166} (2017), 3219--3290.
+\bibitem{GreenAC0} B. Green, On (not) computing the M\"obius function using bounded depth
+circuits, \emph{Combin. Probab. Comput.} \textbf{21} (2012), 942--951.
+\bibitem{TaoChowla} T. Tao, The logarithmically averaged Chowla and Elliott conjectures for
+two-point correlations, \emph{Forum Math. Pi} \textbf{4} (2016), e8.
+\bibitem{FH} N. Frantzikinakis and B. Host, The logarithmic Sarnak conjecture for ergodic
+weights, \emph{Ann. of Math.} \textbf{187} (2018), 869--931.
+\bibitem{LOS} R.~J. Lemke Oliver and K. Soundararajan, Unexpected biases in the distribution of
+consecutive primes, \emph{Proc. Natl. Acad. Sci. USA} \textbf{113} (2016), E4446--E4454.
+\bibitem{Code} C. Gribble, Reference implementations accompanying this programme, code repository
+(2026), \texttt{https://github.com/carlgribble-caa/prime-moments}.
+\end{thebibliography}
+
+\end{document}

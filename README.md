@@ -21,6 +21,7 @@ AI-use disclosure section. Provenance of the canonical sources: `papers/PROVENAN
 |---|---|
 | `papers/crystals_and_shadows.tex` | Programme Note 1 (WP1): the crystal defined — measured free monoids, the invariant package, the instances dictionary |
 | `papers/formal_logarithm.tex` | Programme Note 2 (WP2): the Linnik engine proved as a formal logarithm at crystal generality; Möbius twin with bijective proof; necklace question — checks in `code/formal_engine.py` |
+| `papers/observer_ladder.tex` | Programme Note 3 (WP6): the two-skeleton conjecture stratified by observer class; scanner v2.1 under preregistration (`registry/`) with a skeleton-matched control population — instrument in `code/scanner_v2.py` |
 
 ## Kernel-checked proofs (Lean 4)
 

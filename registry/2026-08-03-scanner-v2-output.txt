@@ -1,0 +1,87 @@
+scanner v2.1 (WP6) under prereg 930a091; instrument revisions documented
+population: 68906 primes; control: m = p + 30 (same mod-60 class, sizes, gaps)
+
+survivors: 57; control prime-contamination 27.1%
+  z=  -218.2 (halves -152.8/-142.3, control -213.0)  slope P(p-1) x om(p-1) (same)          [crystal; control-reproduced]
+  z=  -210.4 (halves -153.6/-139.8, control -208.2)  Om(p-1) x slope P(p-1) (same)          [crystal; control-reproduced]
+  z=  +180.5 (halves +121.0/+123.3, control +176.5)  bits(p) x bits(p) (cons)               [automatic; control-reproduced]
+  z=  -150.3 (halves -101.5/-112.2, control -163.9)  Om(p-1) x sf((p-1)/2) (same)           [crystal; control-reproduced]
+  z=  +129.1 (halves  +89.3/ +85.4, control    n/a)  slope P(p-1) x Pratt h (same)          [crystal; prime-specific]
+  z=  +124.2 (halves  +82.3/ +98.6, control +127.3)  Om(p-1) x om(p-1) (same)               [crystal; control-reproduced]
+  z=  -111.1 (halves  -81.1/ -77.1, control    n/a)  Om(p-1) x Pratt h (same)               [crystal; prime-specific]
+  z=  -107.5 (halves  -64.2/ -71.1, control    n/a)  Pratt h x om(p-1) (same)               [crystal; prime-specific]
+  z=   +82.4 (halves  +53.8/ +52.2, control  +79.7)  slope P(p-1) x sf((p-1)/2) (same)      [crystal; control-reproduced]
+  z=   -41.3 (halves  -35.5/ -27.1, control  -41.5)  chi3(p) x chi3(p) (cons)               [congruence; control-reproduced]
+  z=   +40.9 (halves  +32.9/ +29.0, control    n/a)  Pratt h x sf((p-1)/2) (same)           [crystal; prime-specific]
+  z=   +39.6 (halves  +27.0/ +32.4, control  +42.5)  Om(p+1) x bits(p) (same)               [automaticxcrystal; control-reproduced]
+  z=   -37.8 (halves  -31.4/ -28.3, control  -38.5)  chi4(p) x chi4(p) (cons)               [congruence; control-reproduced]
+  z=   -35.6 (halves  -28.1/ -26.2, control  -39.7)  Om(p-1) x bits(p) (same)               [automaticxcrystal; control-reproduced]
+  z=   +26.6 (halves  +19.4/ +19.2, control  +24.8)  bits(p) x sf((p-1)/2) (same)           [automaticxcrystal; control-reproduced]
+  z=   -15.7 (halves  -11.5/ -12.1, control  -16.3)  Om(p-1) x Om(p-1) (cons)               [crystal; control-reproduced]
+  z=   -15.7 (halves  -12.3/ -11.1, control  -16.9)  Om(p+1) x Om(p+1) (cons)               [crystal; control-reproduced]
+  z=   -14.6 (halves  -11.2/ -10.4, control  -15.6)  sf((p-1)/2) x sf((p-1)/2) (cons)       [crystal; control-reproduced]
+  z=   +14.0 (halves   +9.9/  +9.2, control  +13.4)  slope P(p-1) x bits(p) (same)          [automaticxcrystal; control-reproduced]
+  z=   -13.4 (halves   -9.6/  -9.9, control  -12.6)  om(p-1) x om(p-1) (cons)               [crystal; control-reproduced]
+  z=   -12.9 (halves   -8.1/  -9.3, control  -13.2)  Om(p+1) x om(p-1) (same)               [crystal; control-reproduced]
+  z=   +12.2 (halves  +10.1/  +7.8, control  +14.3)  Om(p+1) x Om(p-1) (cons)               [crystal; control-reproduced]
+  z=   +11.9 (halves   +7.8/  +7.4, control  +10.4)  slope P(p-1) x Om(p-1) (cons)          [crystal; control-reproduced]
+  z=   +11.8 (halves   +9.1/  +8.6, control  +12.8)  bits(p) x Om(p-1) (cons)               [automaticxcrystal; control-reproduced]
+  z=   +11.8 (halves   +9.0/  +9.3, control  +14.5)  Om(p-1) x sf((p-1)/2) (cons)           [crystal; control-reproduced]
+  z=   -11.7 (halves   -9.0/  -7.6, control  -10.2)  Om(p+1) x bits(p) (cons)               [automaticxcrystal; control-reproduced]
+  z=   -11.2 (halves   -9.6/  -8.3, control  -12.5)  rs(p) x rs(p) (cons)                   [automatic; control-reproduced]
+  z=   -11.1 (halves   -7.1/  -5.7, control    n/a)  Om(p+1) x Pratt h (cons)               [crystal; prime-specific]
+  z=   -11.0 (halves   -9.9/  -7.5, control  -13.8)  Om(p+1) x slope P(p-1) (cons)          [crystal; control-reproduced]
+  z=   -10.8 (halves   -6.4/  -8.2, control  -10.7)  gap/log p x gap/log p (cons)           [spacing; control-reproduced]
+  z=   +10.7 (halves   +7.9/  +9.1, control  +11.3)  sf((p-1)/2) x Om(p-1) (cons)           [crystal; control-reproduced]
+  z=   +10.5 (halves   +7.9/  +6.8, control    n/a)  Pratt h x bits(p) (same)               [automaticxcrystal; prime-specific]
+  z=   -10.2 (halves   -7.9/  -5.3, control   -9.5)  gap/log p x chi3(p) (cons)             [congruencexspacing; control-reproduced]
+  z=    -9.8 (halves   -7.9/  -7.2, control  -11.2)  Om(p-1) x Om(p+1) (cons)               [crystal; control-reproduced]
+  z=    +9.1 (halves   +6.3/  +6.8, control  +10.6)  Om(p-1) x slope P(p-1) (cons)          [crystal; control-reproduced]
+  z=    +8.8 (halves   +5.9/  +6.2, control   +9.7)  Om(p+1) x slope P(p-1) (same)          [crystal; control-reproduced]
+  z=    -8.8 (halves   -5.9/  -6.2, control   -8.2)  slope P(p-1) x slope P(p-1) (cons)     [crystal; control-reproduced]
+  z=    +8.5 (halves   +6.0/  +6.4, control   +7.3)  om(p-1) x slope P(p-1) (cons)          [crystal; control-reproduced]
+  z=    +8.3 (halves   +6.1/  +5.8, control   +7.9)  slope P(p-1) x om(p-1) (cons)          [crystal; control-reproduced]
+  z=    +8.1 (halves   +6.9/  +3.7, control   +7.2)  om(p-1) x sf((p-1)/2) (same)           [crystal; control-reproduced]
+  z=    +7.9 (halves   +6.0/  +4.3, control    n/a)  Pratt h x Om(p-1) (cons)               [crystal; prime-specific]
+  z=    -7.9 (halves   -5.1/  -5.7, control   -7.9)  Om(p-1) x Om(p+1) (same)               [crystal; control-reproduced]
+  z=    -7.6 (halves   -5.6/  -4.9, control   -6.2)  om(p-1) x Om(p-1) (cons)               [crystal; control-reproduced]
+  z=    +7.3 (halves   +6.0/  +4.6, control   +7.5)  slope P(p-1) x Om(p+1) (cons)          [crystal; control-reproduced]
+  z=    +7.2 (halves   +5.2/  +5.4, control   +8.2)  bits(p) x om(p-1) (same)               [automaticxcrystal; control-reproduced]
+  z=    +7.0 (halves   +4.5/  +6.2, control   +7.9)  bits(p) x Om(p+1) (cons)               [automaticxcrystal; control-reproduced]
+  z=    +6.5 (halves   +4.6/  +4.8, control   +7.0)  sf((p-1)/2) x Om(p+1) (cons)           [crystal; control-reproduced]
+  z=    +6.3 (halves   +4.7/  +4.2, control    n/a)  Om(p+1) x Pratt h (same)               [crystal; prime-specific]
+  z=    -5.9 (halves   -3.9/  -4.1, control   -6.6)  slope P(p-1) x sf((p-1)/2) (cons)      [crystal; control-reproduced]
+  z=    +5.4 (halves   +3.6/  +4.9, control    n/a)  Pratt h x Om(p+1) (cons)               [crystal; prime-specific]
+  z=    -5.4 (halves   -4.6/  -3.3, control   +5.8)  gap/log p x om(p-1) (cons)             [crystalxspacing; prime-specific]
+  z=    -5.4 (halves   -4.1/  -4.1, control   -6.1)  Om(p-1) x om(p-1) (cons)               [crystal; control-reproduced]
+  z=    -5.3 (halves   -4.1/  -3.6, control   +2.9)  gap/log p x Om(p-1) (cons)             [crystalxspacing; prime-specific]
+  z=    -5.1 (halves   -3.2/  -3.6, control   -6.3)  Om(p-1) x bits(p) (cons)               [automaticxcrystal; control-reproduced]
+  z=    +5.1 (halves   +4.2/  +3.1, control   -2.6)  gap/log p x slope P(p-1) (cons)        [crystalxspacing; prime-specific]
+  z=    +5.0 (halves   +3.6/  +3.8, control    n/a)  Om(p-1) x Pratt h (cons)               [crystal; prime-specific]
+  z=    +4.4 (halves   +4.2/  +3.1, control    n/a)  om(p-1) x Pratt h (cons)               [crystal; prime-specific]
+
+committed predictions (prereg 930a091):
+  P1 chi4xchi4 cons fires, z<0:   z =  -37.8  [PASS]   (control: -38.5)
+  P2 chi3xchi3 cons fires, z<=-8: z =  -41.3  [PASS]   (control: -41.5)
+  P3 gapxgap cons fires, z<0:     z =  -10.8  [PASS]
+  P4 theorem-null, automatic class: 0 prime-specific violations  [PASS]
+  P5 v1 same-prime chi4 cluster absorbed: [PASS]
+
+audit summary: 0 mechanical(prereg), 43 control-reproduced (not prime-specific), 14 prime-specific
+prime-specific survivors (for the ladder's upper stages):
+    z=  +129.1  slope P(p-1) x Pratt h (same)
+    z=  -111.1  Om(p-1) x Pratt h (same)
+    z=  -107.5  Pratt h x om(p-1) (same)
+    z=   +40.9  Pratt h x sf((p-1)/2) (same)
+    z=   -11.1  Om(p+1) x Pratt h (cons)
+    z=   +10.5  Pratt h x bits(p) (same)
+    z=    +7.9  Pratt h x Om(p-1) (cons)
+    z=    +6.3  Om(p+1) x Pratt h (same)
+    z=    +5.4  Pratt h x Om(p+1) (cons)
+    z=    -5.4  gap/log p x om(p-1) (cons)
+    z=    -5.3  gap/log p x Om(p-1) (cons)
+    z=    +5.1  gap/log p x slope P(p-1) (cons)
+    z=    +5.0  Om(p-1) x Pratt h (cons)
+    z=    +4.4  om(p-1) x Pratt h (cons)
+
+result: P1-P5 ALL HOLD
