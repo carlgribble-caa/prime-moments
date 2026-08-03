@@ -317,7 +317,7 @@ Status ledger:
 | WP4 | todo |
 | WP5 | todo |
 | WP6 | todo |
-| WP7 | todo (H1 unblocked) |
+| WP7 | **H1 done** 2026-08-03 — `lean/` project (Lean v4.32.2 + mathlib v4.32.2, elan installed, 6.2 GB cache): `PrimeMoments/NewtonRecovery.lean` kernel-checks Companion III Theorem 1 uniformly over integer configurations — `recoveryPoly` monic of degree #S; Vieta both forms (`recoveryPoly_coeff`, `recoveryPoly_eq_sum` via `Multiset.prod_X_sub_C_coeff`); `newton_recursion` (division-cleared paper recursion, specialized from mathlib's `MvPolynomial.mul_esymm_eq_sum` by `aeval` at the configuration); `isRoot_recoveryPoly_iff` + `recovery_eq_filter` (P(W) = window roots). `lake build` green; `#print axioms` = {propext, Classical.choice, Quot.sound} on all five theorems. Next: H2 (bit-floor obstruction, unblocked), H3 (formal Linnik, unblocked by WP2) |
 | WP8 | todo |
 | WP9a | todo |
 | WP9b | todo |

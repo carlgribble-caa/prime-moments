@@ -22,6 +22,14 @@ AI-use disclosure section. Provenance of the canonical sources: `papers/PROVENAN
 | `papers/crystals_and_shadows.tex` | Programme Note 1 (WP1): the crystal defined — measured free monoids, the invariant package, the instances dictionary |
 | `papers/formal_logarithm.tex` | Programme Note 2 (WP2): the Linnik engine proved as a formal logarithm at crystal generality; Möbius twin with bijective proof; necklace question — checks in `code/formal_engine.py` |
 
+## Kernel-checked proofs (Lean 4)
+
+`lean/` is a Lean 4 project (mathlib v4.32.2) mechanizing the programme's theorems.
+`lean/PrimeMoments/NewtonRecovery.lean` — Paper 3, Theorem 1 (WP7.H1): Vieta coefficients,
+the Newton recursion at integer configurations, root reading, and window-filter recovery;
+all theorems depend only on `propext`, `Classical.choice`, `Quot.sound`.
+Build: `cd lean && lake exe cache get && lake build` (first run downloads the mathlib cache).
+
 ## Reproduction
 
 Requires Python 3.10+ with `numpy` and `mpmath`.

@@ -19,5 +19,8 @@ The Crystal/
 __pycache__/
 *.pyc
 
+# Lean build artifacts
+lean/.lake/
+
 # Local tooling
 .claude/
