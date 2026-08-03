@@ -10,7 +10,7 @@ claims are machine-verified, together with the code that reproduces every table.
 | 1 | *Prime counts and prime sums from multiplication tables: a self-similar formula system* | `code/prime_sum_formula.py` |
 | 2 | *Certified exact sums of primes over dyadic intervals via a ladder of generalized factorials* | `code/certified_snap.py` |
 | 3 | *Recovering the primes in a dyadic interval from exact moments: two constructive routes and an obstruction theorem* | `code/prime_recovery.py` |
-| 4 | *The multiplication crystal: dimension, diffraction, and the symmetries of arithmetic* (expository) | `code/crystal_demos.py`, `code/untargeted_scan.py` |
+| 4 | *The multiplication crystal: dimension, diffraction, and the symmetries of arithmetic* (expository) | `code/crystal_demos.py`, `code/untargeted_scan.py`, `code/graph_universe.py` |
 
 Author: Carl Gribble. Developed in collaboration with Claude (Anthropic); each paper carries a full
 AI-use disclosure section. Provenance of the canonical sources: `papers/PROVENANCE.md`.

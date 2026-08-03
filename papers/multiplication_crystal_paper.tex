@@ -389,6 +389,26 @@ bound holding at every level, and the normalized traces equal to $|\cos n\theta|
 angle $\theta$ of the zero --- the mirror's explicit formula as one sustained tone, where ours
 requires an infinite orchestra.
 
+A third universe, checkable to the last digit: finite graphs carry the identical free
+construction, with axes the primitive closed geodesics (backtrackless, tailless, up to rotation)
+and lengths the integer edge-counts --- a lattice crystal with quantum $1$. Here the bookkeeping
+is not merely exact but \emph{finite}: the crystal's zeta function, Ihara's \cite{Ihara}, is
+rational by Bass's theorem \cite{Bass} --- for a $d$-regular graph,
+$\zeta_G(u)^{-1} = (1-u^2)^{|E|-|V|}\det(I - Au + (d-1)u^2)$, a polynomial --- and its Riemann
+Hypothesis (nontrivial poles on the circle $|u| = 1/\sqrt{d-1}$) is \emph{equivalent} to the
+graph being Ramanujan: every nontrivial adjacency eigenvalue obeying $|\lambda| \le 2\sqrt{d-1}$
+\cite{Terras, LPS}. The machine's verdict (\texttt{graph\_universe.py}; all graphs $3$-regular,
+critical circle $|u| = 1/\sqrt2$): for $K_4$, $K_{3,3}$, the cube, and the Petersen graph, the
+geodesic counts from the Bass determinant match the nonbacktracking traces integer for integer to
+length $12$, the Euler product over primitive geodesics rebuilds the determinant exactly --- the
+free monoid audited directly --- and every nontrivial pole sits on the critical circle to
+$10^{-16}$; the circular ladder $CL_{16}$, whose spectral radius $2\cos(\pi/8) + 1 = 2.8478\ldots$
+exceeds $2\sqrt2 = 2.8284\ldots$, fails Ramanujan, and its poles leave the circle in the same
+breath ($8.8 \times 10^{-2}$ off), the equivalence holding in both directions. In this universe
+the Riemann Hypothesis is not a conjecture one inherits but a property one measures, graph by
+graph --- and the constructions of Lubotzky, Phillips, and Sarnak \cite{LPS} manufacture infinite
+families that pass.
+
 The ontological verdict this section was built to deliver: a prime is an irreducible element of a
 free crystal, and \emph{that} is not mysterious --- the mirror dispatches it in closed form. A number
 is a crystal point together with a size. The two universes differ only in the size map, and with it
@@ -611,7 +631,7 @@ Every table in this essay is produced by a single documented script (\texttt{cry
 the code repository \cite{Code}, using only integer sieves, the mpmath and numpy libraries, and, for
 Section~4, the first $300$--$500$ zeros of $\zeta$ computed on the spot. Total runtime is a few minutes on ordinary hardware; the mirror computations (irreducible sieves
 over $\mathbb{F}_2[t]$, the elliptic-curve point counts, and the Sato--Tate histogram) add under a
-minute. The weld laboratory, the recursion census, the skeleton-null scanner, and the extraction run add
+minute. The graph-universe checks of Section~6 (\texttt{graph\_universe.py}) add seconds. The weld laboratory, the recursion census, the skeleton-null scanner, and the extraction run add
 a few minutes more. The companion papers' exact systems \cite{CompanionI, CompanionII,
 CompanionIII} were re-used where indicated and were themselves machine-verified as described there.
 
@@ -699,6 +719,14 @@ Fields}, Cambridge Univ. Press, 1984.
 \bibitem{SatoTate} T. Barnet-Lamb, D. Geraghty, M. Harris, and R. Taylor, A family of Calabi--Yau
 varieties and potential automorphy II, \emph{Publ. Res. Inst. Math. Sci.} \textbf{47} (2011),
 29--98.
+\bibitem{Ihara} Y. Ihara, On discrete subgroups of the two by two projective linear group over
+$\mathfrak{p}$-adic fields, \emph{J. Math. Soc. Japan} \textbf{18} (1966), 219--235.
+\bibitem{Bass} H. Bass, The Ihara--Selberg zeta function of a tree lattice, \emph{Internat. J.
+Math.} \textbf{3} (1992), 717--797.
+\bibitem{Terras} A. Terras, \emph{Zeta Functions of Graphs: A Stroll through the Garden},
+Cambridge Univ. Press, 2011.
+\bibitem{LPS} A. Lubotzky, R. Phillips, and P. Sarnak, Ramanujan graphs, \emph{Combinatorica}
+\textbf{8} (1988), 261--277.
 \bibitem{Beurling} A. Beurling, Analyse de la loi asymptotique de la distribution des nombres
 premiers g\'en\'eralis\'es I, \emph{Acta Math.} \textbf{68} (1937), 255--291.
 \bibitem{DiamondZhang} H. G. Diamond and W.-B. Zhang, \emph{Beurling Generalized Numbers}, Math.
