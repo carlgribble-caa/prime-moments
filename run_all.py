@@ -18,6 +18,7 @@ SCRIPTS = [
     ("Programme Note 3 - scanner v2.1 under preregistration (WP6)", "scanner_v2.py"),
     ("Programme - quantum-graph instrument (WP9b)", "quantum_graph.py"),
     ("Programme - ML detector under preregistration (WP9c)", "ml_detector.py"),
+    ("Programme - Witt / Frobenius-shadow checks (WP8)", "witt_frobenius.py"),
     ("Programme Note 2 - formal engine checks", "formal_engine.py"),
 ]
 
