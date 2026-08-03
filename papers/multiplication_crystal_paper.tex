@@ -95,8 +95,13 @@ gaps $\log(n{+}1) - \log n$ shrink irregularly, and no finite pattern repeats. B
 artifact of projection. The weights $\log 2, \log 3, \log 5, \ldots$ share no common measure --- a
 rational relation among them would exhibit a nontrivial product of primes equal to $1$ --- so the
 projection throws a perfectly regular infinite-dimensional crystal onto a line at incommensurable
-angles. Point sets produced this way are the mathematical models of \emph{quasicrystals}: aperiodic
-to the eye, crystalline in origin, and recognizable by their diffraction, to which we will return. A
+angles. The mechanism --- a periodic structure of high rank projected at incommensurable angles ---
+is exactly the cut-and-project mechanism by which the model sets of mathematical quasicrystal
+theory are built \cite{BaakeGrimm}. One honesty clause must ride with the analogy, and Section~4
+pays it in full: the shadow itself violates that theory's geometric axioms (its gaps shrink, so it
+is not uniformly discrete --- not a Delone set, hence not a model set). The crystalline order
+survives not in the bare point set but in the \emph{weighted combs} it carries, and it is there
+that diffraction becomes a theorem, to which we will return. A
 typical point of the shadow at height $n$ engages about $\log\log n$ of the crystal's axes
 \cite{HardyRamanujan}; the primes are the points engaging exactly one --- flattest in the crystal,
 and, as positions on the line, the least predictable.
@@ -170,9 +175,50 @@ million. The bulk lives at the pole; the leftover is the music.
 
 \section{The diffraction pattern}
 
-Quasicrystals are identified in the laboratory by diffraction: shine waves on an aperiodic point set,
-and hidden crystalline order announces itself as sharp Bragg peaks. The multiplication crystal's
-shadow can be diffracted in both directions, and both experiments succeed.
+In the laboratory, hidden crystalline order announces itself by diffraction: shine waves on a
+structure, and sharp Bragg peaks appear. Mathematical diffraction theory \cite{Hof, BaakeGrimm}
+makes this rigorous for aperiodic structures: to a (possibly weighted) point comb one associates
+its autocorrelation and takes the Fourier transform; the atoms of the result are the Bragg peaks.
+One honesty clause from Section~2 governs everything below: the bare point sets $\{\log n\}$ and
+$\{\log p\}$ are not Delone sets, so the geometric theory of model sets does not apply to them
+directly. The objects that diffract are the \emph{weighted combs} the shadow carries, and for the
+prime comb the diffraction statement is not an analogy but a theorem --- the Guinand--Weil
+explicit formula \cite{Guinand, Weil52}. Paired against an even test function $h$ with
+$g(u) = \frac{1}{2\pi}\int h(r)e^{-iur}\,dr$,
+\[
+\sum_{\gamma} h(\gamma) \;=\; \frac{1}{2\pi}\int_{-\infty}^{\infty} h(r)\,
+\Bigl[\mathrm{Re}\,\psi\bigl(\tfrac14 + \tfrac{ir}{2}\bigr) - \log\pi\Bigr]dr
+\;+\; h\bigl(\tfrac{i}{2}\bigr) + h\bigl(-\tfrac{i}{2}\bigr)
+\;-\; 2\sum_{n \ge 2} \frac{\Lambda(n)}{\sqrt n}\, g(\log n),
+\]
+the left sum over all nontrivial-zero ordinates: the zero comb read at $h$ equals the
+$\Lambda(n)/\sqrt n$-weighted log-prime comb read at $g$, plus the displayed pole and archimedean
+terms. The identity is unconditional ($\gamma$ complex if zeros stray from the critical line;
+under the Riemann Hypothesis the left side is the pairing of a genuine atomic measure on the real
+line). The machine's check (\texttt{diffraction\_pairing.py}), with $h$ a Gaussian of unit width
+centred at $\pm t_0$:
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+centre $t_0$ & zero side & prime $+$ smooth side & $|$difference$|$ \\
+\hline
+$0$ (pole territory) & $0.000000000$ & $0.000000000$ & $1.3 \times 10^{-23}$ \\
+$\gamma_1 = 14.1347\ldots$ & $2.000000000$ & $2.000000000$ & $7.6 \times 10^{-24}$ \\
+$17.5$ (between zeros) & $0.010996589$ & $0.010996589$ & $2.8 \times 10^{-24}$ \\
+$\gamma_2 = 21.0220\ldots$ & $2.000701572$ & $2.000701572$ & $3.9 \times 10^{-24}$ \\
+$\gamma_3 = 25.0108\ldots$ & $2.000702435$ & $2.000702435$ & $3.5 \times 10^{-24}$ \\
+$\gamma_4 = 30.4248\ldots$ & $2.085660945$ & $2.085660945$ & $4.3 \times 10^{-24}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent At a zero the pairing is $\approx 2$, the $h$-mass of one comb atom counted with both
+signs; between zeros it is small but nonzero and matched to twenty-three decimals all the same
+--- an \emph{identity}, not a peak fit. At $t_0 = 0$ the pole term $h(\pm i/2) = 4e^{1/8}$ is
+cancelled to the same precision by the archimedean and prime terms: the exact accounting behind
+the ``bulk'' subtracted in the experiment below. Both experiments that follow are corollaries of
+this display, read in its two directions.
 
 \emph{Primes ring at zeros.} Take the prime powers up to $N = 2 \times 10^5$ at their logarithmic
 positions, weighted as in the Chebyshev function, and scan the exponential sum
@@ -196,7 +242,8 @@ $32.950$ & $32.935062$ & $0.015$ \\
 \end{center}
 
 \noindent A sieve to $200{,}000$ and a wave scan recover the first five zeros of the zeta function to
-within hundredths. The diffraction pattern of the primes is the zeros.
+within hundredths. The diffraction pattern of the primes is the zeros; and the raw scan's impostor
+bulk was the pole term $h(\pm i/2)$ of the identity all along.
 
 \emph{Zeros ring at primes.} The converse is a theorem of Landau from 1912 \cite{LandauZeros}: for
 fixed $x > 1$, $\sum_{0 < \gamma \le T} x^{\rho}$ grows like $-(T/2\pi)\Lambda(x)$ --- it spikes
@@ -214,6 +261,23 @@ For a true lattice, the statement ``the Fourier transform of the point set is ag
 Poisson summation. For the multiplication crystal's shadow, it is the Riemann--Weil explicit formula:
 primes and zeros are each other's diffraction patterns, an observation Dyson made pointedly when he
 proposed classifying quasicrystals as a road toward the Riemann Hypothesis \cite{Dyson}.
+
+The modern vocabulary sharpens Dyson's road and prices it. A \emph{crystalline measure} is a
+measure with locally finite support whose distributional Fourier transform is again one; a
+\emph{Fourier quasicrystal} adds temperedness of the variations \cite{Meyer, LevOlevskii}. The
+rigidity theorems of Lev and Olevskii \cite{LevOlevskii} say the tame positive examples ---
+uniformly discrete support and spectrum --- are lattice combs in disguise; the Lee--Yang
+constructions of Kurasov and Sarnak \cite{KurasovSarnak} produce genuinely exotic Fourier
+quasicrystals, and were motivated by exactly this chapter's question: how special is the zero
+comb? Where the universe stands, stated with labels. Theorem, unconditional: the explicit
+formula displayed above. Theorems, cited: the rigidity and existence results
+\cite{LevOlevskii, KurasovSarnak}. Conjecture (equivalent to RH): the zero comb
+$\sum_\gamma \delta_\gamma$ is a measure on the \emph{real} line. Open: whether the zero comb ---
+whose average spacing $2\pi/\log\gamma$ shrinks, so it is not uniformly discrete and escapes
+every rigidity hypothesis --- admits a crystalline-measure characterization, and whether such a
+characterization could be run backwards toward RH. The Kurasov--Sarnak examples arise as spectra
+of quantum graphs --- metric graphs with incommensurable edge lengths, the same objects, with
+lengths $\log 2, \log 3, \log 5, \ldots$, that this programme plans as its next instrument.
 
 \section{The symmetries}
 
@@ -631,7 +695,8 @@ Every table in this essay is produced by a single documented script (\texttt{cry
 the code repository \cite{Code}, using only integer sieves, the mpmath and numpy libraries, and, for
 Section~4, the first $300$--$500$ zeros of $\zeta$ computed on the spot. Total runtime is a few minutes on ordinary hardware; the mirror computations (irreducible sieves
 over $\mathbb{F}_2[t]$, the elliptic-curve point counts, and the Sato--Tate histogram) add under a
-minute. The graph-universe checks of Section~6 (\texttt{graph\_universe.py}) add seconds. The weld laboratory, the recursion census, the skeleton-null scanner, and the extraction run add
+minute. The graph-universe checks of Section~6 (\texttt{graph\_universe.py}) and the
+explicit-formula pairing table of Section~4 (\texttt{diffraction\_pairing.py}) add seconds each. The weld laboratory, the recursion census, the skeleton-null scanner, and the extraction run add
 a few minutes more. The companion papers' exact systems \cite{CompanionI, CompanionII,
 CompanionIII} were re-used where indicated and were themselves machine-verified as described there.
 
@@ -685,6 +750,20 @@ problems for fractal strings, \emph{J. London Math. Soc.} (2) \textbf{52} (1995)
 \textbf{71} (1912), 548--564.
 \bibitem{Dyson} F. Dyson, Birds and frogs, \emph{Notices Amer. Math. Soc.} \textbf{56} (2009),
 212--223.
+\bibitem{Hof} A. Hof, On diffraction by aperiodic structures, \emph{Comm. Math. Phys.}
+\textbf{169} (1995), 25--43.
+\bibitem{BaakeGrimm} M. Baake and U. Grimm, \emph{Aperiodic Order. Vol. 1: A Mathematical
+Invitation}, Cambridge Univ. Press, 2013.
+\bibitem{Guinand} A.~P. Guinand, A summation formula in the theory of prime numbers, \emph{Proc.
+London Math. Soc.} (2) \textbf{50} (1948), 107--119.
+\bibitem{Weil52} A. Weil, Sur les ``formules explicites'' de la th\'eorie des nombres premiers,
+\emph{Comm. S\'em. Math. Univ. Lund} (1952), 252--265.
+\bibitem{Meyer} Y. Meyer, Measures with locally finite support and spectrum, \emph{Proc. Natl.
+Acad. Sci. USA} \textbf{113} (2016), 3152--3158.
+\bibitem{LevOlevskii} N. Lev and A. Olevskii, Quasicrystals and Poisson's summation formula,
+\emph{Invent. Math.} \textbf{200} (2015), 585--606.
+\bibitem{KurasovSarnak} P. Kurasov and P. Sarnak, Stable polynomials and crystalline measures,
+\emph{J. Math. Phys.} \textbf{61} (2020), 083501.
 \bibitem{Riemann} B. Riemann, \"Uber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse,
 \emph{Monatsber. K\"onigl. Preuss. Akad. Wiss. Berlin} (1859), 671--680.
 \bibitem{Dirichlet} P. G. L. Dirichlet, Beweis des Satzes, dass jede unbegrenzte arithmetische
