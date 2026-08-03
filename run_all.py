@@ -17,6 +17,7 @@ SCRIPTS = [
     ("Paper 4 - logic column decision procedures (WP5)", "logic_column.py"),
     ("Programme Note 3 - scanner v2.1 under preregistration (WP6)", "scanner_v2.py"),
     ("Programme - quantum-graph instrument (WP9b)", "quantum_graph.py"),
+    ("Programme - ML detector under preregistration (WP9c)", "ml_detector.py"),
     ("Programme Note 2 - formal engine checks", "formal_engine.py"),
 ]
 
