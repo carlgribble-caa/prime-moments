@@ -11,6 +11,7 @@ SCRIPTS = [
     ("Paper 3 - prime recovery, both routes", "prime_recovery.py"),
     ("Paper 4 - crystal demos (every table in the essay)", "crystal_demos.py"),
     ("Paper 4 - skeleton-null scanner", "untargeted_scan.py"),
+    ("Programme Note 2 - formal engine checks", "formal_engine.py"),
 ]
 
 

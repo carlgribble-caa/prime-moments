@@ -1,0 +1,335 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{question}{Question}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\m}{\mathfrak{m}}
+\newcommand{\A}{\mathcal{A}}
+
+\title{The multiplication crystal's engine is a formal logarithm}
+\author{Carl Gribble\thanks{Programme Note 2, draft v0.1. Companion to
+\cite{CompanionI,CompanionII,CompanionIII}, the essay \cite{Essay}, and Programme Note 1
+\cite{Defs}, whose vocabulary is used throughout. Developed in collaboration with Claude
+(Anthropic); the machine checks of Section~7 were run as described there. Responsibility for the
+content rests with the author. A full disclosure of AI use appears at the end of the note.}}
+\date{August 2026 --- draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The identity engine of \cite{CompanionI} --- Linnik's alternating-harmonic de-duplication of the
+multiplication table --- is restated and proved as a statement of pure algebra: in the convolution
+algebra of any crystal (measured free monoid \cite{Defs}), the formal logarithm of the zeta element
+is supported on axis powers with value $1/j$ at $p^{\,j}$. No limit, no analytic continuation, and
+no property of the integers enters; the proof is unique factorization plus the exp/log calculus of
+a complete filtered $\Q$-algebra, and is stated at Beurling generality. The M\"obius twin
+$\Lambda = \ell * \mu$ is derived from the same calculus in two lines, and the classical toggle
+involution gives it a fully bijective proof. For the harmonic form itself we record an honest
+obstruction --- $\kappa$ is not integer-valued, so no unweighted sign-reversing involution can
+compute it --- together with a Burnside reformulation in which the $1/k$ weights become orbit-size
+corrections under cyclic rotation, verified in micro-examples and left open as the \emph{necklace
+question}. Exact machine checks over random crystals (a basis-vector trick makes one run cover all
+Beurling length systems at once) and over the integers confirm every identity at truncation. The
+note closes with the revision plan this induces for \cite{CompanionI} and the statement that work
+package WP7.H3 will mechanize.
+\end{abstract}
+
+\section{What is being claimed}
+
+The engine of the companion paper \cite{CompanionI} is the per-integer identity
+\[
+\sum_{k \ge 1} \frac{(-1)^{k-1}}{k}\, D_k^*(n) \;=\; \frac{\Lambda(n)}{\log n},
+\]
+Linnik's identity \cite{Linnik}, there derived from the generating identity
+$\log \zeta = \log(1 + (\zeta - 1))$ read coefficientwise. That derivation is correct but wears
+analytic clothing: $\zeta(s)$ appears as a function of a complex variable, and the reader may
+suspect that convergence, or some property of the primes, is doing work. The point of this note is
+that nothing of the sort is involved. The identity is a theorem about \emph{free commutative
+monoids with finite divisor sets}, provable by elementary algebra, valid verbatim for every crystal
+of \cite{Defs} --- the integers, the function fields, every Beurling system --- and its natural
+proof is three lines once the right algebra is named. Naming it also locates the identity's
+\emph{bijective} content precisely: it lives in the M\"obius twin, while the harmonic weights
+$1/k$ are calculus, not counting --- with one honest open door recorded in Section~6.
+
+Throughout, $C = (M, \ell)$ is a crystal with axis set $P$ \cite{Defs}; the letter $p$ always
+denotes an axis. The results of Sections 2--5 never use $\ell$ except where it is named
+explicitly, and never use axiom (F); they are theorems about the bare free monoid $M$.
+
+\section{The convolution algebra}
+
+\begin{definition}
+$\A(M)$ is the set of all functions $f \colon M \to \Q$ with pointwise addition and the convolution
+\[
+(f * g)(m) \;=\; \sum_{ab = m} f(a)\, g(b),
+\]
+the sum over ordered pairs with $ab = m$.
+\end{definition}
+
+The sum is finite: divisors of $m$ correspond to componentwise-smaller exponent vectors, of which
+there are finitely many. $\A(M)$ is a commutative associative $\Q$-algebra with unit
+$\delta = 1_{\{1\}}$. For $M = (\N_{\ge 1}, \times)$ it is the algebra of formal Dirichlet series;
+in Rota's theory it is the reduced incidence algebra of the divisor lattice, translation-invariance
+of intervals ($[a, b] \cong [1, b/a]$) being what ``reduced'' means \cite{Rota, DRS, StanleyEC}.
+
+Write $\Omega \colon M \to \N$ for the dimension grading ($\Omega(p) = 1$, additive) and
+\[
+F_k \;=\; \{\, f \in \A(M) : f(m) = 0 \text{ whenever } \Omega(m) < k \,\}, \qquad
+\m \;=\; F_1 = \{ f : f(1) = 0 \}.
+\]
+
+\begin{lemma}[Filtration]\label{lem:filt}
+$F_j * F_k \subseteq F_{j+k}$; in particular $\m^{*k} \subseteq F_k$. Any series
+$\sum_{k \ge 0} f_k$ with $f_k \in F_k$ defines an element of $\A(M)$ (at each $m$ only the terms
+$k \le \Omega(m)$ contribute), and $\A(M)$ is complete for the topology this filtration defines.
+\end{lemma}
+
+\begin{proof}
+If $ab = m$ with $f(a) g(b) \ne 0$ then $\Omega(m) = \Omega(a) + \Omega(b) \ge j + k$. The rest is
+the definition of pointwise finiteness.
+\end{proof}
+
+Consequently the formal series
+\[
+\exp(f) = \sum_{k \ge 0} \frac{f^{*k}}{k!} \quad (f \in \m), \qquad
+\log(\delta + f) = \sum_{k \ge 1} \frac{(-1)^{k-1}}{k}\, f^{*k} \quad (f \in \m)
+\]
+are well defined, and all the usual identities hold --- $\exp$ and $\log$ are mutually inverse
+bijections between $\m$ and $\delta + \m$, and $\exp(f + g) = \exp f * \exp g$, equivalently
+$\log(u * v) = \log u + \log v$ for $u, v \in \delta + \m$. (Proof in one sentence: in each
+truncation $\A(M)/F_{n+1}$ the ideal generated by $\m$ is nilpotent, the identities are the
+classical polynomial identities of exp/log there, and completeness assembles them; see
+\cite[Ch.~5]{StanleyEC}.) Likewise, locally finite families multiply: if $(u_p)_{p \in P}$ satisfy
+$u_p \in \delta + \m$ with $u_p - \delta$ supported on powers of $p$, then $\prod_p u_p$ is
+defined (evaluation at $m$ stabilizes once the finite set of axes dividing $m$ is included) and
+$\log \prod_p u_p = \sum_p \log u_p$.
+
+Two more standing elements: $\zeta = $ the constant function $1$; $F = \zeta - \delta$, the
+indicator of $M \setminus \{1\}$; and the layer counts $D_k := F^{*k}$, so that $D_k(m)$ is the
+number of ordered $k$-tuples of non-identity elements with product $m$ --- the $k$-dimensional
+table of \cite{CompanionI} at $C_{\Z}$.
+
+\section{The formal logarithm theorem}
+
+\begin{theorem}[The engine, at crystal generality]\label{thm:engine}
+In $\A(M)$ define $\kappa = \log \zeta = \sum_{k \ge 1} \frac{(-1)^{k-1}}{k} D_k$. Then
+\[
+\kappa(m) \;=\;
+\begin{cases}
+1/j, & m = p^{\,j},\ p \in P,\ j \ge 1,\\
+0, & \text{otherwise.}
+\end{cases}
+\]
+\end{theorem}
+
+\begin{proof}
+For an axis $p$ let $e_p = 1_{\{p\}}$. Freeness gives $e_p^{*j} = 1_{\{p^{\,j}\}}$ (the only
+ordered $j$-tuple of copies of $p$ with product $p^{\,j}$ is $(p, \dots, p)$), hence
+\[
+\sum_{j \ge 0} e_p^{*j} \;=\; 1_{\{p^{\,j} \,:\, j \ge 0\}} \;=\; (\delta - e_p)^{-1}.
+\]
+Unique factorization says exactly that $\zeta = \prod_{p} (\delta - e_p)^{-1}$: the coefficient of
+$m$ in the finite sub-product over any axis set containing the support of $m$ is $1$. Taking
+$\log$ of the locally finite product,
+\[
+\kappa \;=\; \sum_p \log\,(\delta - e_p)^{-1} \;=\; \sum_p \sum_{j \ge 1} \frac{e_p^{*j}}{j}
+\;=\; \sum_p \sum_{j \ge 1} \frac{1}{j}\, 1_{\{p^{\,j}\}} . \qedhere
+\]
+\end{proof}
+
+\begin{corollary}[Linnik's identity]\label{cor:linnik}
+At $C_{\Z}$, Theorem~\ref{thm:engine} is Lemma~1 of \cite{CompanionI}:
+$\sum_k \frac{(-1)^{k-1}}{k} D^*_k(n) = \Lambda(n)/\log n$. At $C_{\mathbb{F}_q[t]}$ it is the
+function-field analogue, with no change in proof. Proposition~4 of \cite{Defs} is proved.
+\end{corollary}
+
+\begin{corollary}[Window pairings]\label{cor:pairing}
+For any finitely supported weight $w \colon M \to \Q$,
+\[
+\sum_{m \in M} w(m)\, \kappa(m) \;=\; \sum_{p} \sum_{j \ge 1} \frac{w(p^{\,j})}{j}.
+\]
+At $C_\Z$ with $w(m) = |m|^{\,j}\,1_{\{|m| \le y\}}$ this is the identity
+$\sum_{k} \frac{(-1)^{k-1}}{k} T_k^{(j)}(y) = \sum_{p^i \le y} p^{\,ij}/i$ that feeds the
+extraction line of \cite{CompanionI}; the remaining content of that paper's formula system --- the
+Faulhaber base, the hyperbola step, and the root-scale recursion --- is finite arithmetic
+reorganization of these pairings, with no analytic input. The exactness assertion of
+\cite{CompanionI} (``every harmonic combination lands on denominator $1$'') is the integrality of
+the left side, now visible formally: it equals a finite sum of integers $p^{\,ij}$ divided by
+$i$, summed against the M\"obius-inverted extraction, and the paper's recursion is precisely the
+bookkeeping that clears the denominators.
+\end{corollary}
+
+\begin{corollary}[Duplicated-mass skeleton]\label{cor:dup}
+$F - \kappa = \sum_{k \ge 2} \frac{(-1)^{k}}{k} D_k$ identically in $\A(M)$; evaluated at $m$,
+this is $1 - 1/j$ on axis powers $p^{\,j}$ and $1$ on all other $m \ne 1$ --- the composite
+indicator with prime-power dust of \cite[Thm.~2]{CompanionI}. The cancellation of the
+two-dimensional table out of its own duplication ledger is the visible absence of $D_2$ from the
+pair $(F, \kappa)$ once the $k = 2$ term is moved across; the rest of that theorem is the window
+pairing of Corollary~\ref{cor:pairing} at weight $w(m) = |m|\,1_{\{|m| \le N\}}$ plus the fold
+bookkeeping done there.
+\end{corollary}
+
+\section{The M\"obius twin, bijectively}
+
+\begin{proposition}[M\"obius, at crystal generality]\label{prop:mu}
+$\mu := \zeta^{-1} = \prod_p (\delta - e_p)$ is given by $\mu(m) = (-1)^{\omega(m)}$ if $m$ is a
+product of distinct axes ($\omega$ of them) and $0$ otherwise; and $\sum_{d \mid m} \mu(d) = 0$
+for every $m \ne 1$.
+\end{proposition}
+
+\begin{proof}
+The product formula is the finite sub-product evaluation as in Theorem~\ref{thm:engine}; expanding
+it gives the stated values. The divisor sum is $(\mu * \zeta)(m) = \delta(m)$. For the bijective
+proof of that vanishing: fix an axis $p \mid m$; on the squarefree divisors of $m$ (the support of
+$\mu$ among divisors), toggling the factor $p$ is an involution that reverses the sign of $\mu$
+and has no fixed points. Mass cancels in pairs.
+\end{proof}
+
+Now bring in the length. Any additive weight defines a derivation: for
+$L(f)(m) := \ell(m) f(m)$,
+\[
+L(f * g) \;=\; L(f) * g + f * L(g),
+\]
+because $\ell(m) = \ell(a) + \ell(b)$ on each pair $ab = m$; $L$ respects the filtration. The
+standard consequence $L(\log u) = L(u) * u^{-1}$ (proved in the nilpotent truncations, as before)
+yields, in two lines, the twin form of the engine:
+
+\begin{proposition}[$\Lambda = \ell * \mu$]\label{prop:twin}
+Let $\Lambda := L(\kappa)$, so $\Lambda(p^{\,j}) = \ell(p)$ on axis powers and $0$ elsewhere.
+Then
+\[
+\Lambda \;=\; L(\zeta) * \zeta^{-1} \;=\; \ell * \mu ,
+\]
+where $\ell$ denotes the function $m \mapsto \ell(m)$. Equivalently $\ell = \Lambda * \zeta$,
+which is the direct count $\sum_{p^{j} \mid m} \ell(p) = \ell(m)$.
+\end{proposition}
+
+The toggle involution of Proposition~\ref{prop:mu} extends to $\ell * \mu$ by linearity in the
+$\ell$-leg, so the twin identity --- hence the engine's support statement, hence the composite
+indicator used by the duplicated-mass theorem --- has a fully bijective proof. This is the
+integer-weight ``dimension parity'' route that \cite{CompanionI} calls Legendre's twin; the
+calculus above is the precise bridge between the two.
+
+\section{Where the bijection stops: an obstruction}
+
+Can the harmonic identity itself --- Theorem~\ref{thm:engine} with its $1/k$ weights --- be proved
+by a plain sign-reversing involution on factorization tuples? No:
+
+\begin{remark}[Obstruction]\label{rem:obstruction}
+$\kappa$ is not integer-valued ($\kappa(p^2) = \tfrac12$), while any identity established by an
+unweighted sign-reversing involution between sets of tuples computes an integer. A combinatorial
+proof of Theorem~\ref{thm:engine} must therefore either pass through the M\"obius twin (Section~4)
+or count something finer than tuples.
+\end{remark}
+
+The finer count has a natural candidate. The cyclic group $C_k$ acts on the $k$-tuples counted by
+$D_k(m)$ by rotation, and orbit-counting rewrites the engine as
+\[
+\kappa(m) \;=\; \sum_{k \ge 1} (-1)^{k-1} \sum_{\text{orbits } O \text{ of } C_k}
+\frac{1}{|\mathrm{Stab}(O)|},
+\]
+since $|O|/k = 1/|\mathrm{Stab}|$. The harmonic weights are now orbit-size corrections, nonunit
+only on \emph{periodic} tuples. Micro-examples, machine-checked in Section~7: at $m = p^2$ the
+$k = 2$ tuple $(p, p)$ is fixed by rotation, contributing $-\tfrac12$, and
+$\kappa = 1 - \tfrac12 = \tfrac12$; at $m = pq$ the two tuples $(p, q), (q, p)$ form one free
+orbit contributing $-1$, and $\kappa = 1 - 1 = 0$. This is the commutative shadow of the
+Witt/necklace calculus of Metropolis and Rota \cite{MetropolisRota}, where logarithms count
+aperiodic necklaces.
+
+\begin{question}[The necklace question]\label{q:necklace}
+Is there a weight-preserving sign-reversing involution on the set of pairs (cyclic orbit, marked
+period) --- or another finer structure --- that proves Theorem~\ref{thm:engine} directly, with the
+$1/j$ at axis powers emerging as the surviving periodic orbit? A positive answer would categorify
+the engine; Section~6 records where such a categorification would live.
+\end{question}
+
+We record the honest outcome required by the work package: the bijective proof exists and is given
+for the twin (Section~4); for the harmonic form the obstruction is Remark~\ref{rem:obstruction},
+the reformulation is the display above, and the door is Question~\ref{q:necklace}.
+
+\section{Categorification pointer}
+
+At crystal generality the layers are already sets --- $D_k(m) = |L_k(m)|$ for the set $L_k(m)$ of
+tuples --- so the layer identities categorify trivially. The substantive known categorification at
+$C_\Z$ is the \emph{arithmetic product of species} of Maia and M\'endez \cite{MaiaMendez}, under
+which Dirichlet series of species multiply; the tower of layers should be the tower of arithmetic
+powers of the species of nonempty blocks. What would be genuinely new is a species-level
+\emph{logarithm} producing $\kappa$ --- the categorified Witt formula of
+Question~\ref{q:necklace}. We name the door and do not enter it in this note.
+
+\section{Machine verification}
+
+The script \texttt{formal\_engine.py} in the repository \cite{Code} checks every identity above by
+exact rational arithmetic on truncated crystals, with no floating point and no analytic object
+anywhere. Elements are exponent vectors; convolution is vector splitting; truncation is by
+dimension $\Omega \le B$, which is exact for every identity here since all are $\Omega$-graded.
+Five checks: (i) Theorem~\ref{thm:engine} on every element of random crystals with $r$ axes,
+$\Omega \le B$, for $(r, B) = (4, 9), (6, 6), (1, 40)$; (ii) $\mu * \zeta = \delta$ and the
+product formula for $\mu$; (iii) Proposition~\ref{prop:twin} with $\ell$ taken \emph{basis-valued}
+--- $\ell(m)$ is the exponent vector itself in $\Q^r$, so one run verifies $\Lambda = \ell * \mu$
+simultaneously for every Beurling length assignment on $r$ axes; (iv) $\exp(\kappa) = \zeta$ at
+truncation; (v) at $C_\Z$, $\kappa(n)$ against the factorization oracle for all $n \le 3000$,
+computed by integer Dirichlet convolutions. All pass; the run takes seconds and is wired into the
+repository's \texttt{run\_all.py}.
+
+\section{Revision plan for the companion paper}
+
+The changes this note induces in \cite{CompanionI} are surgical. (1) After its Lemma~1, add a
+remark citing this note: the identity is formal, holds at crystal generality, and needs no
+convergence. (2) In its Section~3, the exactness assertion (denominator~$1$) gains the formal
+explanation of Corollary~\ref{cor:pairing}. (3) In related work, add the incidence-algebra
+attribution (Rota; Doubilet--Rota--Stanley) alongside Linnik, and Knopfmacher~\cite{Knopfmacher}
+for the abstract setting. (4) No numerical content changes; no table changes. These edits are queued for the
+Companion~I revision that accompanies the essay's v2 (milestone K1).
+
+\section*{Disclosure of AI use}
+
+This note was developed in an extensive collaboration with Claude (Anthropic; Claude Fable 5,
+accessed through Claude Code, 2026). The direction of the work and all decisions about scope and
+claims are the author's; the AI system drafted the text and proofs, wrote the verification script,
+and assembled the attributions, the reason for its use being to enable a single non-specialist
+author to develop, check, and document the material to a publishable standard. Every identity
+claimed is machine-verified as described in Section~7. The author has reviewed the note and takes
+full responsibility for its content.
+
+\begin{thebibliography}{99}
+\bibitem{CompanionI} C. Gribble, Prime counts and prime sums from multiplication tables: a
+self-similar formula system, preprint, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769103}.
+\bibitem{CompanionII} C. Gribble, Certified exact sums of primes over dyadic intervals via a
+ladder of generalized factorials, preprint, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769105}.
+\bibitem{CompanionIII} C. Gribble, Recovering the primes in a dyadic interval from exact moments:
+two constructive routes and an obstruction theorem, preprint, Zenodo (2026),
+\texttt{doi:10.5281/zenodo.21769107}.
+\bibitem{Essay} C. Gribble, The multiplication crystal: dimension, diffraction, and the symmetries
+of arithmetic, manuscript (2026), in the code repository \cite{Code}.
+\bibitem{Defs} C. Gribble, Crystals and their shadows: definitions for a programme on the
+multiplication crystal, programme note (2026), in the code repository \cite{Code}.
+\bibitem{Linnik} Yu.~V. Linnik, \emph{The Dispersion Method in Binary Additive Problems}, Amer.
+Math. Soc., Providence, 1963.
+\bibitem{Rota} G.-C. Rota, On the foundations of combinatorial theory I: Theory of M\"obius
+functions, \emph{Z. Wahrscheinlichkeitstheorie} \textbf{2} (1964), 340--368.
+\bibitem{DRS} P. Doubilet, G.-C. Rota, and R. Stanley, On the foundations of combinatorial theory
+VI: The idea of generating function, in \emph{Proc. Sixth Berkeley Symp. Math. Statist. Prob.},
+vol.~II, Univ. California Press, 1972, 267--318.
+\bibitem{StanleyEC} R.~P. Stanley, \emph{Enumerative Combinatorics}, vol.~1, 2nd ed., Cambridge
+Univ. Press, 2012.
+\bibitem{MetropolisRota} N. Metropolis and G.-C. Rota, Witt vectors and the algebra of necklaces,
+\emph{Adv. Math.} \textbf{50} (1983), 95--125.
+\bibitem{MaiaMendez} M. Maia and M. M\'endez, On the arithmetic product of combinatorial species,
+\emph{Discrete Math.} \textbf{308} (2008), 5407--5427.
+\bibitem{Knopfmacher} J. Knopfmacher, \emph{Abstract Analytic Number Theory}, North-Holland,
+Amsterdam, 1975.
+\bibitem{Code} C. Gribble, Reference implementations accompanying this programme, code repository
+(2026), \texttt{https://github.com/carlgribble-caa/prime-moments}.
+\end{thebibliography}
+
+\end{document}
