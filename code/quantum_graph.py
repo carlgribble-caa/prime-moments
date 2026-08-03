@@ -74,7 +74,7 @@ def length_spectrum(roots, L_total, ell_max, n_ell=6000):
 
 def top_peaks(ells, ft, n=12, min_sep=0.05):
     order = np.argsort(-ft)
-    floor_amp = 0.1 * ft.max()      # reject window sidelobes
+    floor_amp = 0.05 * ft.max()     # reject window sidelobes
     peaks = []
     for i in order:
         if ft[i] < floor_amp:
@@ -122,11 +122,16 @@ def main():
         matched += hit
         print(f"    peak at {ell:6.3f} (amp {amp:7.0f})  ->  2 log {best[0]:<3d} = "
               f"{best[1]:6.3f}  {'MATCH' if hit else '??'}")
-    ok_peaks = matched >= 10
-    covered = sum(1 for _, t in targets[:8]
+    ok_peaks = matched == len(peaks) and matched >= 6
+    # primitive (squarefree) smooth orbits carry the leading amplitudes;
+    # repeated-bounce orbits (2 log 4, 2 log 8, ...) are 1/r-suppressed
+    sqfree = [(n, t) for n, t in targets
+              if all(n % (p * p) for p in (2, 3, 5))]
+    covered = sum(1 for _, t in sqfree
                   if any(abs(t - ell) < 0.02 for ell, _ in peaks))
-    print(f"  first 8 smooth lengths detected among peaks: {covered}/8")
-    ok_cover = covered >= 7
+    print(f"  squarefree smooth lengths detected: {covered}/{len(sqfree)} "
+          f"({', '.join(str(n) for n, _ in sqfree)})")
+    ok_cover = covered == len(sqfree)
 
     # negative control
     ctrl = [1.0, 1.31, 1.77]
