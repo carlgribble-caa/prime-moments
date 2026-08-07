@@ -20,6 +20,7 @@ SCRIPTS = [
     ("Programme - ML detector under preregistration (WP9c)", "ml_detector.py"),
     ("Programme - Witt / Frobenius-shadow checks (WP8)", "witt_frobenius.py"),
     ("Programme Note 2 - formal engine checks", "formal_engine.py"),
+    ("Programme - Weil positivity explorer under preregistration (WP-RH1)", "weil_positivity.py"),
 ]
 
 

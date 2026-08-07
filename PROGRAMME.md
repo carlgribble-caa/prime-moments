@@ -196,6 +196,28 @@ Hard deps block start; soft deps only shape the write-up.
 **Tasks.** Baselines that only see skeleton data vs models that see crystal-native features; preregistered features, holdout halves, audit ladder for any win; interpretability pass to extract any surviving feature into a candidate statement (which then enters the WP6 pipeline at stage 1).
 **Done when.** Scan report filed in the registry (an all-null harvest is a publishable outcome inside P6).
 
+### WP-RH — The Positivity Lane (standing; opened 2026-08-07)
+**Goal.** The explicit-formula functional treated as the object of study: RH is
+equivalent (Weil 1952) to positivity of `W(g * g~)` over all admissible test functions —
+the criterion whose analogue carries every proved case (Castelnuovo positivity for function
+fields; spectral realization for graphs and the modular surface). The lane measures the
+positivity landscape and the structures that enforce it, under the registry discipline.
+The words "proof of RH" appear in no artifact of this lane; milestones are priced honestly
+(instrument + calibration: near-certain; novel tables + labeled conjectures: likely; a
+partial theorem: possible; RH: epsilon).
+**Stages.**
+- **RH1 (done, first light).** The Weil form as a Gram matrix on a preregistered Gaussian
+  family, geometric side vs zero side; prime-free-window row; elliptic-curve calibration
+  with Hasse-violating negative control. Instrument: `code/weil_positivity.py`.
+- **RH2 (next).** Inverse spectral: reconstruct truncated canonical-system data from the
+  zeros; constant-mine and structure-hunt it against the solved universes' Hamiltonians
+  (EC/Frobenius; Selberg/Laplacian).
+- **RH3 (later).** The requirements spec: the minimal machine-checked property list the
+  positive structure must satisfy, extracted from the calibration universes.
+**Risk.** The lane is adjacent to an active literature (Connes–Consani Weil positivity;
+Li coefficients; de Branges spaces) — librarian stage applied without mercy to any
+candidate; heavy prior-art presumption.
+
 ### WP10 — Releases (rolling)
 - **K1** Essay v2 → arXiv (gate: WP3 + WP4 + WP5 + WP9a merged; pointers to WP2/WP6).
 - **K2** P5 algebra note (gate: WP2).
@@ -323,3 +345,4 @@ Status ledger:
 | WP9b | **done** 2026-08-03 — `code/quantum_graph.py` (in run_all): star quantum graph with edge lengths log 2/log 3/log 5; 3,240 eigenvalues to k = 3000 (Weyl slope 1.08036 vs L/π = 1.08263, 0.2%); the length spectrum's every detected peak lands at 2 log n for 5-smooth n — squarefree orbits 2,3,5,6,10 all present, repeated-bounce orbits (4, 9, 12) present and correctly 1/r-suppressed; negative-control graph rejects the crystal template 56.5 : 1.8. Two instrument bugs found and fixed during bring-up (pole guard phase error producing exactly 2× Weyl; sidelobes counted as peaks) — criteria recalibrated to the corrected physics, honest note in script header. The crystal realized as the length spectrum of an actual differential operator (Kurasov–Sarnak adjacency noted; essay §4 frontier already points here) |
 | WP9c | **done** 2026-08-03 — `code/ml_detector.py` (in run_all, 45 s) under prereg `3a52d21`: predict next-prime chi4 and large-gap from a congruence-skeleton baseline vs a crystal-native challenger; logistic + boosted stumps (numpy only), chronological holdout, eps = 0.002 nats. **Q1 PASS** (max improvement +0.00022, order below eps, all four task/model combos), **Q2 PASS** (positive control: baseline beats coin by 0.0235 nats — LOS visible to the detector in the skeleton features), Q3 not triggered. Null harvest as predicted; results in registry. Power note honest: the scanner's three in-audit readings (r ≈ 0.02) are below this detector's resolution by design |
 | WP10 | rolling |
+| WP-RH | **RH1 done** 2026-08-07 — first light under prereg `8252b9a` (`code/weil_positivity.py`, in run_all, 34 s): Gram matrix of the Weil form on 12 even Gaussian profiles assembled from WP3-engine evaluations at 23 grid centres — identity geo-vs-zero to 2.6e-23 across all 78 entries, positivity at lambda_min = -8.5e-24; prime-free window (supp g in (-log2, log2), prime term identically zero) positive at 9.1e-4 with zero-side agreement 4.2e-6 matching the committed tail estimate; EC calibration (y² = x³+x+1 / F_10007, a = -57): Frobenius Toeplitz form PSD of exact rank 2 (~1e-40 floor), Hasse-violating control fires at -38.96 with golden-ratio growth. **Prediction B3 REFUTED and recorded** (registry): the near-kernel is not spanned by gap profiles — measured mechanism: resolved rank of M = 6 = zeros engaged; on a finite spectral window the Weil form is a finite-rank sampler (known-theorem-derivable; kept as calibration, not claimed as novel). Diagonal gap ladder confirmed as committed (rungs 3e-43 → 0.2). Next: RH2 (inverse spectral reconstruction against solved-universe Hamiltonians) |
