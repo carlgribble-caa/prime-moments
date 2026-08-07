@@ -291,7 +291,12 @@ Kolmogorov estimators.
   history adds +0.00003 nats — two-skeleton at the trained-observer class; parity stream
   coin-like to 10^8; entropy ladder ≤ 0.002 bits excess. Instrument:
   `code/compression_observers.py`.
-- **C3 (candidate).** Dedicated higher-statistics HL short-range test; formalization note
+- **C3 (done).** HL verified at 0.02–0.08% over ten gaps; wheel-conditional enhancements
+  congruence-derivable to 0.08% with the (7−1)/(7−2) jump measured at 1.200/1.201 vs 1.20;
+  raw-MI gate refuted on a diagnosed design flaw (skeleton-induced MI conflated), post-hoc
+  decomposition: beyond-skeleton excess = 3 micronats — C2's null validated in substance.
+  Instrument: `code/hl_resolution.py`.
+- **C3b (candidate).** Prereg gating the beyond-skeleton excess directly; formalization note
   after a proper librarian pass.
 **Risk.** Category error between practical compression and Kolmogorov complexity — fenced by
 the per-observer-class labeling; the librarian pass for the complexity rows is outstanding.

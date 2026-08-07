@@ -34,6 +34,7 @@ SCRIPTS = [
     ("Programme - transfer-law jackknife uncertainties", "transfer_errors.py"),
     ("Programme - the compression question (WP-C1)", "compression_question.py"),
     ("Programme - stronger observers on the residual (WP-C2)", "compression_observers.py"),
+    ("Programme - the HL resolution test (WP-C3)", "hl_resolution.py"),
 ]
 
 

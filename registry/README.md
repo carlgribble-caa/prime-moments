@@ -32,3 +32,4 @@ Index:
 | `2026-08-07-overtone-prereg.md` | `code/overtone.py` | `2026-08-07-overtone-results.md` |
 | `2026-08-08-compression-prereg.md` | `code/compression_question.py` | `2026-08-08-compression-results.md` |
 | `2026-08-08-compression-c2-prereg.md` | `code/compression_observers.py` | `2026-08-08-compression-c2-results.md` |
+| `2026-08-08-hl-resolution-prereg.md` | `code/hl_resolution.py` | `2026-08-08-hl-resolution-results.md` |
