@@ -273,11 +273,34 @@ improve, $0.92 \to 0.98$ at $\ln 2$, mean improvement $+0.128$ inside the commit
 (One prereg-level sign error in the field convention was caught by the frozen gates on first run
 and is recorded with the flipped-sign table in the results file.)
 
+\emph{The transfer law (\texttt{transfer\_law.py}).} Two candidate laws in the scaling variable
+$\tau = \omega/(2\pi\bar\rho_W)$ were fitted on the two measured windows and recorded before the
+test: Debye--Waller $T = e^{-a\tau^2}$ ($a = 1.1416$) and linear/form-factor $T = 1 - c\tau$
+($c = 0.5255$, strikingly near $\tfrac12$). At a third window neither had seen (zeros $301..400$,
+heights $544$--$680$) the Debye--Waller law held --- gated deviations $0.003/0.004/0.036/0.004$,
+beating the linear law $6.6\times$ in out-of-sample error --- and its zero-parameter mechanism form
+($a = 2\pi^2\langle u^2\rangle$ from the window's own shifts) conformed within $0.10$. The lane
+thereby states its first formally labeled conjecture, the programme's third claim-state exercised
+for the first time:
+
+\begin{quote}
+\textbf{Conjecture (transfer law).} Over a height window $W$ with mean zero density $\bar\rho_W$,
+the per-frequency transfer of the prime comb into the zeros' shift field satisfies
+$T(\omega; W) = \exp\!\bigl(-a\,(\omega/2\pi\bar\rho_W)^2\bigr)$ with
+$a = 2\pi^2\,\mathrm{Var}(\bar S) + o(1)$ ($a \approx 1.14$ at heights $14$--$680$): the transfer
+is the Debye--Waller factor of the zeros' unfolded displacement field, with the explicit-formula
+amplitudes as its $\tau \to 0$ limit. \emph{Falsification protocol:} a fourth window under the
+frozen battery; the anomalous frequencies $m = 8, 9, 13$ (measured deviations $0.25/0.29/0.15$,
+recorded and unexplained); Dirichlet $L$-functions; and derivation from the explicit formula plus
+a pair-correlation input, which would promote the law toward a theorem.
+\end{quote}
+
 Constraint 1 of the specification thereby reaches its final measured form for this phase: the
-missing self-adjoint realization must carry the prime comb at fluctuation order \emph{through a
-transfer that attenuates with $\omega/\bar\rho$ at finite height and approaches the explicit-formula
-amplitudes as the spectrum densifies} --- a three-instrument, two-window, controlled and
-preregistered quantitative fingerprint for the OPEN cell's occupant.
+missing self-adjoint realization must carry the prime comb at fluctuation order \emph{through the
+transfer law above} --- attenuating with $\omega/\bar\rho$ at finite height, approaching the
+explicit-formula amplitudes as the spectrum densifies --- now a four-instrument, three-window,
+controlled and preregistered quantitative fingerprint for the OPEN cell's occupant, carrying the
+lane's one labeled conjecture.
 
 \section{Related work, claims, and non-claims}
 

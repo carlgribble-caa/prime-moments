@@ -26,3 +26,4 @@ Index:
 | `2026-08-07-plateau-bias-prereg.md` | `code/plateau_bias.py` | `2026-08-07-plateau-bias-results.md` |
 | `2026-08-07-coefficient-primes-prereg.md` | `code/coefficient_primes.py` | `2026-08-07-coefficient-primes-results.md` |
 | `2026-08-07-transfer-height-prereg.md` | `code/transfer_height.py` | `2026-08-07-transfer-height-results.md` |
+| `2026-08-07-transfer-law-prereg.md` | `code/transfer_law.py` | `2026-08-07-transfer-law-results.md` |
