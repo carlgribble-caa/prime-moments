@@ -23,3 +23,4 @@ Index:
 | `2026-08-07-canonical-system-prereg.md` | `code/canonical_system.py` | `2026-08-07-canonical-system-results.md` |
 | `2026-08-07-requirements-spec-prereg.md` | `code/requirements_spec.py` | `2026-08-07-requirements-spec-results.md` |
 | `2026-08-07-two-interval-plateau-prereg.md` | `code/two_interval_plateau.py` | `2026-08-07-two-interval-plateau-results.md` |
+| `2026-08-07-plateau-bias-prereg.md` | `code/plateau_bias.py` | `2026-08-07-plateau-bias-results.md` |
