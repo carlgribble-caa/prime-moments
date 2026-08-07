@@ -1,0 +1,331 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newcommand{\Nbar}{\overline{N}}
+
+\title{The positivity lane:\\ instruments, calibrations, and a requirements
+specification\\ for the missing self-adjoint realization}
+\author{Carl Gribble\thanks{Programme Note 4, draft v0.1 (WP-RH1--RH3b). Companion to the trilogy
+\cite{CompanionI,CompanionII,CompanionIII}, the essay \cite{Essay}, and Programme Notes 1--3
+\cite{Defs,FormalLog,Observer}. Developed in collaboration with Claude (Anthropic); every numerical
+claim below is reproduced by the cited scripts under \texttt{run\_all.py}, and every scan ran under
+the preregistration registry described in Section~2. Responsibility for the content rests with the
+author. A full disclosure of AI use appears at the end of the note.}}
+\date{August 2026 --- draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In every universe where an analogue of the Riemann Hypothesis is a theorem, the proof runs through a
+positive structure: a self-adjoint or unitary realization whose spectrum the zeros are, with
+positivity doing the confining --- Castelnuovo positivity for function fields, the adjacency operator
+for graphs, the Laplacian for the modular surface. For $\zeta$ that object is missing, and Weil's
+criterion makes its absence exact: RH is equivalent to positivity of the explicit-formula functional
+$W(g * \tilde g)$ over all admissible test functions. This note documents a measurement programme
+aimed at that criterion, run under a preregistration discipline in which gates and predictions are
+committed before each instrument's first run and every refuted prediction is permanent in a public
+registry. Three instruments and one follow-up were built. (1) The \emph{Weil form on finite windows}:
+the Gram matrix of $W$ on a Gaussian family matches its zero-side evaluation to $2.6\times10^{-23}$
+and is positive semidefinite at $-8.5\times10^{-24}$; a preregistered prediction about its
+near-kernel was refuted by the data, which showed instead that the form on a finite spectral window
+is a finite-rank sampler --- resolved rank exactly the number of zeros engaged --- so finite families
+are structurally incapable of distinguishing ``RH-positive'' from ``barely positive.''
+(2) \emph{Canonical-system reconstruction}: the Jacobi/Krein data of the zero comb is computed
+exactly (measure recovered to $1.3\times10^{-38}$), and the arithmetic-free canonical object --- the
+closed-form Abel-inverted potential whose WKB counting is the zeros' mean counting function ---
+tracks the zeros to RMS $0.54$ with a residual that correlates with a damped prime sum at
+$r = 0.9999$: the smooth Hamiltonian misses exactly the primes and nothing else, and the measured
+Maslov offset $+0.1251$ matches the predicted $1/8$. (3) The \emph{requirements specification}: an
+eight-property, three-universe matrix, every cell machine-checked, adopted with citation, or
+measured, with exactly one cell OPEN --- a self-adjoint realization for $\zeta$ --- and two measured
+constraints pinned on its occupant: it cannot be smooth, and it must be tight. A follow-up
+out-of-sample test earned one further claim: the reconstruction's plateau is the arithmetic-free
+two-interval equilibrium of the spectral gap, confirming that the primes live in the corrections.
+The note prices its own ambitions honestly: the mechanisms are classical, the tables and the
+discipline are the contribution, and no progress on RH itself is claimed.
+\end{abstract}
+
+\section{Charter}
+
+Weil's criterion \cite{Weil52,Bombieri} states that RH is equivalent to
+\[
+W(g * \tilde g) \;\ge\; 0 \qquad \text{for all admissible } g,
+\]
+where $W$ pairs a test function against the explicit formula's geometric side (archimedean, pole,
+and prime terms) and equals, by the Guinand--Weil identity \cite{Guinand,Weil52}, the pairing of
+$|\hat g|^2$ against the zero comb. The lane's founding observation is that this criterion has the
+same shape as the \emph{proofs} that exist: Weil's function-field proof is positivity of an
+intersection form \cite{WeilFF}; the graph-theoretic RH is the spectral bound of the adjacency
+operator (Ramanujan $\Leftrightarrow$ Ihara-RH \cite{Ihara,Terras,LPS}); the Selberg zeros are real
+because they are eigenvalues of a Laplacian. In each solved case there is a positive structure whose
+spectrum the zeros are. For $\zeta$ the structure is missing; the de Branges/Krein theory
+\cite{deBranges,Remling} says an equivalent canonical system exists abstractly, and nobody has
+exhibited its Hamiltonian.
+
+The lane measures what can be measured about that object, under three standing rules. First, the
+words ``proof of RH'' appear in no artifact; the milestones are priced as: instruments and
+calibrations, near-certain; novel measured tables and labeled conjectures, likely; a partial
+theorem, possible; RH, epsilon. Second, every scan runs under the programme's preregistration
+registry: constants, gates, and predictions are committed to the repository \emph{before} first run,
+results are append-only, and refuted predictions are permanent. Third, every claim ends in one of
+the programme's three states --- ADOPTED (a citation), MACHINE (a reproducible check), or a labeled
+conjecture --- and anything surviving a scan climbs the audit ladder before the word ``candidate.''
+The Rodgers--Tao theorem $\Lambda_{dB} \ge 0$ \cite{RodgersTao} calibrates the whole enterprise: RH,
+if true, is barely true, so no margin-based numerical route can close it; the honest deliverable is
+structure, not verification.
+
+\section{Method: the registry}
+
+Each instrument below has a preregistration file and a results file in \texttt{registry/}, tied to
+the commit hashes recorded there. The discipline did visible work in this lane, and the note treats
+its interventions as content rather than housekeeping:
+a committed near-kernel prediction was refuted by the first instrument (Section~3); the second
+instrument's first run failed two frozen gates, which diagnosed two bring-up bugs that were fixed
+with thresholds untouched and the failures recorded (Section~4); a committed correlation band was
+refuted \emph{from above} (Section~4); a constant-mining plan was dissolved by analysis before its
+prereg and redirected (Section~6); and a post-hoc reading was refused claim status until it survived
+an out-of-sample test on configurations it had never seen (Section~6). All instruments run in
+\texttt{run\_all.py}; every number quoted below is printed by the cited script.
+
+\section{The Weil form on finite windows (WP-RH1)}
+
+The instrument (\texttt{weil\_positivity.py}) treats the WP3 pairing engine's identity
+\cite{Essay} as a quadratic form: on profiles $\varphi_j(r) = e^{-(r-t_j)^2/4} + e^{-(r+t_j)^2/4}$,
+$t_j = 3j$, $j = 0..11$, the Gram matrix $M_{ij} = W(\varphi_i\varphi_j)$ is assembled purely from
+the geometric side --- no zeros consumed --- via the closed-form reduction of profile products to the
+engine's own test functions. Findings, all under frozen gates:
+
+\emph{Identity and positivity.} All 78 entries match the zero-side evaluation to
+$2.6\times10^{-23}$; the minimal eigenvalue is $-8.5\times10^{-24}$, numerical noise: the form is
+PSD as far as tested.
+
+\emph{The refutation, and the sampling theorem it exposed.} The committed prediction --- that the
+near-kernel is spanned by profiles localized in the zero-free gap $(0, \gamma_1)$ --- was refuted:
+the bottom eigenvectors include large-centroid combinations. The measured mechanism: the resolved
+rank of $M$ equals the number of zeros the family engages (six, at this family), so the kernel is
+\emph{everything that interpolates to zero at the engaged ordinates}. Given the explicit formula
+this is immediate ($M$ is a Gram of point evaluations), so it is recorded as known-theorem-derivable
+and kept as calibration; its consequence frames the lane: \textbf{positivity on any finite family is
+rank-deficient-cheap}, which is a measured restatement of why Weil's criterion quantifies over all
+test functions, and of why the information lives in the margin structure as the window grows.
+
+\emph{The prime-free window.} For $g$ supported inside $(-\log 2, \log 2)$ the prime term vanishes
+identically and $W = $ archimedean $+$ pole $= -0.37595 + 0.37686 = 9.1\times10^{-4} > 0$, with the
+zero side agreeing to $4.2\times10^{-6}$ against a committed tail estimate of $3.8\times10^{-6}$ ---
+the unconditionally provable corner of the criterion, exhibited numerically.
+
+\emph{Calibration.} In the universe where the RH-analogue is a theorem (an elliptic curve over
+$\mathbb F_{10007}$, Hasse \cite{Hasse}), the Frobenius Toeplitz form came out PSD of \emph{exact
+rank 2} at the $10^{-40}$ floor --- positivity with zero margin in all but two directions --- and the
+Hasse-violating control fired at $\lambda_{\min} = -38.96$ with growth ratio the golden ratio. The
+contrast --- tight finite positivity there, rank-deficient sampling here --- recurs throughout the
+lane.
+
+\section{Canonical-system reconstruction (WP-RH2)}
+
+The instrument (\texttt{canonical\_system.py}) computes the two tractable shadows of the missing
+Hamiltonian.
+
+\emph{Discrete Krein/Jacobi data.} Stieltjes orthogonalization on the symmetric measure over the
+first 40 zeros yields the three-term recurrence coefficients --- the discretized canonical-system
+data --- exactly: parity symmetry to $9\times10^{-37}$, and the measure recovered from the
+$80\times80$ Jacobi matrix to $1.3\times10^{-38}$. Against two density-matched controls (the smooth
+comb $\Nbar^{-1}(k - \tfrac12)$ and a deterministic Poisson comb built from $\pi$'s decimal digits),
+the zeros' coefficients hug the smooth comb's \emph{four times tighter} than Poisson's
+(fluctuation-ratio $0.246$, committed band $< 0.7$): spectral rigidity, read in Hamiltonian
+coordinates. (Adjacent literature: random Jacobi ensembles \cite{KillipNenciu}.)
+
+\emph{The arithmetic-free canonical object.} The Wu--Sprung-type potential \cite{WuSprung,SchHutch}
+--- the symmetric well whose WKB counting equals the zeros' mean counting function $\Nbar$ --- is
+built by a closed-form Abel inversion,
+\[
+x(V) \;=\; \frac{1}{\pi}\Bigl[-2u + \sqrt V \,\ln\frac{\sqrt V + u}{\sqrt V - u}\Bigr],
+\qquad u = \sqrt{V - 2\pi},
+\]
+whose defining property (WKB phase $= \Nbar + \tfrac18$ on the built grid) is verified in-code to
+$5\times10^{-5}$, and solved forward by Numerov shooting with node-count indexing. The spectrum
+counts exactly 60 levels below the committed window and tracks the zeros to RMS $0.54$. The headline
+measurement: with $\delta_k = \gamma_k - E_k$, $\bar\rho$ the mean density, and $S$ the damped prime
+sum $-\frac1\pi\sum_{n} \frac{\Lambda(n)}{\sqrt n \ln n}\sin(E\ln n)\,e^{-(\ln n)^2/18}$, the
+detrended series $\delta_k\bar\rho(\gamma_k)$ and $-S(\gamma_k)$ correlate at
+\[
+r \;=\; 0.9999,
+\]
+refuting the committed band $[0.6, 0.95]$ \emph{from above}: $\delta_k\bar\rho \approx \tfrac18 -
+S(\gamma_k)$ is numerically an identity (the measured constant $+0.1251$ against the predicted
+Maslov/convention offset $\tfrac18$), with no circularity --- the solved spectrum consumes neither
+primes nor zeros. In operator language: \textbf{the arithmetic-free Hamiltonian accounts for the
+mean density and misses exactly the prime comb, and essentially nothing else.} The mechanism is
+Riemann--von Mangoldt plus WKB and belongs to the physics-of-$\zeta$ literature
+\cite{WuSprung,SchHutch,BerryKeating}; the quantified table, the controls, and the discipline are
+what is claimed.
+
+\emph{Bring-up, disclosed.} The first run failed two frozen gates and thereby found two instrument
+bugs: a spurious $1/\pi$ in the preregistered Abel formula (the harmonic-oscillator pair
+$x = \sqrt V \leftrightarrow \Phi = E/2$ pins the correct normalization), and a silent
+bracket-saturation in the eigenvalue search whose cap masqueraded as a constant residual. Both are
+recorded in the results file with thresholds untouched; the headline correlation had already reached
+its gate on the broken run through the zeros' own fluctuations, and sharpened by three orders of
+tightness once the instrument was sound.
+
+\emph{Termination in the solved universe.} On the elliptic curve's Frobenius measure the same
+Stieltjes reconstruction \emph{terminates at step 2 with residual zero}: where the RH-analogue is a
+theorem, the canonical system is a finite exact matrix. For $\zeta$ the reconstruction is infinite,
+and its truncations' missing content is, by the headline measurement, the primes.
+
+\section{The requirements specification (WP-RH3)}
+
+The instrument (\texttt{requirements\_spec.py}) assembles the property list the missing object must
+satisfy as a machine-checked matrix: eight rows (self-adjoint realization; real spectrum; functional
+equation; trace formula; mean density law; fluctuations $=$ geodesic/prime comb; rigidity;
+tightness) by three columns (elliptic-curve/Frobenius, graph/Ihara, $\zeta$), every cell labeled
+ADOPTED, MACHINE, MEASURED, or OPEN. New checks run by this instrument:
+
+\begin{itemize}
+\item[--] \emph{Mean density ($\zeta$):} $\max_{k\le100} |\Nbar(\gamma_k) - (k - \tfrac12)| =
+0.498$, inside the committed band (Riemann--von Mangoldt \cite{Edwards}).
+\item[--] \emph{Rigidity ($\zeta$):} unfolded spacing variance $0.1253$ for the zeros ---
+GUE-adjacent (Wigner $\beta=2$: $\approx 0.18$; \cite{Montgomery,Odlyzko}) --- against $1.0755$ for
+the $\pi$-digit Poisson control and $0$ for the picket: the ordering the spec requires.
+\item[--] \emph{Spectrum $\leftrightarrow$ geodesics (graph, exact):} on the Petersen graph the
+integer Hashimoto traces match the Ihara--Bass spectral side \cite{Bass,Terras} to $6\times10^{-29}$
+through $m = 12$; and the smooth split $\mathrm{tr}(A^m) = n\,t_m$ (infinite-tree returns
+\cite{KestenMcKay}) holds \emph{exactly} below the girth, with first excess $120 = $ the twelve
+pentagons traversed ten ways: the graph-universe miniature, as an exact integer identity, of the
+previous section's headline --- the first correction to the smooth spectral law counts the shortest
+geodesics.
+\item[--] \emph{Trace formula (EC, fresh code):} at $p = 13$, the direct count over
+$\mathbb F_{169}$ gives $N_2 = 180 = p^2 + 1 - (a^2 - 2p)$.
+\end{itemize}
+
+The matrix closes with \textbf{exactly one OPEN cell: (self-adjoint realization, $\zeta$)} --- the
+Hilbert--P\'olya object \cite{BerryKeating,Connes} --- and the lane's measurements pin two
+constraints on its occupant:
+\begin{enumerate}
+\item \emph{It cannot be smooth.} An arithmetic-free Hamiltonian reproduces the mean density and
+nothing else (Section~4); the prime comb must appear at fluctuation order in the Hamiltonian data.
+\item \emph{It must be tight.} Every solved-universe realization is finite and exact with zero
+positivity margin to spare (Sections~3--4), and $\zeta$'s margin as measured is $\sim 0$ on every
+finite window --- consistent with the ``barely true'' reading \cite{RodgersTao}.
+\end{enumerate}
+
+\section{The two-interval plateau, out of sample (WP-RH3b)}
+
+Two disciplinary episodes closed the first-light phase. First, a planned constant-mining target
+(PSLQ on the Jacobi tail limits) was dissolved by analysis \emph{before} its prereg: those limits
+are the universal two-interval equilibrium of the truncated support
+$[-\gamma_N, -\gamma_1] \cup [\gamma_1, \gamma_N]$ --- parity-alternating values
+$(\gamma_N \pm \gamma_1)/2$ (classical two-interval recurrence asymptotics; cf.\ \cite{SimonSz}) ---
+so mining them would recover $\gamma_1$ and $\gamma_N$ back. Second, WP-RH3's committed window for
+testing that identification landed in the truncation-decay regime and its prediction was duly
+refuted; the plateau reading visible post hoc was \emph{refused claim status} and converted into an
+out-of-sample prereg: the law must predict the plateaus of fresh reconstructions at $N = 50$ and
+$N = 60$, targets it had never seen. It did (\texttt{two\_interval\_plateau.py}): deviations
+$-1.07/-1.75$ and $-1.43/-2.79$ against a committed band of $\pm 3$, all negative as committed,
+odd parity tighter than even as committed. The claim is thereby earned at MACHINE status:
+\textbf{the plateau of the reconstructed Hamiltonian is the arithmetic-free two-interval equilibrium
+of the spectral gap} --- the leading structure of the canonical-system data depends only on the gap
+and the window, so the primes live in the corrections. The systematic negative bias, growing with
+$N$ and parity, is recorded as observed-but-unclaimed, a candidate for a density-correction prereg.
+
+\section{Related work, claims, and non-claims}
+
+The mechanisms measured here are classical or belong to active literatures: Weil positivity and its
+restricted-class theorems (Connes--Consani \cite{ConnesConsani}); the explicit formula
+\cite{Guinand,Weil52,Edwards}; semiclassical potentials for the zeros \cite{WuSprung,SchHutch,
+BerryKeating}; canonical systems and de Branges spaces \cite{deBranges,Remling}; GUE statistics of
+the zeros \cite{Montgomery,Odlyzko}; graph zeta functions and Ramanujan graphs
+\cite{Ihara,Bass,Terras,LPS,Nilli}; crystalline measures at the diffraction frontier
+\cite{KurasovSarnak}. This note claims: the assembled instruments and their frozen-gate tables; the
+finite-rank sampling framing of finite-window positivity; the rigidity-in-Hamiltonian-coordinates
+and two-interval-plateau measured tables (the latter earned out of sample); the requirements matrix
+with its named OPEN cell; and the end-to-end demonstration that a preregistration registry can run a
+measurement programme against RH-adjacent structure without overclaiming. This note does not claim:
+novelty of any mechanism; any progress on RH; and it prices the lane's summit, honestly, at partial
+theorems about the OPEN cell's occupant.
+
+\section*{Disclosure of AI use}
+
+In accordance with publisher policies on the use of artificial intelligence, the author discloses
+the following. This note and the instruments it reports were developed in an extensive collaboration
+with Claude (Anthropic; accessed 2026). The direction of the work --- opening a positivity lane
+within the author's research programme, and all decisions about scope, claims, and the
+preregistration protocol --- are the author's. Within that direction, the AI system proposed the
+lane's design, wrote the preregistrations, instruments, and analysis under the registry discipline
+described above (including committing predictions before runs, several of which were refuted and are
+so recorded), and drafted this note. Every numerical claim is reproduced by the cited scripts under
+\texttt{run\_all.py} in the repository \cite{Code}, and the registry files record the full
+prediction-and-refutation history. The author has reviewed the manuscript and takes full
+responsibility for its content.
+
+\begin{thebibliography}{99}
+\bibitem{Weil52} A. Weil, Sur les ``formules explicites'' de la th\'eorie des nombres premiers,
+\emph{Comm. S\'em. Math. Univ. Lund} (1952), 252--265.
+\bibitem{Bombieri} E. Bombieri, Remarks on Weil's quadratic functional in the theory of prime
+numbers I, \emph{Rend. Mat. Acc. Lincei} \textbf{11} (2000), 183--233.
+\bibitem{Guinand} A.~P. Guinand, A summation formula in the theory of prime numbers,
+\emph{Proc. London Math. Soc.} \textbf{50} (1948), 107--119.
+\bibitem{WeilFF} A. Weil, \emph{Sur les courbes alg\'ebriques et les vari\'et\'es qui s'en
+d\'eduisent}, Hermann, Paris, 1948.
+\bibitem{Hasse} H. Hasse, Zur Theorie der abstrakten elliptischen Funktionenk\"orper III,
+\emph{J. Reine Angew. Math.} \textbf{175} (1936), 193--208.
+\bibitem{Ihara} Y. Ihara, On discrete subgroups of the two by two projective linear group over
+p-adic fields, \emph{J. Math. Soc. Japan} \textbf{18} (1966), 219--235.
+\bibitem{Bass} H. Bass, The Ihara--Selberg zeta function of a tree lattice, \emph{Internat. J.
+Math.} \textbf{3} (1992), 717--797.
+\bibitem{Terras} A. Terras, \emph{Zeta Functions of Graphs: A Stroll through the Garden}, Cambridge
+Univ. Press, 2011.
+\bibitem{LPS} A. Lubotzky, R. Phillips, and P. Sarnak, Ramanujan graphs, \emph{Combinatorica}
+\textbf{8} (1988), 261--277.
+\bibitem{Nilli} A. Nilli, On the second eigenvalue of a graph, \emph{Discrete Math.} \textbf{91}
+(1991), 207--210.
+\bibitem{KestenMcKay} B.~D. McKay, The expected eigenvalue distribution of a large regular graph,
+\emph{Linear Algebra Appl.} \textbf{40} (1981), 203--216.
+\bibitem{deBranges} L. de Branges, \emph{Hilbert Spaces of Entire Functions}, Prentice-Hall, 1968.
+\bibitem{Remling} C. Remling, \emph{Spectral Theory of Canonical Systems}, de Gruyter, 2018.
+\bibitem{WuSprung} H. Wu and D.~W.~L. Sprung, Riemann zeros and a fractal potential, \emph{Phys.
+Rev. E} \textbf{48} (1993), 2595--2598.
+\bibitem{SchHutch} D. Schumayer and D.~A.~W. Hutchinson, Physics of the Riemann hypothesis,
+\emph{Rev. Mod. Phys.} \textbf{83} (2011), 307--330.
+\bibitem{BerryKeating} M.~V. Berry and J.~P. Keating, The Riemann zeros and eigenvalue asymptotics,
+\emph{SIAM Rev.} \textbf{41} (1999), 236--266.
+\bibitem{Connes} A. Connes, Trace formula in noncommutative geometry and the zeros of the Riemann
+zeta function, \emph{Selecta Math.} \textbf{5} (1999), 29--106.
+\bibitem{ConnesConsani} A. Connes and C. Consani, Weil positivity and trace formula: the
+archimedean place, \emph{Selecta Math.} \textbf{27} (2021), 77.
+\bibitem{RodgersTao} B. Rodgers and T. Tao, The de Bruijn--Newman constant is non-negative,
+\emph{Forum Math. Pi} \textbf{8} (2020), e6.
+\bibitem{Montgomery} H.~L. Montgomery, The pair correlation of zeros of the zeta function, in
+\emph{Analytic Number Theory}, Proc. Sympos. Pure Math. XXIV, AMS, 1973, 181--193.
+\bibitem{Odlyzko} A.~M. Odlyzko, On the distribution of spacings between zeros of the zeta
+function, \emph{Math. Comp.} \textbf{48} (1987), 273--308.
+\bibitem{KillipNenciu} R. Killip and I. Nenciu, Matrix models for circular ensembles,
+\emph{Int. Math. Res. Not.} \textbf{2004}, 2665--2701.
+\bibitem{KurasovSarnak} P. Kurasov and P. Sarnak, Stable polynomials and crystalline measures,
+\emph{J. Math. Phys.} \textbf{61} (2020), 083501.
+\bibitem{SimonSz} B. Simon, \emph{Szeg\H{o}'s Theorem and its Descendants}, Princeton Univ. Press,
+2011.
+\bibitem{Edwards} H.~M. Edwards, \emph{Riemann's Zeta Function}, Academic Press, 1974.
+\bibitem{CompanionI} C. Gribble, Prime counts and prime sums from multiplication tables: a
+self-similar formula system, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769103}.
+\bibitem{CompanionII} C. Gribble, Certified exact sums of primes over dyadic intervals via a ladder
+of generalized factorials, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769105}.
+\bibitem{CompanionIII} C. Gribble, Recovering the primes in a dyadic interval from exact moments,
+Zenodo (2026), \texttt{doi:10.5281/zenodo.21769107}.
+\bibitem{Essay} C. Gribble, The multiplication crystal: dimension, diffraction, and the symmetries
+of arithmetic, manuscript (2026), \texttt{papers/multiplication\_crystal\_paper.tex} in \cite{Code}.
+\bibitem{Defs} C. Gribble, Crystals and their shadows, Programme Note 1 (2026), in \cite{Code}.
+\bibitem{FormalLog} C. Gribble, The multiplication crystal's engine is a formal logarithm,
+Programme Note 2 (2026), in \cite{Code}.
+\bibitem{Observer} C. Gribble, The observer ladder, Programme Note 3 (2026), in \cite{Code}.
+\bibitem{Code} C. Gribble, Reference implementations and preregistration registry, code repository
+(2026), \texttt{https://github.com/carlgribble-caa/prime-moments}.
+\end{thebibliography}
+
+\end{document}
