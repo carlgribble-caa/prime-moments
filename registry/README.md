@@ -20,3 +20,4 @@ Index:
 | `2026-08-03-scanner-v2-prereg.md` | `code/scanner_v2.py` | `2026-08-03-scanner-v2-results.md` |
 | `2026-08-03-ml-detector-prereg.md` | `code/ml_detector.py` | `2026-08-03-ml-detector-results.md` |
 | `2026-08-07-weil-positivity-prereg.md` | `code/weil_positivity.py` | `2026-08-07-weil-positivity-results.md` |
+| `2026-08-07-canonical-system-prereg.md` | `code/canonical_system.py` | `2026-08-07-canonical-system-results.md` |

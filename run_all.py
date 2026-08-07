@@ -21,6 +21,7 @@ SCRIPTS = [
     ("Programme - Witt / Frobenius-shadow checks (WP8)", "witt_frobenius.py"),
     ("Programme Note 2 - formal engine checks", "formal_engine.py"),
     ("Programme - Weil positivity explorer under preregistration (WP-RH1)", "weil_positivity.py"),
+    ("Programme - canonical-system reconstruction under preregistration (WP-RH2)", "canonical_system.py"),
 ]
 
 
