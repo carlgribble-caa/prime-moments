@@ -44,11 +44,17 @@ $r = 0.9999$: the smooth Hamiltonian misses exactly the primes and nothing else,
 Maslov offset $+0.1251$ matches the predicted $1/8$. (3) The \emph{requirements specification}: an
 eight-property, three-universe matrix, every cell machine-checked, adopted with citation, or
 measured, with exactly one cell OPEN --- a self-adjoint realization for $\zeta$ --- and two measured
-constraints pinned on its occupant: it cannot be smooth, and it must be tight. A follow-up
-out-of-sample test earned one further claim: the reconstruction's plateau is the arithmetic-free
-two-interval equilibrium of the spectral gap, confirming that the primes live in the corrections.
-The note prices its own ambitions honestly: the mechanisms are classical, the tables and the
-discipline are the contribution, and no progress on RH itself is claimed.
+constraints pinned on its occupant: it cannot be smooth, and it must be tight. Follow-up
+instruments then chased the arithmetic into its hiding place: the reconstruction's plateau is the
+arithmetic-free two-interval equilibrium of the spectral gap (earned out of sample), its deviation
+from that universal is a pure density effect (the smooth comb reproduces it to $0.02$--$0.22$), and
+the primes themselves are legible in the Jacobi coefficients by committed matched filters --- every
+gated frequency detected with null off-prime controls --- though the committed explicit-formula
+amplitude law was refuted: the transfer attenuates with frequency, and a final two-window test
+confirmed the attenuation weakens as the zeros densify ($0.92 \to 0.98$ at $\ln 2$), identifying the
+explicit-formula amplitudes as the dense-sampling limit. The note prices its own ambitions honestly:
+the mechanisms are classical, the tables and the discipline are the contribution, and no progress on
+RH itself is claimed.
 \end{abstract}
 
 \section{Charter}
@@ -233,6 +239,45 @@ odd parity tighter than even as committed. The claim is thereby earned at MACHIN
 of the spectral gap} --- the leading structure of the canonical-system data depends only on the gap
 and the window, so the primes live in the corrections. The systematic negative bias, growing with
 $N$ and parity, is recorded as observed-but-unclaimed, a candidate for a density-correction prereg.
+
+\section{The corrections thread (WP-RH3c, RH4, RH4b)}
+
+Three further instruments chased the arithmetic content into the corrections the plateau result
+isolated.
+
+\emph{The bias is a density effect (\texttt{plateau\_bias.py}).} The plateau's deviation from the
+two-interval equilibrium is reproduced by the smooth comb --- identical mean density, no primes ---
+cell by cell, to $0.02$--$0.22$ against a committed gate of $1.0$ across two truncations and both
+parities. Ledger after this step: gap, window, universal plateau, \emph{and} its bias are all
+smooth-derivable; the arithmetic is confined to the rigidity-scale residual $c_n = a_n(\text{zeros})
+- a_n(\text{smooth})$.
+
+\emph{The primes in the coefficients (\texttt{coefficient\_primes.py}).} A matched-filter model,
+committed in full before first run --- finite-difference response templates at prime-power
+frequencies $\ln m$, predicted amplitudes $\Lambda(m)/(\pi\sqrt m \ln m)$ from Riemann--von Mangoldt
+plus linear response, four off-prime null controls, frozen window and nuisance regressors ---
+decomposed $c_n$ with $R^2 = 0.93$: every gated frequency detected with positive sign, all controls
+null. The primes, overtones included, are legible in the Hamiltonian coefficients. The committed
+slope-one amplitude law, however, was \textbf{refuted on physics}: the measured ratios attenuate
+monotonically in frequency ($0.64$ at $\ln 2$ down to $0.31$ at $\ln 7$). A post-hoc diagnostic on
+the raw shift field separated two mechanisms, both scaling with $\omega/\bar\rho$: attenuation of
+the first-order RvM premise even at zero-sampling ($0.92 \to 0.33$ across the battery), and a
+Debye--Waller-type decoherence from expressing the field in smooth-comb coordinates, which
+reproduces the instrument's ratios.
+
+\emph{Height dependence (\texttt{transfer\_height.py}).} Both mechanisms predict the attenuation
+weakens as the zeros densify; this was committed as an out-of-window test on zeros $141..200$
+(heights $305$--$396$, disjoint from every prior analysis). Confirmed: all four gated frequencies
+improve, $0.92 \to 0.98$ at $\ln 2$, mean improvement $+0.128$ inside the committed band ---
+\textbf{the explicit-formula amplitudes are the dense-sampling limit of the Hamiltonian transfer}.
+(One prereg-level sign error in the field convention was caught by the frozen gates on first run
+and is recorded with the flipped-sign table in the results file.)
+
+Constraint 1 of the specification thereby reaches its final measured form for this phase: the
+missing self-adjoint realization must carry the prime comb at fluctuation order \emph{through a
+transfer that attenuates with $\omega/\bar\rho$ at finite height and approaches the explicit-formula
+amplitudes as the spectrum densifies} --- a three-instrument, two-window, controlled and
+preregistered quantitative fingerprint for the OPEN cell's occupant.
 
 \section{Related work, claims, and non-claims}
 

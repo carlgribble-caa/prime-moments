@@ -26,6 +26,7 @@ SCRIPTS = [
     ("Programme - two-interval plateau out-of-sample (WP-RH3b)", "two_interval_plateau.py"),
     ("Programme - plateau bias as density effect (WP-RH3c)", "plateau_bias.py"),
     ("Programme - primes in the Hamiltonian coefficients (WP-RH4)", "coefficient_primes.py"),
+    ("Programme - height dependence of the transfer (WP-RH4b)", "transfer_height.py"),
 ]
 
 
