@@ -217,6 +217,12 @@ partial theorem: possible; RH: epsilon).
   properties x 3 universes, every cell ADOPTED/MACHINE/MEASURED, exactly one OPEN cell
   (self-adjoint realization, zeta), with two measured constraint lines pinned on its
   occupant. Instrument: `code/requirements_spec.py`.
+- **Paper draft (done; two gates remain).** `papers/transfer_law_paper.tex` — the focused
+  paper under the librarian framing, with jackknife uncertainties throughout
+  (`code/transfer_errors.py`, in run_all: a = 1.15 ± 0.16; overtones honestly presented as
+  0.6–1.8σ individually, joint-sign + committed-before-measurement as the evidence); compiles
+  clean, cite check 17/17. Status flagged in the paper itself: NOT for circulation before
+  (i) the flagged full-text literature verification and (ii) the author's review.
 - **Librarian pass (done, provisional).** The lane searched against the live literature
   (`registry/2026-08-07-librarian-pass.md`): peak existence = Odlyzko/Landau (KNOWN);
   continuous full content = Landau–Gonek (CLASSICAL — our H1 is a numerical verification);

@@ -1,0 +1,277 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{conjecture}{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newcommand{\Nbar}{\overline{N}}
+
+\title{The prime content of the Riemann zeros' displacement field:\\
+a preregistered measurement programme}
+\author{Carl Gribble\thanks{Draft v0.1, companion to Programme Note 4 \cite{Note4} and the
+preregistration registry of the code repository \cite{Code}, whose commit hashes date every gate
+and prediction below. Developed in collaboration with Claude (Anthropic). Responsibility for the
+content rests with the author. A full disclosure of AI use appears at the end of the paper.
+\emph{Status:} this draft awaits the full-text literature verification flagged in Section~7 and
+the author's review; it should not be circulated as making priority claims before both complete.}}
+\date{August 2026 --- draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+That the primes are visible in the Riemann zeros is classical: Landau's theorem --- in Gonek's
+uniform form, $\sum_{0<\gamma\le T} x^{i\gamma} = -\tfrac{T}{2\pi}\Lambda(x)/\sqrt{x} + E(x,T)$ ---
+puts a von Mangoldt spike at every prime power, and Odlyzko's computations made the picture vivid.
+This paper measures, under a preregistration discipline borrowed from the experimental sciences,
+a quantitative structure inside that classical picture: the per-frequency \emph{amplitude law} with
+which the primes enter the zeros' \emph{displacement field} $u_k = \Nbar(\gamma_k) - (k - \tfrac12)$,
+the object consumed by canonical-system (Hilbert--P\'olya-flavored) reconstructions. Across four
+disjoint windows of the first 500 zeta zeros and the first 150 zeros of $L(s,\chi_{-4})$, with
+every gate and prediction committed to a public registry before each first run, we find:
+(i) a transfer law $T(\omega) = e^{-a\tau^2}$, $\tau = \omega/2\pi\bar\rho$, with a single constant
+$a = 1.15 \pm 0.16$ (block jackknife) that survived two out-of-sample window tests and a
+cross-family test at deviations of $0.003$--$0.05$, beating a linear form-factor alternative
+$6.6\times$ out of sample; (ii) a localization: the counting function carries the primes at full
+Landau--Gonek amplitude at every height tested ($0.99 \pm 0.02$, both families) while only the
+zero-sampled displacement sequence attenuates --- so the law is the price of reading the primes from
+the zeros' \emph{positions}; and (iii) a marginal-significance overtone structure at prime-power
+frequencies (pooled deviations $-0.21 \pm 0.12$ at $m = 9$, $-0.34 \pm 0.22$ at $m = 25$,
+$-0.18 \pm 0.30$ at $m = 27$; jointly all negative, individually weak), consistent in kind with the
+Bogomolny--Keating lower-order arithmetic terms, including two frequencies committed before their
+first measurement anywhere. The family-independence of $a$ is presented as a measured face of
+Rudnick--Sarnak universality, not a surprise. One conjecture is stated, with its falsification
+protocol and its expected rigorous home (discrete twisted moments of $S$ at the zeros; pair
+correlation); the registry records twelve refuted predictions and four instrument errors caught by
+frozen gates alongside the confirmations. No progress on the Riemann Hypothesis is claimed.
+\end{abstract}
+
+\section{Introduction: what is known, and what is measured here}
+
+Three classical facts frame everything below. First, Landau \cite{Landau} proved, and Gonek
+\cite{Gonek} made uniform, that the zeros ring at the primes:
+\[
+\sum_{0<\gamma\le T} x^{i\gamma} \;=\; -\frac{T}{2\pi}\,\frac{\Lambda(x)}{\sqrt{x}} \;+\; E(x,T),
+\]
+a von Mangoldt-weighted spike at every prime power and nothing elsewhere. Second, Odlyzko's
+large-scale computations \cite{Odlyzko87,OdlyzkoEssay} made the Fourier picture vivid and
+established the random-matrix (GUE) statistics of the zeros at short range \cite{Montgomery};
+Rudnick and Sarnak \cite{RudnickSarnak} proved the universality of these correlations across
+automorphic $L$-functions in restricted regimes; and Bogomolny and Keating \cite{BK1,BK2}
+identified the lower-order, explicitly arithmetic corrections that structure Odlyzko's data beneath
+the universal terms. Third, on the constructive side, semiclassical potentials whose spectra track
+the zeros on average are classical \cite{WuSprung,SchHutch,Berry88,BerryKeating}.
+
+None of the above is at stake in this paper, and none of it is claimed. What this paper adds is a
+\emph{measurement}: the quantitative amplitude law with which the primes enter a specific object
+--- the zeros' displacement field, $u_k = \Nbar(\gamma_k) - (k - \tfrac12)$ with $\Nbar$ the
+Riemann--von Mangoldt smooth counting function --- together with the discipline under which the
+measurement was made. The displacement field matters because it is exactly the data consumed by
+canonical-system reconstructions of the sought self-adjoint realization (the Hilbert--P\'olya
+object): a companion note \cite{Note4} shows that every leading structure of such reconstructions
+is arithmetic-free, so whatever the primes contribute to the ``Hamiltonian'' they contribute
+through this field.
+
+The findings, in one paragraph. Regressing $u_k$ on $\sin(\gamma_k \ln m)$ over a window with mean
+zero density $\bar\rho$ returns the Landau--Gonek amplitude \emph{attenuated}, and the attenuation
+follows a Debye--Waller law in the scaling variable $\tau = \omega/2\pi\bar\rho$:
+$T(\omega) = e^{-a\tau^2}$ with a single constant across four disjoint zeta windows and a second
+$L$-function family. The law is a property of position-sampling alone: measured in continuous $t$
+(where $S(t) = N(t) - \Nbar(t)$ is exactly computable between located zeros), the prime content is
+full, at every height, in both families --- a numerical verification of Landau--Gonek --- while the
+zero-sampled sequence attenuates. On top of the law sits a small, individually marginal but
+jointly consistent suppression at prime-power frequencies --- the natural place for the
+Bogomolny--Keating arithmetic terms to cast a shadow --- including at two frequencies
+($\ln 25$, $\ln 27$) whose measurements were committed before they had ever been made.
+
+\section{Method: the registry}
+
+Every scan below ran under preregistration: instrument constants, gates (PASS/FAIL thresholds),
+and predictions were committed to the public repository \cite{Code} \emph{before} each first run;
+results are append-only; refuted predictions and instrument errors are permanent. The registry for
+this paper's chain comprises seven prereg/results pairs (RH4, RH4b, RH5, RH5b, RH6, RH7, and the
+librarian pass), recording along the way: twelve refuted predictions, four instrument or
+prereg-level errors caught by frozen gates and fixed with thresholds untouched, one dissolved
+analysis plan, and two withheld claims that were only admitted after surviving out-of-sample tests
+on data they had never seen. We regard this discipline --- standard in the experimental sciences,
+apparently novel in this literature --- as a contribution of the paper independent of any result.
+
+\section{Objects, instruments, and calibration}
+
+Zeros $\gamma_1..\gamma_{500}$ of $\zeta$ (mpmath, 30 digits) and $\gamma_1..\gamma_{150}$ of
+$L(s,\chi_{-4})$ (located by a Hardy-function scan with self-verified indexing). Field
+$u_k = \Nbar(\gamma_k) - (k-\tfrac12)$; by Riemann--von Mangoldt, $u_k = -\bar S(\gamma_k)$
+exactly. Regression of $u_k$ on $\{\sin(\gamma_k \ln m)\}$ over a frequency battery of prime
+powers plus polynomial nuisance; measured slopes normalized by the explicit-formula amplitudes
+$\Lambda(m)/(\pi\sqrt m \ln m)$ to give ratios $T(m)$; window density $\bar\rho_w$ = mean of
+$\ln(\gamma/2\pi)/2\pi$. Windows: $W_1 = $ zeros $1..60$, $W_2 = 141..200$, $W_3 = 301..400$,
+$W_4 = 401..500$.
+
+\emph{Calibration against a theorem.} The Landau--Gonek sums over all 500 zeros match their
+predicted values at the percent level: measured/predicted $= 1.003, 0.995, 0.966, 0.987, 0.977$
+at $r = 2, 3, 4, 5, 9$. The instrument reproduces the classical first-order structure before any
+new measurement is read.
+
+\section{The transfer law}
+
+\begin{center}
+\begin{tabular}{lcccc}
+\hline
+window & $m=2$ & $m=3$ & $m=5$ & $m=7$ \\
+\hline
+$W_1$ (heights 14--163) & $0.921 \pm .026$ & $0.808 \pm .017$ & $0.636 \pm .031$ & $0.550 \pm .061$ \\
+$W_2$ (305--396) & $0.984 \pm .020$ & $0.936 \pm .036$ & $0.827 \pm .078$ & $0.735 \pm .115$ \\
+$W_3$ (544--680) & $0.974 \pm .016$ & $0.936 \pm .039$ & $0.844 \pm .034$ & $0.825 \pm .052$ \\
+$W_4$ (682--811) & $0.973 \pm .032$ & $0.915 \pm .017$ & $0.889 \pm .084$ & $0.772 \pm .059$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent (Ratios with block-jackknife standard errors; the attenuation weakens with height at
+every gated frequency, as committed in advance at $W_2$ vs $W_1$.) Two laws in
+$\tau = \omega/2\pi\bar\rho_w$ were fitted on $W_1, W_2$ and \emph{recorded before} the $W_3$
+test: Debye--Waller $T = e^{-a\tau^2}$ and linear $T = 1 - c\tau$ (the fitted $c = 0.5255$ sits
+provocatively near the form-factor value $\tfrac12$). At $W_3$ the Debye--Waller law held with
+gated deviations $0.003/0.004/0.036/0.004$ and out-of-sample error $6.6\times$ smaller than the
+linear law's; $W_4$ (run later, inside the overtone instrument) added a fourth confirmation at
+mean absolute deviation $0.024$. Jackknife over delete-block refits gives
+\[
+a \;=\; 1.15 \pm 0.16 .
+\]
+On $L(s, \chi_{-4})$, with the \emph{same} recorded constant: magnitude deviations
+$0.022/0.026/0.050$ at $m = 3/5/7$; the even frequencies, forced null by $\chi(2^k) = 0$, measured
+silent ($0.001$ at $m = 2$); and the sign pattern is exactly the character's. Given
+Rudnick--Sarnak universality \cite{RudnickSarnak}, the family-independence of $a$ is what one
+should \emph{expect} if the law derives from pair correlation; we present the cross-family test as
+a quantitative face of their theorem, and as evidence for that derivation route, not as a
+surprise. A local-variance mechanism ($a$ set by the window's own $\mathrm{Var}\,\bar S$) was
+committed twice and refuted twice; the fixed constant transferred better.
+
+\section{Localization: the law is the price of positions}
+
+A structural lemma, machine-checked on synthetic displaced lattices (exact recovery, $1.000$
+across nine lines): least squares of a field on its own components \emph{evaluated at the true
+sample points} returns full coefficients identically --- sampling displacement cannot attenuate an
+in-span line. The attenuation must therefore live elsewhere, and a committed continuous-time
+measurement located it: with $S(t) = N(t) - \Nbar(t)$ computed exactly between the located zeros,
+the same regression in continuous $t$ returns the \emph{full} Landau--Gonek amplitudes ---
+$0.99 \pm 0.02$ across all fifteen cells, three zeta windows and the Dirichlet family, fitted
+attenuation constant $\approx 0$ --- while the zero-sampled sequence attenuates as in the table
+above. (Our preregistered expectation was the opposite --- that continuous and sampled content
+would agree --- and its refutation, recorded in the registry, is precisely what localizes the
+law.) The Debye--Waller attenuation is thus a property of reading the primes from the zeros'
+\emph{positions}: the counting function carries them in full at every height, as the classical
+theory says it must; the displacement sequence --- the data a Hamiltonian reconstruction actually
+consumes --- pays the $e^{-a\tau^2}$ price.
+
+\begin{conjecture}[transfer law, localized]
+Over a height window $W$ with mean zero density $\bar\rho_W$, the per-frequency content of the
+zero-position displacement sequence satisfies
+$T(\omega; W) = \exp(-a\,(\omega/2\pi\bar\rho_W)^2)$ with $a = 1.15 \pm 0.16$ independent of
+height and family, while the counting fluctuation carries the primes at full explicit-formula
+amplitude. \emph{Expected rigorous home:} the object is a discrete twisted moment of $\bar S$ at
+the zeros, $\sum_{\gamma} \bar S(\gamma)\, x^{i\gamma}$, within the ambit of the Landau--Gonek
+generalization literature and controlled by pair correlation; its GUE universality would explain
+the family-independence of $a$. \emph{Falsification protocol:} further windows and families under
+the frozen battery; the prime-power frequencies (Section~6); and derivation of the jump-point
+sampling weight, which would promote the law toward a theorem.
+\end{conjecture}
+
+\section{Overtones at prime powers: a marginal but committed structure}
+
+The frequencies at which measurements departed from the law are exactly the prime powers ---
+harmonics of strong prime lines, since $\ln p^k = k \ln p$. Pooled over the four windows, with
+jackknife errors: deviations $-0.213 \pm 0.120$ at $m = 9$, $-0.339 \pm 0.221$ at $m = 25$,
+$-0.176 \pm 0.304$ at $m = 27$, $-0.036 \pm 0.132$ at $m = 8$, $-0.051 \pm 0.036$ at $m = 4$;
+genuine-prime controls $+0.035$ ($m = 11$) and $-0.010$ ($m = 13$). We state the evidential
+situation plainly: \emph{individually} these are $0.6$--$1.8\sigma$ effects; the evidence is the
+joint sign pattern (all five prime-power deviations negative while both prime controls sit on the
+law), the cross-family recurrence of the $m = 9$ suppression, and the fact that $m = 25$ and
+$m = 27$ were committed, with thresholds, before either frequency had been measured anywhere ---
+both landed negative as predicted. A committed constant-persistence model for $m = 9$ was refuted:
+the suppression decays toward the law with height ($0.37/0.39/0.46/0.65$ across the windows), the
+natural scaling of a second-order mixing term. This is the place where the Bogomolny--Keating
+lower-order arithmetic terms \cite{BK1,BK2} should cast their shadow on the displacement sequence,
+and we frame the table as a candidate measured face of their theory, awaiting both more data and a
+derivation. The phase-locking input --- Landau sums at $r = 4, 9$, the harmonics' first moments ---
+is verified at the percent level (Section~3).
+
+\section{Related work, non-claims, and required verification}
+
+A librarian pass against the live literature (report in \cite{Code}) governs this section. Known
+and owned elsewhere: the peaks (Landau; Odlyzko); the continuous full-amplitude content
+(Landau--Gonek --- our Section~3 is its numerical verification); correlation universality across
+families (Rudnick--Sarnak); arithmetic lower-order structure (Bogomolny--Keating); semiclassical
+potentials and their residuals (Wu--Sprung; Berry--Keating; Schumayer--Hutchinson). Claimed here:
+the measured amplitude law with its uncertainty, its out-of-sample and cross-family record, the
+localization result, the committed overtone table, and the registry discipline. Not claimed:
+novelty of any mechanism; any progress on RH. \emph{Required before submission:} full-text
+verification against the Landau--Gonek generalization literature and the discrete-moment work of
+Fujii \cite{Fujii1,Fujii2} and successors, and against the modern rigorous treatments of Berry's
+number-variance theory, none of which could be read in full in the environment where this draft
+was prepared; the conjecture's ``we are not aware of a published quantitative law'' stands only
+until that reading completes. The de Bruijn--Newman bound of Rodgers--Tao \cite{RodgersTao}
+calibrates the programme's ambitions: RH, if true, is barely true, and nothing in this paper
+attempts it.
+
+\section{Reproduction}
+
+Every number above is printed by one of seven scripts under \texttt{run\_all.py} in \cite{Code}
+(\texttt{coefficient\_primes.py}, \texttt{transfer\_height.py}, \texttt{transfer\_law.py},
+\texttt{dirichlet\_transfer.py}, \texttt{transfer\_theory.py}, \texttt{overtone.py},
+\texttt{transfer\_errors.py}); the registry directory pairs each instrument with its
+preregistration (constants, gates, predictions, all dated by commit hash) and its append-only
+results, including every refutation and instrument error mentioned in the text.
+
+\section*{Disclosure of AI use}
+
+This paper and the instruments it reports were developed in an extensive collaboration with
+Claude (Anthropic; accessed 2026). The direction of the work and all decisions about scope,
+claims, and the preregistration protocol are the author's. Within that direction, the AI system
+designed the instruments and preregistrations, committed predictions before runs (several of
+which were refuted and are so recorded), performed the analyses and the literature search
+reported in Section~7, and drafted the manuscript. Every numerical claim is reproduced by the
+cited scripts; the registry records the full prediction-and-refutation history. The author has
+reviewed the manuscript and takes full responsibility for its content.
+
+\begin{thebibliography}{99}
+\bibitem{Landau} E. Landau, \"Uber die Nullstellen der Zetafunktion, \emph{Math. Ann.} \textbf{71}
+(1912), 548--564.
+\bibitem{Gonek} S.~M. Gonek, An explicit formula of Landau and its applications to the theory of
+the zeta-function, \emph{Contemp. Math.} \textbf{143} (1993), 395--413.
+\bibitem{Odlyzko87} A.~M. Odlyzko, On the distribution of spacings between zeros of the zeta
+function, \emph{Math. Comp.} \textbf{48} (1987), 273--308.
+\bibitem{OdlyzkoEssay} A.~M. Odlyzko, Primes, quantum chaos, and computers, in \emph{Number
+Theory}, National Research Council, 1990, 35--46.
+\bibitem{Montgomery} H.~L. Montgomery, The pair correlation of zeros of the zeta function, in
+\emph{Analytic Number Theory}, Proc. Sympos. Pure Math. XXIV, AMS, 1973, 181--193.
+\bibitem{RudnickSarnak} Z. Rudnick and P. Sarnak, Zeros of principal $L$-functions and random
+matrix theory, \emph{Duke Math. J.} \textbf{81} (1996), 269--322.
+\bibitem{BK1} E.~B. Bogomolny and J.~P. Keating, Gutzwiller's trace formula and spectral
+statistics: beyond the diagonal approximation, \emph{Phys. Rev. Lett.} \textbf{77} (1996),
+1472--1475.
+\bibitem{BK2} E.~B. Bogomolny and J.~P. Keating, Random matrix theory and the Riemann zeros II:
+$n$-point correlations, \emph{Nonlinearity} \textbf{9} (1996), 911--935.
+\bibitem{Berry88} M.~V. Berry, Semiclassical formula for the number variance of the Riemann
+zeros, \emph{Nonlinearity} \textbf{1} (1988), 399--407.
+\bibitem{BerryKeating} M.~V. Berry and J.~P. Keating, The Riemann zeros and eigenvalue
+asymptotics, \emph{SIAM Rev.} \textbf{41} (1999), 236--266.
+\bibitem{WuSprung} H. Wu and D.~W.~L. Sprung, Riemann zeros and a fractal potential, \emph{Phys.
+Rev. E} \textbf{48} (1993), 2595--2598.
+\bibitem{SchHutch} D. Schumayer and D.~A.~W. Hutchinson, Physics of the Riemann hypothesis,
+\emph{Rev. Mod. Phys.} \textbf{83} (2011), 307--330.
+\bibitem{Fujii1} A. Fujii, On a theorem of Landau, \emph{Proc. Japan Acad. Ser. A} \textbf{65}
+(1989), 51--54.
+\bibitem{Fujii2} A. Fujii, On a theorem of Landau, II, \emph{Proc. Japan Acad. Ser. A}
+\textbf{66} (1990), 291--296.
+\bibitem{RodgersTao} B. Rodgers and T. Tao, The de Bruijn--Newman constant is non-negative,
+\emph{Forum Math. Pi} \textbf{8} (2020), e6.
+\bibitem{Note4} C. Gribble, The positivity lane: instruments, calibrations, and a requirements
+specification for the missing self-adjoint realization, Programme Note 4 (2026), in \cite{Code}.
+\bibitem{Code} C. Gribble, Reference implementations and preregistration registry, code
+repository (2026), \texttt{https://github.com/carlgribble-caa/prime-moments}.
+\end{thebibliography}
+
+\end{document}

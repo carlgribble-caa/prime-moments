@@ -31,6 +31,7 @@ SCRIPTS = [
     ("Programme - the transfer law on Dirichlet L (WP-RH5b)", "dirichlet_transfer.py"),
     ("Programme - the derivation bridge (WP-RH6)", "transfer_theory.py"),
     ("Programme - the overtone theory, first light (WP-RH7)", "overtone.py"),
+    ("Programme - transfer-law jackknife uncertainties", "transfer_errors.py"),
 ]
 
 
