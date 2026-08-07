@@ -35,6 +35,7 @@ SCRIPTS = [
     ("Programme - the compression question (WP-C1)", "compression_question.py"),
     ("Programme - stronger observers on the residual (WP-C2)", "compression_observers.py"),
     ("Programme - the HL resolution test (WP-C3)", "hl_resolution.py"),
+    ("Programme - gating the beyond-skeleton excess (WP-C3b)", "excess_gate.py"),
 ]
 
 
