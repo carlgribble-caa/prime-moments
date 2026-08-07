@@ -217,6 +217,13 @@ partial theorem: possible; RH: epsilon).
   properties x 3 universes, every cell ADOPTED/MACHINE/MEASURED, exactly one OPEN cell
   (self-adjoint realization, zeta), with two measured constraint lines pinned on its
   occupant. Instrument: `code/requirements_spec.py`.
+- **Librarian pass (done, provisional).** The lane searched against the live literature
+  (`registry/2026-08-07-librarian-pass.md`): peak existence = Odlyzko/Landau (KNOWN);
+  continuous full content = Landau–Gonek (CLASSICAL — our H1 is a numerical verification);
+  family universality = a measured face of Rudnick–Sarnak (ADOPTED); overtones' known home =
+  Bogomolny–Keating lower-order terms; the DW law itself = no hits found, but the adjacent
+  Landau–Gonek-generalization and number-variance full texts 403'd and MUST be read before
+  any untabulated-claim goes to print. Paper reframing consequences recorded.
 - **RH7 (done, first light).** The overtone theory: existence earned out of sample —
   never-measured prime-power frequencies (25, 27) suppressed below the law while genuine
   primes conform, Landau phase bias verified at the percent level; the committed
