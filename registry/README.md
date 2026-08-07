@@ -28,3 +28,4 @@ Index:
 | `2026-08-07-transfer-height-prereg.md` | `code/transfer_height.py` | `2026-08-07-transfer-height-results.md` |
 | `2026-08-07-transfer-law-prereg.md` | `code/transfer_law.py` | `2026-08-07-transfer-law-results.md` |
 | `2026-08-07-dirichlet-transfer-prereg.md` | `code/dirichlet_transfer.py` | `2026-08-07-dirichlet-transfer-results.md` |
+| `2026-08-07-transfer-theory-prereg.md` | `code/transfer_theory.py` | `2026-08-07-transfer-theory-results.md` |

@@ -29,6 +29,7 @@ SCRIPTS = [
     ("Programme - height dependence of the transfer (WP-RH4b)", "transfer_height.py"),
     ("Programme - the transfer law, out of sample (WP-RH5)", "transfer_law.py"),
     ("Programme - the transfer law on Dirichlet L (WP-RH5b)", "dirichlet_transfer.py"),
+    ("Programme - the derivation bridge (WP-RH6)", "transfer_theory.py"),
 ]
 
 
