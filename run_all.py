@@ -20,6 +20,22 @@ SCRIPTS = [
     ("Programme - ML detector under preregistration (WP9c)", "ml_detector.py"),
     ("Programme - Witt / Frobenius-shadow checks (WP8)", "witt_frobenius.py"),
     ("Programme Note 2 - formal engine checks", "formal_engine.py"),
+    ("Programme - Weil positivity explorer under preregistration (WP-RH1)", "weil_positivity.py"),
+    ("Programme - canonical-system reconstruction under preregistration (WP-RH2)", "canonical_system.py"),
+    ("Programme - requirements spec matrix under preregistration (WP-RH3)", "requirements_spec.py"),
+    ("Programme - two-interval plateau out-of-sample (WP-RH3b)", "two_interval_plateau.py"),
+    ("Programme - plateau bias as density effect (WP-RH3c)", "plateau_bias.py"),
+    ("Programme - primes in the Hamiltonian coefficients (WP-RH4)", "coefficient_primes.py"),
+    ("Programme - height dependence of the transfer (WP-RH4b)", "transfer_height.py"),
+    ("Programme - the transfer law, out of sample (WP-RH5)", "transfer_law.py"),
+    ("Programme - the transfer law on Dirichlet L (WP-RH5b)", "dirichlet_transfer.py"),
+    ("Programme - the derivation bridge (WP-RH6)", "transfer_theory.py"),
+    ("Programme - the overtone theory, first light (WP-RH7)", "overtone.py"),
+    ("Programme - transfer-law jackknife uncertainties", "transfer_errors.py"),
+    ("Programme - the compression question (WP-C1)", "compression_question.py"),
+    ("Programme - stronger observers on the residual (WP-C2)", "compression_observers.py"),
+    ("Programme - the HL resolution test (WP-C3)", "hl_resolution.py"),
+    ("Programme - gating the beyond-skeleton excess (WP-C3b)", "excess_gate.py"),
 ]
 
 

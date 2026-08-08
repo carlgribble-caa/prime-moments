@@ -19,3 +19,18 @@ Index:
 |---|---|---|
 | `2026-08-03-scanner-v2-prereg.md` | `code/scanner_v2.py` | `2026-08-03-scanner-v2-results.md` |
 | `2026-08-03-ml-detector-prereg.md` | `code/ml_detector.py` | `2026-08-03-ml-detector-results.md` |
+| `2026-08-07-weil-positivity-prereg.md` | `code/weil_positivity.py` | `2026-08-07-weil-positivity-results.md` |
+| `2026-08-07-canonical-system-prereg.md` | `code/canonical_system.py` | `2026-08-07-canonical-system-results.md` |
+| `2026-08-07-requirements-spec-prereg.md` | `code/requirements_spec.py` | `2026-08-07-requirements-spec-results.md` |
+| `2026-08-07-two-interval-plateau-prereg.md` | `code/two_interval_plateau.py` | `2026-08-07-two-interval-plateau-results.md` |
+| `2026-08-07-plateau-bias-prereg.md` | `code/plateau_bias.py` | `2026-08-07-plateau-bias-results.md` |
+| `2026-08-07-coefficient-primes-prereg.md` | `code/coefficient_primes.py` | `2026-08-07-coefficient-primes-results.md` |
+| `2026-08-07-transfer-height-prereg.md` | `code/transfer_height.py` | `2026-08-07-transfer-height-results.md` |
+| `2026-08-07-transfer-law-prereg.md` | `code/transfer_law.py` | `2026-08-07-transfer-law-results.md` |
+| `2026-08-07-dirichlet-transfer-prereg.md` | `code/dirichlet_transfer.py` | `2026-08-07-dirichlet-transfer-results.md` |
+| `2026-08-07-transfer-theory-prereg.md` | `code/transfer_theory.py` | `2026-08-07-transfer-theory-results.md` |
+| `2026-08-07-overtone-prereg.md` | `code/overtone.py` | `2026-08-07-overtone-results.md` |
+| `2026-08-08-compression-prereg.md` | `code/compression_question.py` | `2026-08-08-compression-results.md` |
+| `2026-08-08-compression-c2-prereg.md` | `code/compression_observers.py` | `2026-08-08-compression-c2-results.md` |
+| `2026-08-08-hl-resolution-prereg.md` | `code/hl_resolution.py` | `2026-08-08-hl-resolution-results.md` |
+| `2026-08-08-excess-gate-prereg.md` | `code/excess_gate.py` | `2026-08-08-excess-gate-results.md` |
