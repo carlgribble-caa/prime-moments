@@ -1,0 +1,40 @@
+Dear Editors,
+
+I am pleased to submit "Recovering the primes in a dyadic interval from exact moments: two
+constructive routes and an obstruction theorem" for consideration in Research in Number Theory.
+
+Two companion manuscripts (cited in the paper, same author) construct exact "moment channels"
+for the primes in (m, 2m]: integer power sums obtained from divisor-lattice data with no prime
+input, and weighted logarithmic moments obtained from the primes below the window. This paper
+closes the circle: the moments determine the window primes individually. Theorem 1 recovers them
+from r + 1 integer moments via Newton's identities and integer root reading, with no primality
+test anywhere in the pipeline; Theorem 2 recovers them from a single real moment — Chebyshev's
+functional theta(2m) − theta(m) — delivered to about log_2(product of window primes) bits, by
+rounding and window trial division; a Prony decoder interpolates. Against these, Theorem 3 proves
+a pigeonhole floor: any scheme whose decoder sees at most D bits, correct on every r-subset of
+the window, needs D at least log_2 C(m, r), which diverges — while the companions' determination
+of a single aggregate from O(log m) moments sits near the same floor at entropy O(log m). The
+model restriction that makes the folklore "no formula for the primes" well-posed (excluding
+Mills- and Willans-type decoders) is stated and discussed explicitly. All constructions are
+machine-verified — at m = 500 both routes recover the 73 primes of (500, 1000] exactly — with
+code at https://github.com/carlgribble-caa/prime-moments.
+
+On the companion manuscripts: both are publicly available (doi:10.5281/zenodo.21769102 and
+doi:10.5281/zenodo.21769104) and are attached as supplementary files for the referees'
+convenience; each is under review elsewhere as an independent paper. Only two displayed facts are
+imported from them — stated in full in Section 2 of the present paper, which is self-contained
+given those displays — so the referee's reliance on the companions is limited to the provenance
+of two identities.
+
+Disclosure of AI use: the paper was developed in an extensive collaboration with Claude
+(Anthropic; Claude Fable 5, 2026) under my direction; a full statement in the publisher's
+required format appears in the paper's final section, and I raise it here proactively.
+
+This manuscript is not under consideration elsewhere and has not been previously published.
+A preprint appears at doi:10.5281/zenodo.21769106 (v1.0, 2026).
+
+Thank you for your consideration.
+
+Sincerely,
+Carl Gribble
+me@carlgribble.com

@@ -1,0 +1,36 @@
+Dear Editors,
+
+I am pleased to submit "Prime counts and prime sums from multiplication tables: a self-similar
+formula system" for consideration in Mathematics Magazine.
+
+The paper develops a fully elementary, self-contained route from a picture every reader knows —
+the multiplication table — to an exact formula system for prime counts and prime sums. Reading
+the table's duplicated entries carefully yields Linnik's identity geometrically; organizing the
+resulting layers gives a three-line recursive system that returns exact values of pi(y) and of
+sums of primes with no prime input, no primality test, and no sieve at any stage. Along the way
+the paper proves a duplicated-mass theorem and a layer-birth law (dimension k of the construction
+switches on exactly at 2^k), classifies the intervals on which the system is constant, and
+validates the whole machine at scale — including an exact, prime-free computation of
+pi(10^9) = 50,847,534. Code for every verification is openly available at
+https://github.com/carlgribble-caa/prime-moments. A companion manuscript by the same author is
+cited for context only; the present paper is mathematically self-contained.
+
+On novelty, the paper is deliberately scoped: the computational route through Linnik's identity
+was pioneered by Nathan McKenzie, whom the paper cites and credits; the contributions claimed are
+the geometric derivation, the structural theorems, the interval taxonomy, and the verification
+discipline. I believe this is exactly the kind of piece the Magazine publishes best: a fresh,
+visual derivation of real mathematics, accessible to strong undergraduates, with an honest
+frontier.
+
+Disclosure of AI use: the paper was developed in an extensive collaboration with Claude
+(Anthropic; Claude Fable 5, 2026) under my direction; a full statement in the publisher's
+required format appears in the paper's final section, and I raise it here proactively.
+
+This manuscript is not under consideration elsewhere and has not been previously published.
+A preprint appears at doi:10.5281/zenodo.21769102 (v1.0, 2026).
+
+Thank you for your consideration.
+
+Sincerely,
+Carl Gribble
+me@carlgribble.com

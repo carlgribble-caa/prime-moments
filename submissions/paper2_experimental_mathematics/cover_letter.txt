@@ -1,0 +1,36 @@
+Dear Editors,
+
+I am pleased to submit "Certified exact sums of primes over dyadic intervals via a ladder of
+generalized factorials" for consideration in Experimental Mathematics.
+
+The paper constructs generalized factorials with Chebyshev-polynomial exponents whose prime
+valuations isolate the primes in a dyadic window (m, 2m]. Each polynomial weight yields one exact
+linear functional of those primes, computable from the primes below m alone; finitely many such
+moments, closed by a certified interval-arithmetic sandwich and the integrality of the target,
+determine the exact sum of the window primes. The method is elementary end to end — its ancestor
+is Chebyshev's 1852 central-binomial argument, which the paper recasts as rung zero of the ladder
+— and it is verified by exact certified computations at m = 10^3, 10^4, and 10^5, reported with
+sandwich widths and cross-checked against independent ground truth. All code is openly available
+at https://github.com/carlgribble-caa/prime-moments. A companion manuscript by the same author is
+cited for context and cross-checks only; the present paper is mathematically self-contained.
+
+I believe the paper fits the journal's remit precisely: a new computational method, developed and
+validated experimentally, with every claim machine-verified and reproducible. The contribution is
+methodological rather than asymptotic — no speed records are claimed, and the paper says so
+plainly; its value is a certified, minimal-trust elementary route to exact answers.
+
+Disclosure of AI use: the paper was developed in an extensive collaboration with Claude
+(Anthropic; Claude Fable 5, 2026), which contributed substantially to the mathematics, code, and
+text under my direction; a full statement in the publisher's required format (tool, version,
+manner of use, reason, and my assumption of responsibility) appears in the paper's final section.
+I raise it here rather than leave it to be discovered, and I am glad to answer any questions about
+the collaboration.
+
+This manuscript is not under consideration elsewhere and has not been previously published.
+A preprint appears at doi:10.5281/zenodo.21769104 (v1.0, 2026).
+
+Thank you for your consideration.
+
+Sincerely,
+Carl Gribble
+me@carlgribble.com
