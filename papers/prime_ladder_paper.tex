@@ -53,17 +53,25 @@ Del\'eglise--Rivat, and computes $\pi(x)$ in $O(x^{2/3}\log^{-2}x)$ time \cite{D
 extended to the prime power sums $\sum_{p \le x} p^k$ \cite{Orlov}, with widely used implementations
 \cite{primesum}, and has a folklore branch, the $O(x^{3/4})$ dynamic program posted by the Project Euler
 user Lucy\_Hedgehog in 2013, which sums the primes below $x$ ``without finding them all''
-\cite{Lucy}. The analytic tradition, initiated by Lagarias and Odlyzko and realized rigorously by Platt
-\cite{Platt} and B\"uthe \cite{Buthe}, evaluates an explicit formula over zeta zeros to accuracy below
-$\tfrac12$ and rounds; the target being an integer converts a certified approximation into an exact
-determination.
+\cite{Lucy}. The analytic tradition, initiated by Lagarias and Odlyzko \cite{LO} and realized
+rigorously by Platt \cite{Platt} and B\"uthe \cite{Buthe}, evaluates an explicit formula over zeta
+zeros to accuracy below $\tfrac12$ and rounds; the target being an integer converts a certified
+approximation into an exact determination --- a closure used likewise, outside prime counting, in
+Johansson's certified computation of the partition numbers \cite{JohanssonHRR} --- and rigorous
+computations of the Chebyshev function $\theta$ itself belong to the same tradition \cite{PT}. The
+need for certification is not hypothetical: a $2009$ computation of the sum of the primes below
+$10^{21}$ was withdrawn in $2011$ after an off-by-one discrepancy came to light \cite{primesum}.
 
 This note describes a third route to exact interval prime sums, elementary in its ingredients and
 certified in its execution. It originates in Chebyshev's 1852 observation \cite{Cheb} that the prime
 factorization of the central binomial coefficient controls $\theta(2m)-\theta(m)$: the primes of
 $(m, 2m]$ appear in $\binom{2m}{m}$ with exponent exactly one. We extend this single exact functional to
 a \emph{ladder} of them. The factorial is the weight-$1$ member of the family
-$\prod_{i \le n} i^{w(i)}$; taking polynomial weights $w$ produces generalized factorials (the weight
+$\prod_{i \le n} i^{w(i)}$; taking polynomial weights $w$ produces generalized
+factorials\footnote{The term is overloaded: Bhargava's generalized factorials \cite{Bhargava}
+generalize $n!$ to subsets of $\Z$ via $p$-orderings, a different construction; throughout this paper
+``generalized factorial'' means a product $\prod_{i \le n} i^{w(i)}$ with polynomial weight $w$.}
+(the weight
 $w(i)=i$ gives the classical hyperfactorial \cite{HypVal1,HypVal2}) whose valuations at large primes are
 $w(p)$ itself. Choosing the weights to be integer-rescaled Chebyshev polynomials yields a numerically
 stable basis of exact moments; approximation theory then converts finitely many moments into a rigorous
@@ -182,12 +190,23 @@ logarithmically in the initial window.
 \begin{proof}[Proof sketch]
 $f$ is analytic in a neighborhood of $[m, 2m]$ with nearest singularities at $t = 1$ and $t = 0$; under
 $u(t)$ these map near $u = -3$, and $\rho = |u_\ast| + \sqrt{u_\ast^2 - 1}$ with $u_\ast \to -3$. The
-bound is then the classical Bernstein estimate; see \cite[Ch.~8]{Tref}.
+bound is then the classical Bernstein estimate; see \cite[Ch.~8]{Tref}. The limiting constant is
+itself classical: $3 + 2\sqrt{2} = (\sqrt{2}+1)^2 = (\sqrt{\kappa}+1)/(\sqrt{\kappa}-1)$ at endpoint
+ratio $\kappa = 2$, the familiar Chebyshev rate for intervals of condition ratio $2$, known since
+Chebyshev's best uniform approximation of the reciprocal \cite{KVZ}.
 \end{proof}
 
 \begin{remark}
 Empirically the contraction factor observed in Section~5 is close to $10$ per moment, faster than the
 guaranteed floor; the floor alone already gives the logarithmic moment count.
+\end{remark}
+
+\begin{remark}[Moment-problem reading]
+The sandwich \eqref{eq:sandwich} is the elementary end of a classical subject: two-sided bounds on a
+linear functional of a positive measure from finitely many polynomial moments belong to the
+Chebyshev--Markov--Stieltjes circle \cite{KN,KS}. Gauss-quadrature-type bounds \cite{GM} would use all
+$K{+}1$ moments inside the bound itself, conceivably tightening the window at fixed $K$; we have not
+pursued this.
 \end{remark}
 
 \section{Certified implementation}
@@ -205,9 +224,13 @@ and extended to $[m, 2m]$ by Lemma~\ref{lem:curv}. (4) \emph{Assembly.} Equation
 evaluated in interval arithmetic; if $\lceil \text{lo} \rceil = \lfloor \text{hi} \rfloor$, that integer
 is $S(m)$.
 
-The trust base is: correctness of the interval arithmetic library (mpmath), of big-integer arithmetic,
-and of Lemma~\ref{lem:curv}'s two analytic inequalities. All other quantities are enclosed, not
-estimated. Ground-truth verification by segmented sieve, and cross-checks of every moment enclosure
+The trust base is: correctness of the interval arithmetic library --- mpmath \cite{mpmath}, whose
+interval context is documented as experimental; the pipeline therefore touches only interval
+addition, subtraction, multiplication, division, and the logarithm, and a port to ball arithmetic in
+Arb \cite{Arb} would further harden this leg --- of big-integer arithmetic, and of
+Lemma~\ref{lem:curv}'s two analytic inequalities. All other quantities are enclosed, not
+estimated; for general background on validated numerics see \cite{Tucker}. Ground-truth verification
+by segmented sieve, and cross-checks of every moment enclosure
 against direct computation over the (sieved) interval primes, are performed outside the pipeline.
 
 \section{Results}
@@ -245,7 +268,17 @@ expresses $\Lambda(n)/\log n$ as an alternating-harmonic combination of the coun
 factorizations into parts $\ge 2$, and was developed into prime-counting and prime-power-sum
 algorithms by McKenzie \cite{McKenzie}; the companion paper \cite{Companion} builds this route into a
 uniform weighted formula system which, in exact rational arithmetic, reproduces
-$\sum_{p \le 10^5} p = 454{,}396{,}537$ from divisor-lattice data alone. Finally, the dyadic windows
+$\sum_{p \le 10^5} p = 454{,}396{,}537$ from divisor-lattice data alone.
+
+The nearest structural relatives of the ladder that our searches found are the partial factorizations
+of products of binomial coefficients studied by Lagarias, Mehta, and Du \cite{LM,DuL}: the same
+threshold-split valuations of factorial-like products, analyzed there asymptotically (under the prime
+number theorem or the Riemann hypothesis) rather than assembled into exact window functionals. The
+Chebyshev--Sylvester weight schemes, from Sylvester through Diamond--Erd\H{o}s \cite{DE} to a recent
+computational revival \cite{Gantumur}, optimize finitely supported weights acting on
+$\log \lfloor x \rfloor!$ into one-sided bounds on $\psi$ --- inequalities of increasing sharpness,
+never exact functionals of a window; and a family of interval-count identities extracted from
+binomial-coefficient valuations, with $O(\sqrt k)$ errors, appears in \cite{Xylouris}. Finally, the dyadic windows
 $(2^{r-1}, 2^r]$ tile the integers and each contains a prime by Bertrand's postulate, so the pair
 $\big(I(r), F\big)$ with $I(r) = (2^{r-1}, 2^r]$ and $F$ the certified procedure above answers, for
 every $r$, the question ``what is the sum of the primes in the $r$-th dyadic window'' exactly.
@@ -284,20 +317,22 @@ for its content, including the accuracy of the mathematics and of all references
 \bibitem{Cheb} P.~L. Chebyshev, M\'emoire sur les nombres premiers, \emph{J. Math. Pures Appl.}
 \textbf{17} (1852), 366--390.
 \bibitem{DR} M. Del\'eglise and J. Rivat, Computing $\pi(x)$: the Meissel, Lehmer, Lagarias, Miller,
-Odlyzko method, \emph{Math. Comp.} \textbf{65} (1996), 235--245.
+Odlyzko method, \emph{Math. Comp.} \textbf{65} (1996), 235--245; Computing $\psi(x)$,
+\emph{Math. Comp.} \textbf{67} (1998), 1691--1696.
 \bibitem{Staple} D.~B. Staple, The combinatorial algorithm for computing $\pi(x)$, arXiv:1503.01839
-(2015).
+(2015); MSc thesis, Dalhousie University, Halifax, 2015.
 \bibitem{Orlov} A. Orlov, The combinatorial method to compute the sum of the powers of primes,
 arXiv:2111.15545 (2021).
 \bibitem{primesum} K. Walisch, \emph{primesum} (software), \texttt{github.com/kimwalisch/primesum}.
-\bibitem{Lucy} Lucy\_Hedgehog, post in the Project Euler Problem 10 discussion thread (2013); see also
-G. Broxey, ``Lucy's Algorithm + Fenwick Trees'' (2023),
-\texttt{https://gbroxey.github.io/blog/2023/04/09/lucy-fenwick.html}.
+\bibitem{Lucy} Lucy\_Hedgehog, post in the Project Euler Problem 10 discussion thread (2013),
+\texttt{projecteuler.net/thread=10;page=5\#111677}; see also
+G. Macris, ``Lucy's Algorithm + Fenwick Trees'' (2023),
+\texttt{gbroxey.github.io/blog/2023/04/09/lucy-fenwick.html}.
 \bibitem{Platt} D.~J. Platt, Computing $\pi(x)$ analytically, \emph{Math. Comp.} \textbf{84} (2015),
 1521--1535.
 \bibitem{Buthe} J. B\"uthe, An analytic method for bounding $\psi(x)$, \emph{Math. Comp.} \textbf{87}
-(2018); An improved analytic method for calculating $\pi(x)$, \emph{Manuscripta Math.} \textbf{151}
-(2016), 329--352.
+(2018), 1991--2009; An improved analytic method for calculating $\pi(x)$, \emph{Manuscripta Math.}
+\textbf{151} (2016), 329--352.
 \bibitem{HypVal1} L. Onnis, On the $p$-adic valuation of a hyperfactorial, arXiv:2109.05616 (2021).
 \bibitem{HypVal2} J.-C. Pain, Bounds on the $p$-adic valuation of the factorial, hyperfactorial and
 superfactorial, arXiv:2408.00353 (2024).
@@ -306,13 +341,47 @@ superfactorial, arXiv:2408.00353 (2024).
 \bibitem{Adam} V.~S. Adamchik, Polygamma functions of negative order, \emph{J. Comput. Appl. Math.}
 \textbf{100} (1998), 191--199.
 \bibitem{Coppo} M.-A. Coppo, Generalized Glaisher--Kinkelin constants and Ramanujan summation of
-series, \emph{Res. Number Theory} \textbf{10} (2024), art.~8.
+series, \emph{Res. Number Theory} \textbf{10} (2024), \texttt{doi:10.1007/s40993-023-00505-2}.
 \bibitem{Linnik} Yu.~V. Linnik, \emph{The Dispersion Method in Binary Additive Problems}, Amer. Math.
 Soc., Providence, 1963.
 \bibitem{Tref} L.~N. Trefethen, \emph{Approximation Theory and Approximation Practice}, SIAM,
 Philadelphia, 2013.
-\bibitem{McKenzie} N. McKenzie, Computing the prime counting function with Linnik's identity,
-manuscript (2011), available at \texttt{https://www.primecounting.com}.
+\bibitem{LO} J.~C. Lagarias and A.~M. Odlyzko, Computing $\pi(x)$: an analytic method,
+\emph{J. Algorithms} \textbf{8} (1987), 173--191.
+\bibitem{PT} D.~J. Platt and T.~S. Trudgian, On the first sign change of $\theta(x) - x$,
+\emph{Math. Comp.} \textbf{85} (2016), 1539--1547.
+\bibitem{JohanssonHRR} F. Johansson, Efficient implementation of the Hardy--Ramanujan--Rademacher
+formula, \emph{LMS J. Comput. Math.} \textbf{15} (2012), 341--359.
+\bibitem{mpmath} F. Johansson et al., \emph{mpmath: a Python library for arbitrary-precision
+floating-point arithmetic}, \texttt{mpmath.org}.
+\bibitem{Arb} F. Johansson, Arb: efficient arbitrary-precision midpoint-radius interval arithmetic,
+\emph{IEEE Trans. Computers} \textbf{66} (2017), 1281--1292.
+\bibitem{Tucker} W. Tucker, \emph{Validated Numerics: A Short Introduction to Rigorous
+Computations}, Princeton Univ. Press, 2011.
+\bibitem{KVZ} J. Kraus, P. Vassilevski, and L. Zikatanov, Polynomial of best uniform approximation to
+$x^{-1}$ and smoothing in two-level methods, arXiv:1002.1859 (2010).
+\bibitem{KN} M.~G. Krein and A.~A. Nudelman, \emph{The Markov Moment Problem and Extremal Problems},
+Transl. Math. Monographs 50, Amer. Math. Soc., Providence, 1977.
+\bibitem{KS} S. Karlin and W.~J. Studden, \emph{Tchebycheff Systems: With Applications in Analysis
+and Statistics}, Wiley, New York, 1966.
+\bibitem{GM} G.~H. Golub and G. Meurant, \emph{Matrices, Moments and Quadrature with Applications},
+Princeton Univ. Press, 2010.
+\bibitem{Bhargava} M. Bhargava, The factorial function and generalizations, \emph{Amer. Math.
+Monthly} \textbf{107} (2000), 783--799.
+\bibitem{LM} J.~C. Lagarias and H. Mehta, Products of binomial coefficients and unreduced Farey
+fractions, \emph{Int. J. Number Theory} \textbf{12} (2016); arXiv:1409.4145.
+\bibitem{DuL} L. Du and J.~C. Lagarias, Partial factorizations of products of binomial coefficients,
+\emph{Int. J. Number Theory} \textbf{18} (2022), 691--728; arXiv:2006.15439.
+\bibitem{DE} H.~G. Diamond and P. Erd\H{o}s, On sharp elementary prime number estimates,
+\emph{Enseign. Math. (2)} \textbf{26} (1980), 313--321.
+\bibitem{Gantumur} T. Gantumur, An expository review of the Chebyshev--Sylvester method in prime
+number theory, arXiv:2512.02466 (2025).
+\bibitem{Xylouris} T. Xylouris, Binomial coefficients and the distribution of the primes,
+arXiv:0709.4676 (2007).
+\bibitem{McKenzie} N. McKenzie, Computing the prime counting function with Linnik's identity in
+$O(n^{2/3} \log n)$ time and $O(n^{1/3} \log n)$ space, manuscript (2011),
+\texttt{primecounting.com/prime-counting-algorithms/}\allowbreak\texttt{PrimeCounting\_NathanMcKenzie.pdf}; prime power
+sums in the companion manuscript and code (2011), \texttt{github.com/NathanMcKenzie/InitalTest}.
 \bibitem{Companion} C. Gribble, Prime counts and prime sums from multiplication tables: a
 self-similar formula system, companion manuscript, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769103}.
 \bibitem{Code} C. Gribble, Reference implementations accompanying this paper and \cite{Companion},
