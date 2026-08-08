@@ -1,4 +1,4 @@
-"""Prime sums over arbitrary intervals from the inductive U-space formula system.
+"""Prime sums over arbitrary intervals from the inductive multiplication-table formula system.
 
 Three lines of mathematics, no primality tests anywhere:
   base:  T_1^(j)(y) = sum_{n=2..y} n^j                       (Faulhaber)
