@@ -6,7 +6,7 @@ Superseded copies remain on disk untracked (`Draft II/`, `Finals/`, `The Crystal
 
 | Canonical file | Source copied | Why that source |
 |---|---|---|
-| `u_space_prime_formula_paper.tex` | `Draft II/u_space_prime_formula_paper (1).tex` (2026-08-01 14:14) | Revision adding the McKenzie attribution (abstract, intro, related work) and the Companion/Code bibitems; the root copy (13:23) lacks both |
+| `prime_sum_formula_paper.tex` (named `u_space_prime_formula_paper.tex` until 2026-08-08, renamed to match the paper's title and its verification script) | `Draft II/u_space_prime_formula_paper (1).tex` (2026-08-01 14:14) | Revision adding the McKenzie attribution (abstract, intro, related work) and the Companion/Code bibitems; the root copy (13:23) lacks both |
 | `prime_ladder_paper.tex` | `Draft II/prime_ladder_paper (1).tex` (2026-08-01 14:15) | Same revision wave: adds McKenzie/Companion/Code references and completed bibitems; root copy (13:26) predates it |
 | `prime_recovery_paper.tex` | `Finals/prime_recovery_paper.tex` (mtime 06:40 is a zip-extraction artifact) | Content superset of `Draft II/prime_recovery_paper.tex`: author name, the AI-disclosure section, the Section-2 self-containment sentence referenced by the cover letters; no mathematical differences between the two |
 | `multiplication_crystal_paper.tex` | `The Crystal/multiplication_crystal_paper.tex` (2026-08-02 16:10) | Only copy |

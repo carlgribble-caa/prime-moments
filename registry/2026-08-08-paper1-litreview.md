@@ -1,4 +1,4 @@
-# Literature review — Paper 1 (u_space_prime_formula_paper.tex)
+# Literature review — Paper 1 (prime_sum_formula_paper.tex, at review time named u_space_prime_formula_paper.tex)
 
 Date: 2026-08-08. Method: three parallel search agents (claims 1–2; claims 3–5 + OEIS;
 computational thread + citation chasing), ~110 distinct queries across arXiv, general web,

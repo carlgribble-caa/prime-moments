@@ -12,7 +12,7 @@ probed by four draft papers and five scripts:
 
 | Asset | Role |
 |---|---|
-| `papers/u_space_prime_formula_paper.tex` (Companion I) | integer moment channel (Linnik engine) |
+| `papers/prime_sum_formula_paper.tex` (Companion I) | integer moment channel (Linnik engine) |
 | `papers/prime_ladder_paper.tex` (Companion II) | weighted moment channel (Chebyshev ladder) |
 | `papers/prime_recovery_paper.tex` (Companion III) | decoding + bit-floor obstruction |
 | `papers/multiplication_crystal_paper.tex` (Essay) | the view from above |
