@@ -57,7 +57,11 @@ Let $U_k(N)$ denote the $k$-dimensional multiplication table restricted to entri
 products at most $N$: the set of tuples $(x_1, \dots, x_k)$ with every $x_i \ge 2$ and
 $x_1 x_2 \cdots x_k \le N$. The starting observation is elementary and, we believe, a good pedagogical
 door into multiplicative number theory: the values manufactured by $U_2$ are exactly the composite
-numbers, and the primes are exactly the integers the table cannot make. An arithmetic amateur's very
+numbers, and the primes are exactly the integers the table cannot make. (The table complement is a
+classical device --- Sundaram's sieve \cite{Sundaram} generates the primes exactly this way --- and the
+\emph{de-duplicated} table, the set of distinct products, is the subject of the Erd\H{o}s
+multiplication table problem \cite{ErdosMT,Ford}; our concern below is with the table's exact
+multiplicities rather than its cardinality.) An arithmetic amateur's very
 natural program --- \emph{sum the integers up to $N$, subtract what the table makes, obtain the sum of
 the primes} --- is therefore structurally sound, and fails only on multiplicity: the table ships
 duplicates, in quantities governed by the divisor function and, more fundamentally, by the number of
@@ -175,13 +179,17 @@ $D(1000) = 974{,}163$. The dust term is itself produced prime-free by Theorem~\r
 \section{Interval structure}
 
 \begin{proposition}[Where the intervals live]\label{prop:intervals}
-(i) For a target interval $(A, B]$ of values, every layer is summed over the hyperbola shell
+(i) For a target interval $(A, B]$ of values, every layer is summed over the hyperbola
+shell\footnote{``Shell'' here means a product level region, the difference of two $k$-dimensional
+Dirichlet hyperbola regions --- not the hyperbolic shells (level sets of indefinite quadratic forms)
+of the lattice-point literature.}
 $A < x_1 \cdots x_k \le B$; the interval constrains the product, never the coordinates. (ii) In the
 sorted fold, the coordinates are root-bounded: $x_1 \le B^{1/k}$ and inductively
 $x_i \le \big(B/(x_1 \cdots x_{i-1})\big)^{1/(k-i+1)}$. (iii) The system
 \eqref{eq:base}--\eqref{eq:extract} evaluates only at the closure of $\{B\}$ (and $\{A\}$) under
 $y \mapsto \fl{y/d}$ and $y \mapsto \fl{y^{1/a}}$ --- a finite, self-similar lattice of
-$O(\sqrt B)$ points (e.g.\ $642$ points for $B = 10^5$).
+$O(\sqrt B)$ points (the quotient set alone has cardinality $2\sqrt B + O(1)$, exactly determined
+in \cite{Heyman}; e.g.\ $642$ points for $B = 10^5$).
 \end{proposition}
 
 \begin{proposition}[Layer-birth law]\label{prop:birth}
@@ -219,17 +227,29 @@ the computation.\par}
 Since $\fl{(y+1)/d} > \fl{y/d}$ exactly when $d \mid y+1$, the evaluation lattice of $y+1$ exceeds that
 of $y$ only at divisors of $y+1$. A prime step therefore adds a single lattice point --- observed above
 as the $176\,\mathrm{s} \to 1\,\mathrm{s}$ collapse and a lattice increment of exactly one. The
-system's cost profile feels primality before its arithmetic announces it.
+system's cost profile feels primality before its arithmetic announces it. The underlying object has a
+literature of its own: the floor-quotient set $\{\fl{y/d}\}$ carries a partial-order structure studied
+by Lagarias and Richman \cite{LR}, its cardinality is exactly determined \cite{Heyman}, and the primes
+\emph{inside} it are actively studied \cite{HeymanP,MaWu}. The observable here is of a different kind:
+the bare cardinality of the quotient set grows at every step and does not discriminate primes, whereas
+the growth of the closed evaluation lattice is supported exactly on the divisors of $y+1$ --- kin to
+the folklore reading of $D(n) - D(n-1) = d(n)$ for the divisor summatory function, minimal exactly at
+the primes.
 \end{remark}
 
 \section{Related work, limitations, open doors}
 
 Lemma~\ref{lem:linnik} is Linnik's identity \cite{Linnik}, standard in sieve theory \cite{FI} and
 developed into $x^{2/3}$-class algorithms for $\pi(x)$ and prime power sums by McKenzie
-\cite{McKenzie}; the $j=0$ extraction is Riemann's inversion \cite{Riemann,Edwards}; Legendre's sieve is the
-dimension-parity twin; and the combinatorial prime-counting lineage
-\cite{DR,Staple} and its prime-power-sum extensions \cite{Orlov,Lucy} contain algorithms of better
-exponent ($x^{2/3}$-class) than our $x^{3/4}$-class implementation. The companion paper \cite{Companion} develops a
+\cite{McKenzie} (unrefereed manuscripts, whose complexity analysis is McKenzie's own); within the same
+lineage, Sladkey's $O(x^{1/3})$ divisor-summatory algorithm \cite{Sladkey} is the natural subroutine
+for pressing below the $x^{2/3}$ class. The $j=0$ extraction is Riemann's inversion
+\cite{Riemann,Edwards}; Legendre's sieve is the
+dimension-parity twin; the combinatorial prime-counting lineage
+\cite{DR,Staple} and its prime-power-sum extensions \cite{Orlov,Lucy,Walisch} contain algorithms of better
+exponent ($x^{2/3}$-class) than our $x^{3/4}$-class implementation, with record prime-sum computations
+to $10^{26}$ \cite{Walisch}; and an elementary route of Hirsch, Kessler, and Mendlovic reaches
+$\widetilde{O}(\sqrt x)$ for counts and sums alike \cite{HKM}. The companion paper \cite{Companion} develops a
 different, certified route to interval prime sums via Chebyshev-weighted generalized factorials. The
 present system computes any functional of primes defined by \emph{individual} membership --- intervals
 here; residue classes are an open door, since the ledger survives residue-restricted weights and the
@@ -270,11 +290,33 @@ Odlyzko method, \emph{Math. Comp.} \textbf{65} (1996), 235--245.
 (2015).
 \bibitem{Orlov} A. Orlov, The combinatorial method to compute the sum of the powers of primes,
 arXiv:2111.15545 (2021).
-\bibitem{Lucy} Lucy\_Hedgehog, post in the Project Euler Problem 10 discussion thread (2013).
+\bibitem{Lucy} Lucy\_Hedgehog, post in the Project Euler Problem 10 discussion thread (2013),
+\texttt{projecteuler.net/thread=10;page=5\#111677}.
 \bibitem{HW} G.~H. Hardy and E.~M. Wright, \emph{An Introduction to the Theory of Numbers}, 6th ed.,
 Oxford Univ. Press, 2008.
-\bibitem{McKenzie} N. McKenzie, Computing the prime counting function with Linnik's identity,
-manuscript (2011), available at \texttt{https://www.primecounting.com}.
+\bibitem{Sundaram} V. Ramaswami Aiyar, Sundaram's sieve for prime numbers, \emph{The Mathematics
+Student} \textbf{2} (1934), 73.
+\bibitem{ErdosMT} P. Erd\H{o}s, Some remarks on number theory (Hebrew, English summary),
+\emph{Riveon Lematematika} \textbf{9} (1955), 45--48.
+\bibitem{Ford} K. Ford, The distribution of integers with a divisor in a given interval,
+\emph{Ann. of Math. (2)} \textbf{168} (2008), 367--433.
+\bibitem{McKenzie} N. McKenzie, Computing the prime counting function with Linnik's identity in
+$O(n^{2/3} \log n)$ time and $O(n^{1/3} \log n)$ space, manuscript (2011),
+\texttt{primecounting.com/prime-counting-algorithms/}\allowbreak\texttt{PrimeCounting\_NathanMcKenzie.pdf}; prime power
+sums in the companion manuscript and code (2011), \texttt{github.com/NathanMcKenzie/InitalTest}.
+\bibitem{Sladkey} R. Sladkey, A successive approximation algorithm for computing the divisor
+summatory function, arXiv:1206.3369 (2012).
+\bibitem{HKM} D. Hirsch, I. Kessler, and U. Mendlovic, Computing $\pi(N)$: an elementary approach in
+$\widetilde{O}(\sqrt{N})$ time, arXiv:2212.09857 (2022).
+\bibitem{Walisch} K. Walisch and D. Baugh, \emph{primesum} (software),
+\texttt{github.com/kimwalisch/primesum}.
+\bibitem{LR} J.~C. Lagarias and D.~H. Richman, The floor quotient partial order, \emph{Adv. in Appl.
+Math.} \textbf{153} (2024); arXiv:2212.11689.
+\bibitem{Heyman} R. Heyman, Cardinality of a floor function set, \emph{Integers} \textbf{19} (2019),
+\#A67.
+\bibitem{HeymanP} R. Heyman, Primes in floor function sets, arXiv:2111.00408 (2021).
+\bibitem{MaWu} R. Ma and J. Wu, On the primes in floor function sets, \emph{Bull. Aust. Math. Soc.}
+\textbf{108} (2023), 236--243; arXiv:2112.12426.
 \bibitem{Companion} C. Gribble, Certified exact sums of primes over dyadic intervals via a ladder
 of generalized factorials, companion manuscript, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769105}.
 \bibitem{Code} C. Gribble, Reference implementations accompanying this paper and \cite{Companion},
