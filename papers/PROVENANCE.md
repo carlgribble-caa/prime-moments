@@ -34,6 +34,24 @@ Superseded copies remain on disk untracked (`Draft II/`, `Finals/`, `The Crystal
 
 No placeholders remain in any paper.
 
+## Zenodo v1.0 releases (2026-08-09)
+
+New versions of the trilogy records were published via `tools/zenodo_update.py` with the
+literature-review revisions (v1.0, publication date 2026-08-08). Before rebuilding the PDFs,
+each paper's Companion bibitems were switched from version DOIs to concept DOIs
+("cite all versions"), so cross-citations always resolve to the latest version.
+
+| Paper | Concept DOI (cited) | v1.0 version DOI |
+|---|---|---|
+| Paper 1 `prime_sum_formula_paper` | `10.5281/zenodo.21769102` | `10.5281/zenodo.21855605` |
+| Paper 2 `prime_ladder_paper` | `10.5281/zenodo.21769104` | `10.5281/zenodo.21855606` |
+| Paper 3 `prime_recovery_paper` | `10.5281/zenodo.21769106` | `10.5281/zenodo.21855607` |
+
+The original v0.x version DOIs (`…21769103`, `…21769105`, `…21769107`) remain resolvable as
+prior versions of the same concept records. Note: the v0.x records carried the `.tex` source
+alongside the PDF; the v1.0 versions carry the PDF only (Paper 1's file also renamed from
+`u_space_prime_formula_paper.pdf` to `prime_sum_formula_paper.pdf`).
+
 ## Audit note
 
 Paper 1's abstract claim of "forty exact interval tests" was recounted against
