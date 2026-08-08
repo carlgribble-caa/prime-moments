@@ -129,6 +129,12 @@ $r$ has at most $r$ integer roots; the $r$ window primes are roots; so the zero 
 exactly $P(W)$.
 \end{proof}
 
+Recovery of a finite multiset from its power sums is classical and has a modern general theory
+\cite{MSW}; in exact arithmetic, the same decoder --- power sums, a Hankel/Newton step, integer
+roots --- is the sparse-interpolation algorithm of Ben-Or and Tiwari \cite{BOT}. What is specific
+here is the provenance and the support: the power sums arrive from a prime-free channel, and the
+roots are the window primes.
+
 The moment count is the smallest for which this decoder is defined: $r$ unknowns, $r$ power sums, plus
 $s_0$ to know $r$. The price is paid in height rather than count: $\log_2 e_k$ grows like
 $k \log_2 m$, so the total delivered data is $\Theta(r^2 \log m)$ bits (Section~7), and the encoder
@@ -175,6 +181,15 @@ generic extraction from $N$ is integer factorization of an $r\log m$-bit number;
 rescues us, since trial division over $W$ is \emph{complete} --- composites cannot divide $N$ --- so
 no factoring and no primality testing occur.
 
+The kernel of Route II --- the primorial determines the primes --- has classical avatars. Gandhi's
+formula recovers the next prime from the divisors of $p_n\#$ by a M\"obius sum
+\cite{VandenEynden,Golomb}, and Fridman, Garbulsky, Glecer, Grime, and Tron Florentin exhibited a
+single real constant, in effect a primorial-denominated series, whose floor recurrence emits every
+prime \cite{Fridman}. Both are decoders whose data store the answers, and both therefore live outside
+the model of Section~5, exactly as Mills's constant does; Theorem~\ref{thm:prod} differs in taking
+the real number from a computable moment channel and pricing the window's information in delivered
+bits.
+
 \begin{remark}[Prony interpolation]\label{rem:prony}
 The weighted channel \eqref{eq:wch} with $2r$ moments recovers $P(W)$ at intermediate precision. With
 $\sigma_k = \sum_p (\log p)\, p^k$ for $0 \le k \le 2r-1$, the Hankel matrix
@@ -183,7 +198,10 @@ matrix at the distinct primes, $D = \mathrm{diag}(\log p) \succ 0$), and the Pro
 $\sum_{j=0}^{r-1} c_j \sigma_{i+j} = -\sigma_{r+i}$ returns the coefficients of
 $\prod_p (x - p) \in \mathbb{Z}[x]$, which rounding makes exact at sufficient precision; the roots are
 then read off as in Theorem~\ref{thm:int}. Explicit precision bounds follow from Vandermonde-inverse
-estimates using the gap $|p_i - p_j| \ge 2|i - j|$ between distinct odd primes, but are tedious; we
+estimates using the gap $|p_i - p_j| \ge 2|i - j|$ between distinct odd primes, but are tedious;
+sharp forms exist in the super-resolution literature, where the required precision is governed by
+node separation \cite{Moitra,BY}, and the primes' gap $\ge 2$ places the window in the
+well-separated regime. We
 record instead the machine datum that at $m = 50$ a working precision of about $160$ bits suffices
 (Section~6). Prony's memoir is \cite{Prony}.
 \end{remark}
@@ -192,7 +210,8 @@ record instead the machine datum that at $m = 50$ a working precision of about $
 
 The primes up to $2m$ are computable from the single input $m$; in the unrestricted world their
 description length is $O(\log m)$ and no lower bound is possible. The meaningful question, and the
-rigorous kernel of the no-closed-form folklore, concerns schemes whose decoders learn about the window
+rigorous kernel of the no-closed-form folklore (classically articulated by Wilf and Dudley
+\cite{Wilf,Dudley}), concerns schemes whose decoders learn about the window
 \emph{only through delivered data}. We formalize the channel and count.
 
 \begin{definition}[Uniform scheme]\label{def:scheme}
@@ -218,12 +237,24 @@ there are $2^{D+1} - 1$ bit strings of length at most $D$; so $2^{D+1} > \binom{
 asymptotic is $\log_2\binom{m}{r} = r \log_2(em/r) + O(\log m)$ with $r \sim m/\log m$.
 \end{proof}
 
+The counting step is the standard information-theoretic floor for representing $r$-subsets of an
+$m$-universe, as in succinct data structures \cite{BrodnikMunro} and combinatorial search
+\cite{ErdosRenyi}; the content here is its application to the moment channels and the accounting of
+Section~7. We note also that ``entropy of the primes'' has an established different use ---
+entropy \emph{proofs} of Chebyshev-type estimates \cite{Kontoyiannis} --- distinct from the
+subset-counting entropy priced here; and that the nearest prior impossibility statement we know, an
+algorithmic-information argument against ``formulas for primes'' \cite{KolpakovRocke}, is heuristic
+and asymptotic in character, where Theorem~\ref{thm:lb} is a finite, unconditional count in an
+explicitly delimited channel model.
+
 Three glosses carry the theorem's meaning. \emph{(a) The ensemble is the model.} The actual window
 primes are one configuration per $m$; correctness over all $r$-subsets is what excludes decoders with
 number theory built in. Mills's prime-representing function \cite{Mills} is a decoder whose constant
-stores the answers; Willans's formula \cite{Willans} passes unbounded information through the
-evaluation of factorials under a floor; a sieve is a decoder that ignores the channel and recomputes
-from $m$. All three are outside Definition~\ref{def:scheme}, and their exclusion is precisely what
+stores the answers --- computing the constant requires knowing the primes it emits
+\cite{CaldwellCheng}; Willans's formula \cite{Willans} passes unbounded information through the
+evaluation of factorials under a floor, as do its Diophantine and arithmetic-term descendants
+\cite{JSWW,PrunescuShunia}; a sieve is a decoder that ignores the channel and recomputes
+from $m$. All of these are outside Definition~\ref{def:scheme}, and their exclusion is precisely what
 makes the folklore well-posed rather than false. The decoders of Theorems~\ref{thm:int} and
 \ref{thm:prod} --- Newton's recursion, rounding, trial division --- use no property of the primes
 beyond what the bits assert, are correct on arbitrary configurations of distinct window integers (for
@@ -234,7 +265,9 @@ integers), and hence live inside the model, where their budgets can be compared 
 currency, and the count--precision \emph{tradeoff} is the object of study. \emph{(c) Information is
 not extraction.} The floor prices what the bits can distinguish, not the work of deciding; the time
 cost of prime determination is a separate and harder question, on which the elementary
-$\sqrt{x}$-barrier literature \cite{Polymath} is the state of the art.
+$\sqrt{x}$-barrier literature \cite{Polymath} is the state of the art. That work is also, in the
+present vocabulary, a moment channel with a partial decoder: it extracts one exact bit of the window
+--- the parity of the number of its primes --- in time $O(N^{1/2 - c})$, without enumerating them.
 
 \section{Machine verification}
 
@@ -327,16 +360,20 @@ of the mathematics and of all references.
 self-similar formula system, companion manuscript, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769103}.
 \bibitem{CompanionII} C. Gribble, Certified exact sums of primes over dyadic intervals via a ladder
 of generalized factorials, companion manuscript, Zenodo (2026), \texttt{doi:10.5281/zenodo.21769105}.
-\bibitem{Linnik} Yu.~V. Linnik, \emph{The Dispersion Method in Binary Additive Problems}, Amer. Math.
-Soc., Providence, 1963.
-\bibitem{McKenzie} N. McKenzie, Computing the prime counting function with Linnik's identity,
-manuscript (2011), available at \texttt{https://www.primecounting.com}.
+\bibitem{Linnik} Yu.~V. Linnik, \emph{The Dispersion Method in Binary Additive Problems},
+Translations of Mathematical Monographs 4, Amer. Math. Soc., Providence, 1963.
+\bibitem{McKenzie} N. McKenzie, Computing the prime counting function with Linnik's identity in
+$O(n^{2/3} \log n)$ time and $O(n^{1/3} \log n)$ space, manuscript (2011),
+\texttt{primecounting.com/prime-counting-algorithms/}\allowbreak\texttt{PrimeCounting\_NathanMcKenzie.pdf}; prime power
+sums in the companion manuscript and code (2011), \texttt{github.com/NathanMcKenzie/InitalTest}.
 \bibitem{Cheb} P.~L. Chebyshev, M\'emoire sur les nombres premiers, \emph{J. Math. Pures Appl.}
 \textbf{17} (1852), 366--390.
-\bibitem{Macdonald} I.~G. Macdonald, \emph{Symmetric Functions and Hall Polynomials}, 2nd ed., Oxford
-Univ. Press, 1995.
-\bibitem{Prony} R. de Prony, Essai exp\'erimental et analytique, \emph{J. \'Ecole Polytechnique}
-\textbf{1} (1795), 24--76.
+\bibitem{Macdonald} I.~G. Macdonald, \emph{Symmetric Functions and Hall Polynomials}, 2nd ed.,
+Oxford Mathematical Monographs, Clarendon Press, Oxford, 1995.
+\bibitem{Prony} R. de Prony, Essai exp\'erimental et analytique: sur les lois de la dilatabilit\'e
+des fluides \'elastiques et sur celles de la force expansive de la vapeur de l'eau et de la vapeur de
+l'alkool, \`a diff\'erentes temp\'eratures, \emph{J. \'Ecole Polytechnique} \textbf{1}, cahier 2
+(1795), 24--76.
 \bibitem{Mills} W.~H. Mills, A prime-representing function, \emph{Bull. Amer. Math. Soc.} \textbf{53}
 (1947), 604.
 \bibitem{Willans} C.~P. Willans, On formulae for the $n$th prime number, \emph{Math. Gaz.} \textbf{48}
@@ -344,7 +381,39 @@ Univ. Press, 1995.
 \bibitem{Erdos} P. Erd\H{o}s, Beweis eines Satzes von Tschebyschef, \emph{Acta Litt. Sci. Szeged}
 \textbf{5} (1932), 194--198.
 \bibitem{Polymath} D.~H.~J. Polymath, Deterministic methods to find primes, \emph{Math. Comp.}
-\textbf{81} (2012); arXiv:1009.3956.
+\textbf{81} (2012), 1233--1246; arXiv:1009.3956.
+\bibitem{MSW} H. Mel\'anov\'a, B. Sturmfels, and R. Winter, Recovery from power sums,
+\emph{Exp. Math.} \textbf{33} (2024), 225--234; arXiv:2106.13981.
+\bibitem{BOT} M. Ben-Or and P. Tiwari, A deterministic algorithm for sparse multivariate polynomial
+interpolation, in \emph{Proc. 20th ACM Symp. Theory of Computing (STOC)}, 1988, 301--309.
+\bibitem{VandenEynden} C. Vanden Eynden, A proof of Gandhi's formula for the $n$th prime,
+\emph{Amer. Math. Monthly} \textbf{79} (1972).
+\bibitem{Golomb} S.~W. Golomb, Formulas for the next prime, \emph{Pacific J. Math.} \textbf{63}
+(1976), 401--404.
+\bibitem{Fridman} D. Fridman, J. Garbulsky, B. Glecer, J. Grime, and M. Tron Florentin, A
+prime-representing constant, \emph{Amer. Math. Monthly} \textbf{126} (2019), 70--73.
+\bibitem{JSWW} J.~P. Jones, D. Sato, H. Wada, and D. Wiens, Diophantine representation of the set of
+prime numbers, \emph{Amer. Math. Monthly} \textbf{83} (1976), 449--464.
+\bibitem{PrunescuShunia} M. Prunescu and J.~M. Shunia, On arithmetic terms expressing the
+prime-counting function and the $n$-th prime, arXiv:2412.14594 (2024).
+\bibitem{Wilf} H.~S. Wilf, What is an answer?, \emph{Amer. Math. Monthly} \textbf{89} (1982),
+289--292.
+\bibitem{Dudley} U. Dudley, Formulas for primes, \emph{Math. Mag.} \textbf{56} (1983), 17--22.
+\bibitem{CaldwellCheng} C.~K. Caldwell and Y. Cheng, Determining Mills' constant and a note on
+Honaker's problem, \emph{J. Integer Seq.} \textbf{8} (2005), art.~05.4.1.
+\bibitem{KolpakovRocke} A. Kolpakov and A. Rocke, On the impossibility of discovering a formula for
+primes using AI, arXiv:2308.10817 (2023).
+\bibitem{Kontoyiannis} I. Kontoyiannis, Some information-theoretic computations related to the
+distribution of prime numbers, arXiv:0710.4076 (2007); expository version, Counting the primes using
+entropy, \emph{IEEE Information Theory Workshop} (2008).
+\bibitem{BrodnikMunro} A. Brodnik and J.~I. Munro, Membership in constant time and almost-minimum
+space, \emph{SIAM J. Comput.} \textbf{28} (1999), 1627--1640.
+\bibitem{ErdosRenyi} P. Erd\H{o}s and A. R\'enyi, On two problems of information theory,
+\emph{Publ. Math. Inst. Hungar. Acad. Sci.} \textbf{8} (1963), 229--243.
+\bibitem{Moitra} A. Moitra, Super-resolution, extremal functions and the condition number of
+Vandermonde matrices, in \emph{Proc. 47th ACM Symp. Theory of Computing (STOC)}, 2015, 821--830.
+\bibitem{BY} D. Batenkov and Y. Yomdin, On the accuracy of solving confluent Prony systems,
+\emph{SIAM J. Appl. Math.} \textbf{73} (2013), 134--154.
 \bibitem{Code} C. Gribble, Reference implementations accompanying this paper and its companions,
 code repository (2026), \texttt{https://github.com/carlgribble-caa/prime-moments}.
 \end{thebibliography}
