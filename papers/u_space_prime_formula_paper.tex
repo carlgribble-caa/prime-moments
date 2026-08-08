@@ -44,6 +44,13 @@ geometric derivation, the duplicated-mass and layer-birth theorems, the interval
 verification discipline.
 \end{abstract}
 
+\medskip
+\noindent\textbf{Keywords:} prime counting function; prime power sums; Linnik's identity;
+multiplication tables; divisor function; Legendre--Meissel methods; machine-verified computation.
+
+\smallskip
+\noindent\textbf{MSC 2020:} primary 11N05; secondary 11A25, 11Y35, 11Y16.
+
 \section{Introduction}
 
 Let $U_k(N)$ denote the $k$-dimensional multiplication table restricted to entries at least $2$ and
@@ -199,13 +206,14 @@ $(113, 126]$, a unit window, and a window containing $2^{10}$ to exercise the du
 intervals below $10^6$; five count tests (weight $j = 0$), including $\pi(10^6) = 78{,}498$; and the
 spans $(10^6, 10^7]$ and $(1, 10^7]$, the latter returning $3{,}203{,}324{,}994{,}356$.
 
+{\emergencystretch=2em
 \emph{Billion-scale validation.} With published values as the oracle
 ($\pi(10^9) = 50{,}847{,}534$; $999{,}999{,}937$ the largest prime below $10^9$), the implementation
 computed $\pi(999{,}999{,}936) = 50{,}847{,}533$ in $176$ s, $\pi(999{,}999{,}937) = 50{,}847{,}534$ in
 $1$ s, and $\pi(10^9) = 50{,}847{,}534$ in $18$ s, touching $63{,}719$ lattice points in total: the
 formula's verdicts --- that $999{,}999{,}937$ is prime, is prime number $50{,}847{,}534$, and is the
 last prime below one billion --- agree with the record values, with no sieve and no primality test in
-the computation.
+the computation.\par}
 
 \begin{remark}[Primality as lattice growth]
 Since $\fl{(y+1)/d} > \fl{y/d}$ exactly when $d \mid y+1$, the evaluation lattice of $y+1$ exceeds that

@@ -45,6 +45,13 @@ $m = 500$ both routes recover the $73$ primes of $(500, 1000]$ exactly, the seco
 $695$-bit real number.
 \end{abstract}
 
+\medskip
+\noindent\textbf{Keywords:} prime recovery; moment problems; Newton's identities; elementary
+symmetric functions; Chebyshev's functional; Prony's method; information-theoretic lower bounds.
+
+\smallskip
+\noindent\textbf{MSC 2020:} primary 11N05; secondary 05E05, 11Y16, 94A17.
+
 \section{Introduction}
 
 The first companion paper \cite{CompanionI} develops Linnik's identity \cite{Linnik}, in the
@@ -148,13 +155,14 @@ primality.
 \end{theorem}
 
 \begin{proof}
+{\emergencystretch=2em
 $\exp(\theta(2m) - \theta(m)) = N$ exactly, and for $|\delta| \le 2^{-B}$,
 $|N e^{\delta} - N| \le N\, 2^{-B+1} < 2^{\lceil \log_2 N\rceil + 1 - B} = \tfrac12$, so rounding
 recovers $N$; the divisibility $N \mid \binom{2m}{m}$ and the bound $N \le 4^m$ are the central
 binomial facts underlying \cite{Cheb,Erdos}. For the divisor characterization: every $p \in P(W)$ divides
 $N$ and lies in $W$; conversely a composite $c \in W$ has a prime factor $q \le \sqrt{2m} \le m$
 (valid for $m \ge 2$), and $q$ does not divide $N$ since every prime factor of $N$ exceeds $m$; hence
-$c \nmid N$.
+$c \nmid N$.\par}
 \end{proof}
 
 Theorem~\ref{thm:prod} is the ``internal Willans'' of the moment model: a single real number carries
